@@ -100,18 +100,7 @@ class _GlobalGuestsListState extends State<GlobalGuestsList> {
                   : Center(
                     child:
                         context.watch<EventsController>().event.visibility == 'private'
-                            ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text('Vous n\'avez pas encore d\'invités', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kBlack)),
-                                const SizedBox(height: 16),
-                                PhoneContacts(
-                                  onReturn: () {
-                                    setState(() {});
-                                  },
-                                ),
-                              ],
-                            )
+                            ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [const Text('Vous n\'avez pas encore d\'invités', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kBlack)), const SizedBox(height: 16)])
                             : const Column(mainAxisAlignment: MainAxisAlignment.center, children: [Text('Vous n\'avez pas encore d\'invités, partagez le code d\'invitation pour en inviter !', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kBlack))]),
                   ),
         );

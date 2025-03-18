@@ -1,4 +1,3 @@
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kapstr/components/dialogs/organizer_sms_dialog.dart';
@@ -10,6 +9,7 @@ import 'package:kapstr/helpers/format_phone_number.dart';
 import 'package:kapstr/helpers/share_app.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/models/app_event.dart';
+import 'package:kapstr/models/contact.dart';
 import 'package:kapstr/models/guest.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/events/create/completed.dart';
@@ -259,7 +259,7 @@ class _ManageOrganizersState extends State<ManageOrganizers> {
                   onPressed:
                       (displayName != null && phoneNumber != null && phoneNumber!.isNotEmpty)
                           ? () async {
-                            Contact contact = Contact(displayName: displayName!, phones: [Item(label: 'mobile', value: await formatPhoneNumber(phoneNumber!))]);
+                            Contact contact = Contact(id: "", name: displayName!, phones: []);
 
                             List<Contact> selectedContacts = [contact];
                             List<String> allowedModules = [];
@@ -357,26 +357,7 @@ class _GuestListBottomSheetState extends State<GuestListBottomSheet> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              children: [
-                Expanded(child: SearchBarGuest(searchController: widget.searchController)),
-                const SizedBox(width: 12),
-                Event.instance.visibility == 'public'
-                    ? const SizedBox()
-                    : PhoneContacts(
-                      onReturn: () {
-                        setState(() {
-                          filteredGuests = Event.instance.guests;
-                        });
-
-                        Navigator.of(context).pop();
-                      },
-                    ),
-              ],
-            ),
-          ),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 8), child: Row(children: [Expanded(child: SearchBarGuest(searchController: widget.searchController)), const SizedBox(width: 12)])),
           const SizedBox(height: 16),
           Expanded(
             child:
@@ -384,22 +365,7 @@ class _GuestListBottomSheetState extends State<GuestListBottomSheet> {
                     ? Center(
                       child:
                           Event.instance.visibility == 'private'
-                              ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Il n\'y a pas d\'invités pour le moment.', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-                                  const SizedBox(height: 12),
-                                  PhoneContacts(
-                                    onReturn: (() {
-                                      filteredGuests = Event.instance.guests;
-
-                                      setState(() {});
-
-                                      Navigator.of(context).pop();
-                                    }),
-                                  ),
-                                ],
-                              )
+                              ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [const Text('Il n\'y a pas d\'invités pour le moment.', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)), const SizedBox(height: 12)])
                               : const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [Text('Vous n\'avez pas encore d\'invités, partagez le code d\'invitation pour en inviter !', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: kBlack))],

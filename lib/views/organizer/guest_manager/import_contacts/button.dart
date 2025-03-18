@@ -1,8 +1,8 @@
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/guests.dart';
 import 'package:kapstr/controllers/contacts.dart';
 import 'package:kapstr/helpers/vibration.dart';
+import 'package:kapstr/models/contact.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/views/global/in_app_purchase/purchase.dart';

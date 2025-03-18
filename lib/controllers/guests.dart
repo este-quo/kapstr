@@ -1,15 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/rsvps.dart';
+
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/format_phone_number.dart';
 import 'package:kapstr/helpers/rsvp.dart';
-import 'package:kapstr/models/added_guest.dart';
-import 'package:kapstr/models/app_guest.dart';
+
+import 'package:kapstr/models/contact.dart';
 import 'package:kapstr/models/modules/module.dart';
 import 'package:kapstr/models/modules/table.dart';
-import 'package:kapstr/models/rsvp.dart';
 import 'package:kapstr/models/user.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/models/app_event.dart';
@@ -227,18 +225,18 @@ class GuestsController extends ChangeNotifier {
 
     for (var guest in newGuests) {
       try {
-        String? phone = guest.phones!.first.value;
+        String? phone = guest.phones!.first;
 
         String? formattedPhone = await formatPhoneNumber(phone!);
 
         // Check against local collection
         if (!existingPhones.contains(formattedPhone)) {
           var guestDocRef = configuration.getCollectionPath('events').doc(Event.instance.id).collection('guests').doc();
-          batch.set(guestDocRef, {'user_id': '', 'name': guest.displayName, 'phone': formattedPhone, 'posted_pictures': [], 'table_id': '', 'image_url': '', 'children': 0, 'adults': 1, 'has_joined': false, 'event_id': Event.instance.id, 'allowed_modules': allowedModules});
+          batch.set(guestDocRef, {'user_id': '', 'name': guest.name, 'phone': formattedPhone, 'posted_pictures': [], 'table_id': '', 'image_url': '', 'children': 0, 'adults': 1, 'has_joined': false, 'event_id': Event.instance.id, 'allowed_modules': allowedModules});
         } else {
           var guestDocRef = allGuestsSnapshot.docs.firstWhere((doc) => (doc.data())['phone'] == formattedPhone).reference;
 
-          batch.update(guestDocRef, {'name': guest.displayName});
+          batch.update(guestDocRef, {'name': guest.name});
         }
 
         counter++;

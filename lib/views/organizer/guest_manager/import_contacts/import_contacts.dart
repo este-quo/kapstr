@@ -55,7 +55,6 @@ class _ImportContactState extends State<ImportContact> {
               const SizedBox(height: 12.0),
               Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: SearchBarGuest(searchController: searchController)),
               const SizedBox(height: 12.0),
-              Expanded(child: PhoneContactsList(phoneContacts: phoneContactsProvider.contacts, selectedContactsFromPhone: phoneContactsProvider.selectedContacts, searchQuery: searchController.text, isFiltered: isFiltered)),
             ],
           ),
         );

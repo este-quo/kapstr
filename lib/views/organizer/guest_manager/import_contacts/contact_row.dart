@@ -1,5 +1,5 @@
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
+import 'package:kapstr/models/contact.dart';
 import 'package:kapstr/widgets/layout/spacing.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/guest_manager/import_contacts/button.dart';

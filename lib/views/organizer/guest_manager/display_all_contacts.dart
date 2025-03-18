@@ -107,7 +107,7 @@ class _DisplayAllContactsState extends State<DisplayAllContacts> {
                 ? Column(
                   children: [
                     largeSpacerH(),
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: Row(children: [Expanded(child: SearchBarGuest(searchController: searchController)), const SizedBox(width: 12), event.visibility == 'public' ? const SizedBox() : PhoneContacts(onReturn: () {})])),
+                    Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: Row(children: [Expanded(child: SearchBarGuest(searchController: searchController)), const SizedBox(width: 12)])),
                     smallSpacerH(),
                     Expanded(
                       child: Column(
