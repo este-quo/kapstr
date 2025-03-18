@@ -1,0 +1,61 @@
+// ignore_for_file: type=lint
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    if (kIsWeb) {
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
+    }
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
+        return ios;
+      case TargetPlatform.macOS:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
+    }
+  }
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyA7im8C6Rrgk1TuzGM2ToYR-EMFqZv6lUE',
+    appId: '1:1016658555930:android:d5627cc01790034eaa8da3',
+    messagingSenderId: '1016658555930',
+    projectId: 'ic-event-v2',
+    storageBucket: 'ic-event-v2.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAuszXTjze-nOuQT2Iaj2uDqHtXz1ze1R8',
+    appId: '1:1016658555930:ios:6a2741199339e7b5aa8da3',
+    messagingSenderId: '1016658555930',
+    projectId: 'ic-event-v2',
+    storageBucket: 'ic-event-v2.appspot.com',
+    androidClientId:
+        '1016658555930-9pudaltpr8e5otkacu8ot0rfmgmgs70e.apps.googleusercontent.com',
+    iosClientId:
+        '1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq.apps.googleusercontent.com',
+    iosBundleId: 'events148.kapstr.app',
+  );
+}

@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "1016658555930",
+    "project_id": "ic-event-v2",
+    "storage_bucket": "ic-event-v2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016658555930:android:4f8c9b1e7bf85cd5aa8da3",
+        "android_client_info": {
+          "package_name": "com.events148.kapstr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016658555930-63ccmpgk8dheidjb6mmvjbq977dml846.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "19928a3ca42e47e05fc3a48e040f5b0a812b0e16"
+          }
+        },
+        {
+          "client_id": "1016658555930-pkonanq96navu38j83g2lifg3294j2q1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "f857f38d5f8fdb022fec2f497a47337dc4bb3c55"
+          }
+        },
+        {
+          "client_id": "1016658555930-svoqfhcqdb07mepinp2khribp97eoo2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "d1b14d9c1fd50ecb12be104d0531e8eb86164a57"
+          }
+        },
+        {
+          "client_id": "1016658555930-o6lm6tocbrtc263k5g59k03bmtsod4af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7im8C6Rrgk1TuzGM2ToYR-EMFqZv6lUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016658555930-o6lm6tocbrtc263k5g59k03bmtsod4af.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "events148.kapstr.app",
+                "app_store_id": "6503693192"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

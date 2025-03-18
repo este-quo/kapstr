@@ -1,0 +1,148 @@
+﻿CGV/ CGU KAPSTR
+
+Conditions Générales de Vente (CGV)
+
+1. Informations Générales
+
+L’application mobile Kapstr et le site kapstr.com sont développés et édités par la SAS Events 148, située au 92 rue de Paris, Charenton-le-pont, 94220.
+
+2. Objet
+
+Les présentes Conditions Générales de Vente (CGV) définissent les droits et obligations des parties dans le cadre de l'utilisation des services fournis par l'application Kapstr, propriété de la société Events 148.
+
+3. Acceptation des Conditions Générales de Vente
+
+L'inscription à l'application et l'utilisation des services proposés impliquent l'acceptation sans réserve des présentes CGV. Les CGV peuvent être consultées à tout moment sur le site web et l'application Kapstr.
+
+4. Description des Services
+
+Kapstr permet aux utilisateurs de créer des faire-part digitaux personnalisés pour divers événements tels que mariages, anniversaires, événements d'entreprise, etc. Les fonctionnalités incluent :
+
+- Gestion des invitations
+- Création d'albums photo
+- Gestion des RSVP
+- Personnalisation des thèmes et des mises en page
+- Ajout de documents et médias
+- Messagerie pour discuter avec les participants
+- Cagnotte en ligne
+
+5. Inscription et Utilisation
+
+5.1 Inscription
+
+- Les utilisateurs peuvent s'inscrire via Google, Facebook, Apple ou par email.
+- Les informations requises incluent prénom, nom, numéro de téléphone et adresse email.
+- Un code de vérification est envoyé par SMS pour valider l'inscription.
+
+5.2 Conditions d'utilisation
+
+- Les utilisateurs s'engagent à ne pas publier de contenus violents, pornographiques, racistes, ou tout autre contenu illicite.
+- Le non-respect de ces conditions peut entraîner la suspension ou la suppression du compte.
+- L'utilisation des services est soumise aux présentes CGV et à toute loi applicable.
+
+6. Tarification
+
+Les tarifs des services proposés par Kapstr sont disponibles sur le site web et dans l'application. Les utilisateurs peuvent consulter les différentes formules et abonnements, ainsi que les prix correspondants, avant de procéder à l'achat. Events 148 se réserve le droit de modifier les tarifs à tout moment. Les modifications de tarifs seront indiquées sur le site web et dans l'application, et les utilisateurs en seront informés avant tout renouvellement de service ou nouvel achat.
+
+7. Paiement
+
+7.1 Modalités de paiement
+
+- Les paiements effectués via l'application sont sécurisés par des technologies de cryptage de pointe.
+- Les paiements sont traités via les plateformes Apple et Google, conformément à leurs politiques de paiement respectives.
+- Les utilisateurs peuvent payer par carte de crédit, débit, ou tout autre moyen de paiement proposé sur les plateformes Apple et Google.
+
+7.2 Facturation
+
+- Les factures sont fournies par Apple ou Google selon les modalités de leurs plateformes respectives.
+- Les utilisateurs sont responsables de fournir des informations de paiement exactes et à jour sur les plateformes Apple et Google.
+
+8. Propriété Intellectuelle
+
+8.1 Contenus des utilisateurs
+
+- Les contenus créés par les utilisateurs restent leur propriété. Toutefois, en utilisant Kapstr, les utilisateurs accordent à Events 148 une licence non-exclusive, mondiale et gratuite pour utiliser, reproduire, représenter, adapter et diffuser ces contenus dans le cadre des services de l'application.
+- Les utilisateurs garantissent qu'ils disposent des droits nécessaires pour accorder cette licence et que les contenus ne portent pas atteinte aux droits de tiers.
+
+8.2 Propriété de l'application
+
+- Tous les éléments de l'application (design, textes, logiciels, etc.) sont la propriété exclusive de Events 148 et sont protégés par le droit d'auteur.
+- Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments de l'application, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable de Events 148.
+
+9. Confidentialité et Protection des Données
+
+9.1 Données collectées
+
+- Prénom, nom, numéro de téléphone, email, ainsi que les données relatives aux événements.
+- Les données de paiement sont collectées par Apple ou Google et sont soumises à leurs politiques de confidentialité respectives.
+
+9.2 Utilisation des données
+
+- Les données sont utilisées pour fournir les services de l'application et peuvent être partagées avec des tiers de confiance pour la gestion des paiements et la sécurité.
+- Les données peuvent être utilisées à des fins de communication et de marketing si l'utilisateur a donné son consentement préalable.
+
+9.3 Sécurité
+
+- Les données de paiement sont protégées par des technologies de cryptage et des mesures de sécurité conformes aux normes PCI DSS des plateformes Apple et Google.
+- Events 148 s'engage à prendre toutes les mesures nécessaires pour garantir la confidentialité et la sécurité des données.
+
+9.4 Conservation des données
+
+- Les données des utilisateurs sont conservées pendant la durée nécessaire à la réalisation des finalités pour lesquelles elles ont été collectées, conformément à la législation en vigueur.
+- Les utilisateurs peuvent exercer leurs droits d'accès, de rectification, d'opposition et de suppression de leurs données en contactant Events 148 à l'adresse email indiquée.
+
+
+
+
+
+
+
+
+
+
+10. Durée de Disponibilité
+* Les contenus de chaque événement sont disponibles pour une durée maximale d'un an.
+* Après cette période, l'événement et ses contenus associés sont automatiquement supprimés, sauf demande contraire de l'utilisateur avant la fin de cette période.
+* Events 148 n'est pas responsable de la perte des données après la suppression de l'événement.
+11. Service Client et Réclamations
+11.1 Support
+* Pour toute assistance ou réclamation, les utilisateurs peuvent contacter le service client à contact@kapstr.com.
+* Events 148 s'engage à répondre aux demandes dans un délai raisonnable.
+11.2 Réclamations et remboursements
+* Les demandes de remboursement doivent être envoyées par email à contact@kapstr.com avec le motif et la liste des problèmes rencontrés.
+* Les remboursements sont accordés uniquement en cas de bugs majeurs empêchant la création complète de l'événement et l'envoi des invitations.
+* Le délai de traitement des demandes de remboursement est de 10 à 15 jours en moyenne.
+* Events 148 se réserve le droit de refuser toute demande de remboursement qui ne respecte pas ces conditions.
+12. Modifications des CGV
+* Events 148 se réserve le droit de modifier les présentes CGV à tout moment.
+* Les utilisateurs seront informés des modifications via email ou notification in-app au moins 30 jours avant leur entrée en vigueur.
+* En cas de désaccord avec les nouvelles CGV, l'utilisateur pourra résilier son compte sans frais.
+13. Droit Applicable et Juridiction
+* Les présentes CGV sont régies par le droit français.
+* En cas de litige, une solution amiable sera recherchée avant toute action judiciaire.
+* À défaut d'accord amiable, les tribunaux compétents seront ceux du ressort de Paris, France.
+
+
+
+
+
+
+
+
+14. Responsabilité
+* Events 148 s'efforce de garantir le bon fonctionnement de l'application et des services associés.
+* Toutefois, la société ne peut être tenue responsable des interruptions temporaires des services pour des raisons techniques ou de maintenance.
+* En cas de dysfonctionnements importants, Events 148 s'engage à résoudre les problèmes dans les meilleurs délais.
+* Events 148 n'est pas responsable des dommages indirects pouvant survenir du fait de l'utilisation de l'application.
+15. Force Majeure
+* Events 148 ne pourra être tenue responsable en cas de force majeure, tel que défini par la jurisprudence française, rendant impossible l'exécution des obligations contractuelles.
+* Les parties conviennent que la force majeure suspend les obligations nées des présentes CGV pendant toute la durée de son existence.
+16. Dispositions Finales
+16.1 Divisibilité
+* Si une ou plusieurs stipulations des présentes CGV sont tenues pour non valides ou déclarées telles en application d'une loi, d'un règlement ou à la suite d'une décision définitive d'une juridiction compétente, les autres stipulations garderont toute leur force et leur portée.
+16.2 Intégralité de l'accord
+* Les présentes CGV constituent l'intégralité de l'accord entre les parties et remplacent tout accord ou arrangement antérieur, écrit ou oral, relatif au même objet.
+16.3 Non-renonciation
+* Le fait pour Events 148 de ne pas se prévaloir d'un manquement par l'utilisateur à l'une quelconque des obligations visées dans les présentes CGV ne saurait être interprété comme une renonciation à se prévaloir pour l'avenir de ce manquement.
+16.4 Langue
+* Les présentes CGV sont rédigées en français. En cas de traduction dans une autre langue, seule la version française fera foi en cas de litige, de contestation, de difficulté.
