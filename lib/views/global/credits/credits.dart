@@ -76,101 +76,106 @@ class _CreditsPageState extends State<CreditsPage> {
           ],
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Stack(
         children: [
-          const SizedBox(height: 16),
-          // Packs
-          Expanded(
-            child: Consumer<InAppController>(
-              builder: (context, controller, child) {
-                if (controller.availablePlans.isEmpty) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 16),
+              // Packs
+              Expanded(
+                child: Consumer<InAppController>(
+                  builder: (context, controller, child) {
+                    if (controller.availablePlans.isEmpty) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                final List<ProductDetails> sortedPlans = List.from(controller.availablePlans)..sort((a, b) => a.rawPrice.compareTo(b.rawPrice));
+                    final List<ProductDetails> sortedPlans = List.from(controller.availablePlans)..sort((a, b) => a.rawPrice.compareTo(b.rawPrice));
 
-                return ListView(
-                  padding: const EdgeInsets.all(16),
-                  children:
-                      sortedPlans.map((plan) {
-                        return buildPackCard(
-                          id: plan.id,
-                          title: plan.title,
-                          description: plan.description,
-                          details:
-                              plan.id == "credits_1"
-                                  ? ["Activer 1 évènement", "Invités illimités", "Valable 1 an"]
-                                  : plan.id == "credits_10"
-                                  ? ["Activer 10 évènement", "Invités illimités"]
-                                  : ["Activer 20 évènements", "Invités illimités"],
-                          price: plan.price,
-                          isSelected: selectedPack == plan.id,
-                          economy:
-                              plan.id == "credits_1"
-                                  ? ""
-                                  : plan.id == "credits_10"
-                                  ? "15% d’économie"
-                                  : "51% d’économie",
-                          catchline:
-                              plan.id == "credits_1"
-                                  ? "Offre de lancement"
-                                  : plan.id == "credits_10"
-                                  ? "soit 59,99€/évènement"
-                                  : "soit 39,90€/évènement",
-                          onSelect: () {
+                    return ListView(
+                      padding: const EdgeInsets.all(16),
+                      children:
+                          sortedPlans.map((plan) {
+                            return buildPackCard(
+                              id: plan.id,
+                              title: plan.title,
+                              description: plan.description,
+                              details:
+                                  plan.id == "credits_1"
+                                      ? ["Activer 1 évènement", "Invités illimités", "Valable 1 an"]
+                                      : plan.id == "credits_10"
+                                      ? ["Activer 10 évènement", "Invités illimités"]
+                                      : ["Activer 20 évènements", "Invités illimités"],
+                              price: plan.price,
+                              isSelected: selectedPack == plan.id,
+                              economy:
+                                  plan.id == "credits_1"
+                                      ? ""
+                                      : plan.id == "credits_10"
+                                      ? "15% d’économie"
+                                      : "51% d’économie",
+                              catchline:
+                                  plan.id == "credits_1"
+                                      ? "Offre de lancement"
+                                      : plan.id == "credits_10"
+                                      ? "soit 59,99€/évènement"
+                                      : "soit 39,90€/évènement",
+                              onSelect: () {
+                                setState(() {
+                                  selectedPack = plan.id;
+                                });
+                              },
+                            );
+                          }).toList(),
+                    );
+                  },
+                ),
+              ),
+
+              // Footer
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : ElevatedButton(
+                          style: ElevatedButton.styleFrom(backgroundColor: kPrimary, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                          onPressed: () async {
                             setState(() {
-                              selectedPack = plan.id;
+                              isLoading = true;
                             });
+
+                            try {
+                              final selectedPlan = inAppController.availablePlans.firstWhere((plan) => plan.id == selectedPack, orElse: () => throw Exception("Plan introuvable"));
+
+                              await inAppController.buyPlan(selectedPlan, context.read<UsersController>().user!.id);
+
+                              if (widget.isCreditsEmpty) {
+                                _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
+                                Navigator.of(context).pop();
+                              } else {
+                                Navigator.of(context).pop();
+                                _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
+                              }
+                            } catch (e) {
+                              // Gérer les erreurs éventuelles
+                            } finally {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
                           },
-                        );
-                      }).toList(),
-                );
-              },
-            ),
+                          child: isLoading ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)) : const Text("Activer mon évènement", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                        ),
+                    const SizedBox(height: 8),
+                    const Text("Payez une fois, sans engagement", style: TextStyle(fontSize: 14, color: kBlack)),
+                  ],
+                ),
+              ),
+            ],
           ),
-
-          // Footer
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                isLoading
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: kPrimary, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                      onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-
-                        try {
-                          final selectedPlan = inAppController.availablePlans.firstWhere((plan) => plan.id == selectedPack, orElse: () => throw Exception("Plan introuvable"));
-
-                          await inAppController.buyPlan(selectedPlan, context.read<UsersController>().user!.id);
-
-                          if (widget.isCreditsEmpty) {
-                            _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
-                            Navigator.of(context).pop();
-                          } else {
-                            Navigator.of(context).pop();
-                            _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
-                          }
-                        } catch (e) {
-                          // Gérer les erreurs éventuelles
-                        } finally {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        }
-                      },
-                      child: const Text("Activer mon évènement", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
-                    ),
-                const SizedBox(height: 8),
-                const Text("Payez une fois, sans engagement", style: TextStyle(fontSize: 14, color: kBlack)),
-              ],
-            ),
-          ),
+          if (isLoading) Container(color: Colors.black.withOpacity(0.4), child: const Center(child: CircularProgressIndicator())),
         ],
       ),
     );

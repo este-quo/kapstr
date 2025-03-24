@@ -134,7 +134,7 @@ PreferredSize moduleAppBar(Module module, BuildContext context) {
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: GestureDetector(onTap: () => Navigator.of(context).pop(module), child: const Row(children: [Icon(Icons.arrow_back_ios, size: 16, color: kWhite), Text('Retour', style: TextStyle(color: kWhite, fontSize: 14, fontWeight: FontWeight.w500))])),
       ),
-      flexibleSpace: Stack(fit: StackFit.expand, children: [ColorFiltered(colorFilter: ColorFilter.mode(fromHex(module.colorFilter), BlendMode.srcOver), child: Image.network(module.image, fit: BoxFit.cover))]),
+      flexibleSpace: Stack(fit: StackFit.expand, children: [Image.network(module.image, fit: BoxFit.cover, color: fromHex(module.colorFilter).withOpacity(0.5), colorBlendMode: BlendMode.srcOver)]),
       actions: [
         MainButton(
           onPressed: () async {
