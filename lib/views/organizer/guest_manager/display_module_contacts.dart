@@ -145,7 +145,7 @@ class _DisplayModuleContactsState extends State<DisplayModuleContacts> {
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             body: Column(
               children: [
-                largeSpacerH(),
+                largeSpacerH(context),
                 Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: Row(children: [Expanded(child: SearchBarGuest(searchController: searchController))])),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
@@ -158,7 +158,7 @@ class _DisplayModuleContactsState extends State<DisplayModuleContacts> {
                     },
                   ),
                 ),
-                smallSpacerH(),
+                smallSpacerH(context),
                 Expanded(
                   child: Consumer<ModulesController>(
                     builder: (context, moduleProvider, child) {

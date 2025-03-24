@@ -90,7 +90,7 @@ class _NotificationsState extends State<Notifications> {
                           physics: const AlwaysScrollableScrollPhysics(),
                           child: Column(
                             children: [
-                              Divider(color: kBlack.withOpacity(0.1), height: 1, thickness: 1),
+                              Divider(color: kBlack.withValues(alpha: 0.1), height: 1, thickness: 1),
                               ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,

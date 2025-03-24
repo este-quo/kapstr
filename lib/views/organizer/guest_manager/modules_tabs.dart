@@ -8,10 +8,9 @@ import 'package:kapstr/views/organizer/guest_manager/display_all_contacts.dart';
 import 'package:kapstr/views/organizer/guest_manager/display_module_contacts.dart';
 
 class ModuleFiltersTab extends StatelessWidget {
-  ModuleFiltersTab({super.key});
+  const ModuleFiltersTab({super.key});
 
   bool shouldFilterModule(Module module) {
-    print(module.type);
     return kNonEventModules.contains(module.type);
   }
 

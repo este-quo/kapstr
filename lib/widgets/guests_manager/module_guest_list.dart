@@ -60,7 +60,6 @@ class _ModuleGuestListState extends State<ModuleGuestList> {
 
     setState(() {
       filteredModuleGuests = filteredList..sort((a, b) => a.name.compareTo(b.name));
-      print(filteredModuleGuests);
     });
   }
 
@@ -77,7 +76,7 @@ class _ModuleGuestListState extends State<ModuleGuestList> {
         return Expanded(
           child: ListView.separated(
             padding: EdgeInsets.only(bottom: 92),
-            separatorBuilder: (context, index) => Divider(color: kLightGrey.withOpacity(0.2), thickness: 1),
+            separatorBuilder: (context, index) => Divider(color: kLightGrey.withValues(alpha: 0.2), thickness: 1),
             shrinkWrap: true,
             itemCount: filteredModuleGuests.length,
             itemBuilder: (context, index) {

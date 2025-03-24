@@ -13,9 +13,9 @@ const kWhite = Color(0xFFFFFFFF);
 const Color kPrimary = Color(0XFF448AF7);
 const Color kYellow = Color.fromARGB(255, 3, 3, 3);
 
-Color kBorderColor = Colors.black.withOpacity(0.15);
+Color kBorderColor = Colors.black.withValues(alpha: 0.15);
 
-BoxShadow kBoxShadow = BoxShadow(color: Colors.black.withOpacity(0.1), spreadRadius: 1, offset: const Offset(0, 0), blurRadius: 10);
+BoxShadow kBoxShadow = BoxShadow(color: Colors.black.withValues(alpha: 0.1), spreadRadius: 1, offset: const Offset(0, 0), blurRadius: 10);
 
 const kYellowWithOpacity = Color.fromARGB(150, 178, 149, 0);
 

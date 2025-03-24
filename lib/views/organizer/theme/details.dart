@@ -8,10 +8,7 @@ import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/module.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/events/create/completed.dart';
-import 'package:kapstr/views/global/events/create/profile_picture/profile_picture.dart';
-import 'package:kapstr/views/organizer/account/manage_organizers.dart';
 import 'package:kapstr/views/organizer/home/configuration.dart';
-import 'package:kapstr/views/organizer/modules/golden_book/profile_picture.dart';
 import 'package:kapstr/widgets/buttons/ic_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:loading_skeleton_niu/loading_skeleton.dart';
@@ -19,14 +16,13 @@ import 'package:provider/provider.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
 
 class ThemeDetails extends StatefulWidget {
-  ThemeDetails({super.key, required this.type, required this.themeUrl, this.isOnBoarding = false});
-
-  String type;
+  final String type;
   final String themeUrl;
   final bool isOnBoarding;
+
+  const ThemeDetails({super.key, required this.type, required this.themeUrl, this.isOnBoarding = false});
 
   @override
   State<ThemeDetails> createState() => _ThemeDetailsState();
@@ -37,17 +33,21 @@ class _ThemeDetailsState extends State<ThemeDetails> {
   bool _isLoading = false;
   late String highResThemeUrl;
   late String lowResThemeUrl;
+  late String themeType;
 
+  @override
   @override
   void initState() {
     super.initState();
-    if (widget.type == 'popular') {
+
+    themeType = themeType;
+    if (themeType == 'popular') {
       final themeName = context.read<EventsController>().getFileNameWithExtension(widget.themeUrl);
-      widget.type = extractCategory(themeName);
+      themeType = extractCategory(themeName);
     }
 
     highResThemeUrl = widget.themeUrl.replaceAll('thumbnails', 'full_res');
-    lowResThemeUrl = widget.themeUrl; // assuming widget.themeUrl is the low resolution URL
+    lowResThemeUrl = widget.themeUrl;
   }
 
   // Function to generate a palette from an image URL
@@ -146,12 +146,11 @@ class _ThemeDetailsState extends State<ThemeDetails> {
 
   // Helper function to convert a Color to a hex string
   String colorToHexString(Color color) {
-    return '#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}';
+    return '#${color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}';
   }
 
   @override
   Widget build(BuildContext context) {
-    printOnDebug('Type: ${widget.type}');
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -187,17 +186,17 @@ class _ThemeDetailsState extends State<ThemeDetails> {
 
             // Enregistrer les couleurs dans le cache de l'application
             final prefs = await SharedPreferences.getInstance();
-            await prefs.setInt('${Event.instance.id}_darkColor1', darkColor1.value);
-            await prefs.setInt('${Event.instance.id}_darkColor2', darkColor2.value);
+            await prefs.setInt('${Event.instance.id}_darkColor1', darkColor1.toARGB32());
+            await prefs.setInt('${Event.instance.id}_darkColor2', darkColor2.toARGB32());
 
             // Appliquer les couleurs alternées sur les filtres des modules
             bool alternate = false;
             int count = 1;
             for (Module module in Event.instance.modules) {
               if (alternate) {
-                module.colorFilter = darkColor2.withOpacity(0.6).value.toRadixString(16).padLeft(8, '0');
+                module.colorFilter = darkColor2.withValues(alpha: 0.6).toARGB32().toRadixString(16).padLeft(8, '0');
               } else {
-                module.colorFilter = darkColor1.withOpacity(0.6).value.toRadixString(16).padLeft(8, '0');
+                module.colorFilter = darkColor1.withValues(alpha: 0.6).toARGB32().toRadixString(16).padLeft(8, '0');
               }
               await context.read<ModulesController>().updateModuleField(key: 'color_filter', value: module.colorFilter, moduleId: module.id);
 
@@ -228,7 +227,7 @@ class _ThemeDetailsState extends State<ThemeDetails> {
         radius: 8,
         backgroundColor:
             Event.instance.buttonColor == ''
-                ? widget.type == 'dark'
+                ? themeType == 'dark'
                     ? kWhite
                     : kBlack
                 : Color(int.parse('0xFF${Event.instance.buttonColor}')),
@@ -239,7 +238,7 @@ class _ThemeDetailsState extends State<ThemeDetails> {
                   width: 20,
                   child:
                       Event.instance.buttonTextColor == ''
-                          ? widget.type == 'dark'
+                          ? themeType == 'dark'
                               ? const PulsatingLogo(svgPath: 'assets/icons/app/svg_light.svg', size: 64)
                               : const PulsatingLogo(svgPath: 'assets/icons/app/svg_dark.svg', size: 64)
                           : const PulsatingLogo(svgPath: 'assets/icons/app/svg_light.svg', size: 64),
@@ -249,7 +248,7 @@ class _ThemeDetailsState extends State<ThemeDetails> {
                   style: TextStyle(
                     color:
                         Event.instance.buttonTextColor == ''
-                            ? widget.type == 'dark'
+                            ? themeType == 'dark'
                                 ? kBlack
                                 : kWhite
                             : Color(int.parse('0xFF${Event.instance.buttonTextColor}')),
@@ -258,7 +257,7 @@ class _ThemeDetailsState extends State<ThemeDetails> {
                   ),
                 ),
       ),
-      backgroundColor: widget.type == 'dark' ? kBlack : kWhite,
+      backgroundColor: themeType == 'dark' ? kBlack : kWhite,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -273,11 +272,11 @@ class _ThemeDetailsState extends State<ThemeDetails> {
             children: [
               GestureDetector(
                 onTap: () => Navigator.of(context).pop(),
-                child: Row(children: [Icon(Icons.arrow_back_ios, size: 16, color: widget.type == 'dark' ? kWhite : kBlack), Text('Retour', style: TextStyle(color: widget.type == 'dark' ? kWhite : kBlack, fontSize: 14, fontWeight: FontWeight.w500))]),
+                child: Row(children: [Icon(Icons.arrow_back_ios, size: 16, color: themeType == 'dark' ? kWhite : kBlack), Text('Retour', style: TextStyle(color: themeType == 'dark' ? kWhite : kBlack, fontSize: 14, fontWeight: FontWeight.w500))]),
               ),
-              if (widget.type == 'custom')
+              if (themeType == 'custom')
                 IconButton(
-                  icon: Icon(Icons.delete, size: 16, color: widget.type == 'dark' ? kWhite : kBlack),
+                  icon: Icon(Icons.delete, size: 16, color: themeType == 'dark' ? kWhite : kBlack),
                   onPressed: () async {
                     bool confirmed = await showDialog(
                       context: context,
@@ -339,7 +338,7 @@ class _ThemeDetailsState extends State<ThemeDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Title
-                Text('Options du thème', style: TextStyle(color: widget.type == 'dark' ? kWhite : kBlack, fontSize: 24, fontWeight: FontWeight.w600)),
+                Text('Options du thème', style: TextStyle(color: themeType == 'dark' ? kWhite : kBlack, fontSize: 24, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 40,
@@ -347,18 +346,18 @@ class _ThemeDetailsState extends State<ThemeDetails> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Opacité', style: TextStyle(color: widget.type == 'dark' ? kWhite : kBlack, fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize)),
+                      Text('Opacité', style: TextStyle(color: themeType == 'dark' ? kWhite : kBlack, fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize)),
                       SliderTheme(
                         data: SliderTheme.of(context).copyWith(
                           trackHeight: 2,
                           thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
                           overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
-                          thumbColor: widget.type == 'dark' ? kWhite : kBlack,
-                          overlayColor: widget.type == 'dark' ? kWhite : kBlack.withOpacity(0.2),
+                          thumbColor: themeType == 'dark' ? kWhite : kBlack,
+                          overlayColor: themeType == 'dark' ? kWhite : kBlack.withValues(alpha: 0.2),
                           trackShape: const RoundedRectSliderTrackShape(),
                         ),
                         child: Slider(
-                          activeColor: widget.type == 'dark' ? kWhite : kBlack,
+                          activeColor: themeType == 'dark' ? kWhite : kBlack,
                           inactiveColor: kMediumGrey,
                           value: _opacity,
                           min: 0,

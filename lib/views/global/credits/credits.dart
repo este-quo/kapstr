@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kapstr/controllers/in-app.dart';
+import 'package:kapstr/controllers/in_app.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +9,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 class CreditsPage extends StatefulWidget {
   final bool isCreditsEmpty;
 
-  const CreditsPage({Key? key, required this.isCreditsEmpty}) : super(key: key);
+  const CreditsPage({super.key, required this.isCreditsEmpty});
 
   @override
   _CreditsPageState createState() => _CreditsPageState();
@@ -71,7 +71,7 @@ class _CreditsPageState extends State<CreditsPage> {
           children: [
             Image.asset('assets/images/header_background.png', width: double.infinity, fit: BoxFit.cover, height: 200),
             Positioned(right: 16, top: 32, child: IconButton(icon: const Icon(Icons.close, color: Colors.white), onPressed: () => Navigator.of(context).pop())),
-            Positioned(bottom: 50, child: SvgPicture.asset("assets/images/kapstr_white_clean.svg"), width: 45, height: 45),
+            Positioned(bottom: 50, width: 45, height: 45, child: SvgPicture.asset("assets/images/kapstr_white_clean.svg")),
             const Positioned(bottom: 16, child: Text("Activez votre évènement !", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white))),
           ],
         ),
@@ -180,7 +180,7 @@ class _CreditsPageState extends State<CreditsPage> {
     return GestureDetector(
       onTap: onSelect,
       child: Container(
-        decoration: BoxDecoration(color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.blue.withOpacity(0.02), border: Border.all(color: isSelected ? kPrimary : Colors.black.withOpacity(0.8), width: 2), borderRadius: BorderRadius.circular(8)),
+        decoration: BoxDecoration(color: isSelected ? Colors.blue.withValues(alpha: 0.1) : Colors.blue.withValues(alpha: 0.02), border: Border.all(color: isSelected ? kPrimary : Colors.black.withValues(alpha: 0.8), width: 2), borderRadius: BorderRadius.circular(8)),
         margin: const EdgeInsets.only(top: 15),
         padding: const EdgeInsets.all(16),
         child: Stack(

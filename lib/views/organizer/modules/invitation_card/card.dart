@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:kapstr/controllers/modules/invitations.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/modules/invitation_card/editable_text.dart';
 import 'package:kapstr/views/organizer/modules/invitation_card/recto.dart';
 import 'package:kapstr/views/organizer/modules/invitation_card/verso.dart';
 

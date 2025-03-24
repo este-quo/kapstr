@@ -49,8 +49,6 @@ class EventsController extends ChangeNotifier {
     }
   }
 
-  //TODO: Séparer la customisation complètement -> Necessite la séparatation des modules et controllers
-
   void updateModuleCustomization({required String moduleId, required Customization customization}) {
     int index = _event.modules.indexWhere((module) => module.id == moduleId);
 
@@ -73,7 +71,7 @@ class EventsController extends ChangeNotifier {
 
   Future<void> confirmGuestAddition(String eventId, String phone, String userId) async {
     printOnDebug('Confirming guest addition with phone: $phone');
-    printOnDebug('Event ID: ${eventId}');
+    printOnDebug('Event ID: $eventId');
     try {
       await configuration.getCollectionPath('events').doc(eventId).collection('guests').where('phone', isEqualTo: phone).get().then((value) {
         value.docs.first.reference.update({"user_id": userId, 'has_joined': true});
@@ -224,13 +222,13 @@ class EventsController extends ChangeNotifier {
       context.read<UsersController>().user!.createdEvents.remove(eventId);
       // Commit the batch
       await batch.commit();
-    } on FirebaseException catch (firebaseEx) {
-      // Handle Firebase-specific errors
-      print("FirebaseException: ${firebaseEx.message}");
+    } on FirebaseException catch (e) {
+      printOnDebug(e.code);
+
       rethrow;
     } catch (e) {
       // Handle any other errors
-      print("An error occurred: $e");
+
       throw Exception("Failed to delete event: $e");
     }
   }

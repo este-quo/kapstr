@@ -13,7 +13,6 @@ class InAppPurchaseService {
   final InAppPurchase _iap = InAppPurchase.instance;
   late bool _available;
   List<ProductDetails> _products = [];
-  final List<PurchaseDetails> _purchases = [];
 
   Future<void> initialize(BuildContext context) async {
     _available = await _iap.isAvailable();
@@ -83,7 +82,7 @@ class InAppPurchaseService {
       final PurchaseParam purchaseParam = PurchaseParam(productDetails: product);
       await _iap.buyNonConsumable(purchaseParam: purchaseParam);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred while purchasing the product. Please try again later. ' + e.toString())));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred while purchasing the product. Please try again later. $e')));
     }
   }
 

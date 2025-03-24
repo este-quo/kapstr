@@ -9,7 +9,6 @@ import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/custom_svg_picture.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:provider/provider.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key});
@@ -192,7 +191,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> with SingleTickerProvid
                 margin: const EdgeInsets.only(top: 16),
                 height: 40,
                 width: 40,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: kBlack.withOpacity(0.5), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), spreadRadius: 1, blurRadius: 20)]),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: kBlack.withValues(alpha: 0.5), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 20)]),
                 child: const Icon(Icons.close_rounded, color: kWhite, size: 20),
               ),
             ),
@@ -262,7 +261,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> with SingleTickerProvid
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(children: [Text('1 à 30 invités', style: TextStyle(color: kBlack, fontSize: 18, fontWeight: FontWeight.w600)), const Spacer(), Text('Gratuit', style: TextStyle(color: kBlack, fontSize: 20, fontWeight: FontWeight.w700))]),
+                  Row(children: [Text('1 à 30 invités', style: TextStyle(color: kBlack, fontSize: 18, fontWeight: FontWeight.w600)), Spacer(), Text('Gratuit', style: TextStyle(color: kBlack, fontSize: 20, fontWeight: FontWeight.w700))]),
                 ],
               ),
             ),

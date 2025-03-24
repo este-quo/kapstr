@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/events.dart';
-import 'package:kapstr/controllers/modules/menu.dart';
 import 'package:kapstr/controllers/modules/text.dart';
 import 'package:kapstr/controllers/themes.dart';
-import 'package:kapstr/models/modules/menu.dart';
 import 'package:kapstr/models/modules/text.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/guest/modules/invitation_card/display_text.dart';

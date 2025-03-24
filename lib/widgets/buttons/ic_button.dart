@@ -82,7 +82,7 @@ class IcButton extends StatelessWidget {
       width = null;
     }
 
-    Color textColor = this.textColor ?? Theme.of(context).colorScheme.background;
+    Color textColor = this.textColor ?? Theme.of(context).colorScheme.surface;
 
     Widget? child;
     if (this.child != null) child = this.child;
@@ -98,7 +98,7 @@ class IcButton extends StatelessWidget {
     // init colors
     Color? borderColor = this.borderColor ?? Colors.transparent;
     Color? disabledBorderColor = this.disabledBorderColor ?? Theme.of(context).disabledColor;
-    Color? backgroundColor = this.backgroundColor ?? Theme.of(context).colorScheme.background;
+    Color? backgroundColor = this.backgroundColor ?? Theme.of(context).colorScheme.surface;
     Color? disabledBackgroundColor = this.disabledBackgroundColor ?? Theme.of(context).disabledColor;
 
     if (isTransparent) {

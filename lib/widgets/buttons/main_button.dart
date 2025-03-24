@@ -3,35 +3,26 @@ import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/widgets/buttons/ic_button.dart';
 
 class MainButton extends StatelessWidget {
-  MainButton({super.key, this.onPressed, required this.child, this.backgroundColor = kBlack, this.width = 0, this.height = 0});
+  const MainButton({super.key, this.onPressed, required this.child, this.backgroundColor = kBlack, this.width = 0, this.height = 0});
 
   final VoidCallback? onPressed;
   final Widget child;
   final Color backgroundColor;
-  double width;
-  double height;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    if (width == 0) {
-      width = MediaQuery.of(context).size.width - 40;
-    } else {
-      width = width;
-    }
-
-    if (height == 0) {
-      height = 48;
-    } else {
-      height = height;
-    }
+    final double resolvedWidth = width == 0 ? MediaQuery.of(context).size.width - 40 : width;
+    final double resolvedHeight = height == 0 ? 48 : height;
 
     return IcButton(
       backgroundColor: backgroundColor,
       borderColor: const Color.fromARGB(30, 0, 0, 0),
       borderWidth: 1,
       radius: 8,
-      height: height,
-      width: width,
+      height: resolvedHeight,
+      width: resolvedWidth,
       onPressed: () async {
         if (onPressed != null) {
           onPressed!();

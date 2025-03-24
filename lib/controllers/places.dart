@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/configuration/in_app_purchase_service.dart';
 import 'package:kapstr/controllers/rsvps.dart';
 import 'package:kapstr/helpers/rsvp.dart';
 import 'package:kapstr/models/added_guest.dart';
@@ -40,7 +39,6 @@ class PlacesController extends ChangeNotifier {
       List<String> placesIds = getIdsFromPlaces(savedPlaces);
 
       for (AddedGuest added in addeds) {
-        print(added.name);
         if (!placesIds.contains(added.id)) {
           places.add(Place(id: added.id, tableId: "", guestId: added.id, guestName: added.name));
         } else {

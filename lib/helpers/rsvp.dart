@@ -33,8 +33,6 @@ Future<void> createRsvpsForGuest(String guestID, String guestName, BuildContext 
         continue;
       }
 
-      print("Checking existing RSVP for module: ${module.id}");
-
       // Vérifier dans la base de données si un RSVP existe déjà
       bool rsvpExists = await rsvpController.checkIfRsvpExists(guestID, module.id);
 
@@ -78,8 +76,8 @@ List<AddedGuest> getAllAddedsFromRsvps(List<RSVP> rsvps) {
   final seenIds = <String>{};
   addeds =
       addeds.where((added) {
-        if (added.id != null && !seenIds.contains(added.id)) {
-          seenIds.add(added.id!);
+        if (!seenIds.contains(added.id)) {
+          seenIds.add(added.id);
           return true;
         }
         return false;
@@ -90,5 +88,5 @@ List<AddedGuest> getAllAddedsFromRsvps(List<RSVP> rsvps) {
 
 List<String> getIdsFromPlaces(List<Place> places) {
   // Récupérer uniquement les identifiants non-nuls de la liste de places
-  return places.where((place) => place.id != null).map((place) => place.id!).toList();
+  return places.where((place) => place.id != "").map((place) => place.id).toList();
 }

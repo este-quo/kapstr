@@ -32,7 +32,7 @@ class _AddModuleButtonState extends State<AddModuleButton> {
           child: Container(
             width: MediaQuery.of(context).size.width - 40,
             height: 64,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: kBlack.withOpacity(0.2), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: kBlack.withValues(alpha: 0.2), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),

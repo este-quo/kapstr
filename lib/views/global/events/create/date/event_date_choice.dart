@@ -21,7 +21,7 @@ class EventDateChoice extends StatelessWidget {
             children: [
               Text(textAlign: TextAlign.center, answer, style: TextStyle(color: isSelected ? kPrimary : kLightGrey, fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize)),
               Radio<String>(
-                fillColor: isSelected ? MaterialStateProperty.all(kPrimary) : MaterialStateProperty.all(kWhite),
+                fillColor: isSelected ? WidgetStateProperty.all(kPrimary) : WidgetStateProperty.all(kWhite),
                 activeColor: kPrimary,
                 value: answer,
                 groupValue: groupValue,

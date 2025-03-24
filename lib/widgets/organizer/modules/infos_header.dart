@@ -14,7 +14,7 @@ class CustomModuleHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        xLargeSpacerH(),
+        xLargeSpacerH(context),
         Container(
           margin: EdgeInsets.all(Sizer(context).getWidthSpace()),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const BackArrowButton(), Tagline(upText: 'Complétez', downText: 'votre ${module.name}', color: kBlack), SizedBox(width: Sizer(context).getWidthSpace())]),

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,14 +7,11 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:kapstr/components/credits_card.dart';
 import 'package:kapstr/configuration/navigation/entry_point.dart';
 import 'package:kapstr/controllers/authentication.dart';
-import 'package:kapstr/controllers/events.dart';
-import 'package:kapstr/controllers/in-app.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/rate_app.dart';
 import 'package:kapstr/helpers/share_app.dart';
 import 'package:kapstr/views/global/profile/modify_profile.dart';
-import 'package:kapstr/views/organizer/account/event_settings.dart';
 import 'package:kapstr/views/organizer/account/feature.dart';
 import 'package:kapstr/views/organizer/account/feature_sections.dart';
 import 'package:kapstr/helpers/capitalize.dart';
@@ -40,10 +35,6 @@ class UserAccountPageState extends State<UserAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    String getInitials(String name) {
-      return name.split(' ').map((word) => word.isNotEmpty ? word[0] : '').take(2).join().toUpperCase();
-    }
-
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -219,52 +210,6 @@ class UserAccountPageState extends State<UserAccountPage> {
     );
   }
 
-  void _showCodeDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          backgroundColor: kWhite,
-          surfaceTintColor: kWhite,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          title: Center(child: Text('Mon code invité', style: TextStyle(color: kBlack, fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize))),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(width: 20),
-                      Text(Event.instance.code, style: TextStyle(color: kBlack, fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize)),
-                      // Copy code button
-                      IconButton(
-                        onPressed: () {
-                          Clipboard.setData(ClipboardData(text: Event.instance.code));
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(seconds: 1), content: Text('Code copié dans le presse-papier', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))));
-                        },
-                        icon: const Icon(Icons.copy, color: kBlack, size: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Fermer', style: TextStyle(color: kBlack, fontSize: 16)),
-              onPressed: () {
-                Navigator.pop(dialogContext);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Future<void> _showImageDialog() async {
     return showDialog<void>(
       context: context,
@@ -362,38 +307,4 @@ String getPlanText(String plan) {
     default:
       return 'Gratuit';
   }
-}
-
-Future<void> _showRenameDialog(BuildContext context) async {
-  TextEditingController nameController = TextEditingController();
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext dialogContext) {
-      return AlertDialog(
-        backgroundColor: kWhite,
-        surfaceTintColor: kWhite,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        title: const Text('Changer le nom de l\'événement', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w500)),
-        content: TextField(controller: nameController, maxLength: 20, decoration: const InputDecoration(hintText: "Entrez un nouveau nom", hintStyle: TextStyle(color: kLightGrey, fontSize: 14))),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(dialogContext);
-            },
-            child: Text('Annuler'),
-          ),
-          TextButton(
-            onPressed: () {
-              // Ici, récupérez la valeur du TextField et utilisez-la comme vous le souhaitez
-              Navigator.pop(dialogContext);
-              printOnDebug('Nouveau nom: ${nameController.text}');
-
-              context.read<EventsController>().updateEventName(Event.instance.id, nameController.text);
-            },
-            child: Text('Confirmer'),
-          ),
-        ],
-      );
-    },
-  );
 }

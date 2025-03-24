@@ -4,9 +4,7 @@ import 'package:kapstr/helpers/capitalize.dart';
 
 import 'package:kapstr/helpers/module_data.dart' as module_data;
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/events/create/type/event_type.dart';
 
-final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 const int timeout = 60;
 

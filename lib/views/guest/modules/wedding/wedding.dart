@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/controllers/rsvps.dart';
 import 'package:kapstr/controllers/users.dart';
+import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/format_colors.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/models/app_event.dart';
@@ -33,7 +34,6 @@ class WeddingGuest extends StatefulWidget {
 
 class _WeddingGuestState extends State<WeddingGuest> {
   RSVP? rsvp;
-  bool _isLoading = true;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _WeddingGuestState extends State<WeddingGuest> {
 
   Future<void> _loadRSVP() async {
     try {
-      RSVP? currentRsvp = await context.read<RSVPController>().getRsvpByIds(AppGuest.instance.id, widget.module.id);
+      RSVP? currentRsvp = context.read<RSVPController>().getRsvpByIds(AppGuest.instance.id, widget.module.id);
 
       if (currentRsvp != null) {
         setState(() {
@@ -52,7 +52,7 @@ class _WeddingGuestState extends State<WeddingGuest> {
         });
       }
     } catch (e) {
-      print('Error: ${e.toString()}');
+      printOnDebug(e.toString());
     }
   }
 
@@ -209,9 +209,9 @@ class _WeddingGuestState extends State<WeddingGuest> {
                                         begin: Alignment.bottomCenter,
                                         end: Alignment.topCenter,
                                         colors: [
-                                          fromHex(widget.module.colorFilter).withOpacity(0.7), // Darker at the bottom
-                                          fromHex(widget.module.colorFilter).withOpacity(0.5), // Darker at the bottom
-                                          fromHex(widget.module.colorFilter).withOpacity(0.2), // Darker at the bottom
+                                          fromHex(widget.module.colorFilter).withValues(alpha: 0.7), // Darker at the bottom
+                                          fromHex(widget.module.colorFilter).withValues(alpha: 0.5), // Darker at the bottom
+                                          fromHex(widget.module.colorFilter).withValues(alpha: 0.2), // Darker at the bottom
 
                                           Colors.transparent, // Transparent at the top
                                         ],
@@ -278,7 +278,7 @@ class _WeddingGuestState extends State<WeddingGuest> {
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(color: const Color.fromARGB(26, 136, 136, 136), borderRadius: BorderRadius.circular(12), boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 20)]),
+                                decoration: BoxDecoration(color: const Color.fromARGB(26, 136, 136, 136), borderRadius: BorderRadius.circular(12), boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 20)]),
                                 child: const CustomAssetSvgPicture('assets/icons/calendar.svg', width: 24, height: 24),
                               ),
                               const SizedBox(width: 12),
@@ -302,7 +302,7 @@ class _WeddingGuestState extends State<WeddingGuest> {
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(color: const Color.fromARGB(26, 136, 136, 136), borderRadius: BorderRadius.circular(12), boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 20)]),
+                                decoration: BoxDecoration(color: const Color.fromARGB(26, 136, 136, 136), borderRadius: BorderRadius.circular(12), boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 20)]),
                                 child: const CustomAssetSvgPicture('assets/icons/location.svg', width: 26, height: 26),
                               ),
                               const SizedBox(width: 12),
@@ -323,7 +323,7 @@ class _WeddingGuestState extends State<WeddingGuest> {
                           ),
                           const SizedBox(height: 48),
                           // Infos
-                          widget.module.moreInfos != "" ? const Text('Informations sur l\'événement', style: const TextStyle(color: kBlack, fontSize: 20, fontWeight: FontWeight.w500)) : const SizedBox(),
+                          widget.module.moreInfos != "" ? const Text('Informations sur l\'événement', style: TextStyle(color: kBlack, fontSize: 20, fontWeight: FontWeight.w500)) : const SizedBox(),
                           const SizedBox(height: 12),
                           widget.module.moreInfos != "" ? Text(widget.module.moreInfos == "" ? 'Pas d’information pour le moment.' : widget.module.moreInfos, style: const TextStyle(color: kGrey, letterSpacing: 0.0, height: 1.2, fontSize: 16, fontWeight: FontWeight.w400)) : const SizedBox(),
 
@@ -360,7 +360,7 @@ class _WeddingGuestState extends State<WeddingGuest> {
                   margin: const EdgeInsets.only(top: 16),
                   height: 40,
                   width: 40,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: kWhite, boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 20)]),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: kWhite, boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 20)]),
                   child: const Icon(Icons.close_rounded, color: kBlack, size: 24),
                 ),
               ),
@@ -379,7 +379,7 @@ Text getButtonText(RSVP rsvp) {
 
   switch (response) {
     case 'Accepté':
-      return Text('Présent · ${personsNb} personnes', style: const TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w500));
+      return Text('Présent · $personsNb personnes', style: const TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w500));
     case 'Absent':
       return const Text('Absent', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w500));
     default:
@@ -408,19 +408,19 @@ String getNames(String eventType, String moduleName) {
       return '$manFirstName & $womanFirstName';
 
     case 'gala':
-      return '$eventName';
+      return eventName;
 
     case 'soirée':
-      return '$manFirstName';
+      return manFirstName;
 
     case 'anniversaire':
-      return '$manFirstName';
+      return manFirstName;
 
     case 'bar mitsvah':
-      return '$manFirstName';
+      return manFirstName;
 
     case 'entreprise':
-      return '$eventName';
+      return eventName;
 
     default:
       return moduleName;

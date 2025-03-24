@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/modules/modules.dart';
-import 'package:kapstr/controllers/notification.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/module.dart';
-import 'package:kapstr/views/organizer/home/configuration.dart';
 import 'package:kapstr/views/organizer/modules/update_module/place_picker.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:intl/intl.dart';
@@ -56,7 +53,7 @@ class UpdateModuleInfosState extends State<UpdateModuleInfos> {
 
     printOnDebug(module.placeAddress!);
 
-    return Container(
+    return SizedBox(
       child: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -130,7 +127,6 @@ class UpdateModuleInfosState extends State<UpdateModuleInfos> {
                                 data: ThemeData.light().copyWith(
                                   dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
                                   colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack),
-                                  dialogBackgroundColor: kWhite,
                                 ),
                                 child: child!,
                               );
@@ -186,8 +182,7 @@ class UpdateModuleInfosState extends State<UpdateModuleInfos> {
                             return Theme(
                               data: ThemeData.light().copyWith(
                                 dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack, background: Colors.white),
-                                dialogBackgroundColor: kWhite,
+                                colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack),
                               ),
                               child: child!,
                             );
@@ -237,7 +232,7 @@ class UpdateModuleInfosState extends State<UpdateModuleInfos> {
 
               GestureDetector(
                 onTap: () async {
-                  showModalBottomSheet(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)), showDragHandle: true, context: context, builder: (context) => PlacePicker(module: module, moduleId: module.id, placeAdress: module.placeAddress ?? '')).then((value) {
+                  showModalBottomSheet(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)), showDragHandle: true, context: context, builder: (context) => PlacePicker(module: module, moduleId: module.id, initialPlaceAddress: module.placeAddress ?? '')).then((value) {
                     if (value != null) {
                       setState(() {
                         module.placeAddress = value;
@@ -260,7 +255,6 @@ class UpdateModuleInfosState extends State<UpdateModuleInfos> {
 
               const Text('Informations supplémentaires', style: TextStyle(fontSize: 18, color: kBlack, fontWeight: FontWeight.w500)),
 
-              //TODO: Bouton Valider
               TextFormField(
                 textCapitalization: TextCapitalization.sentences,
                 focusNode: _infoFocusNode,

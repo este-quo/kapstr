@@ -4,11 +4,11 @@ import 'package:kapstr/themes/colors/main_theme.dart';
 
 ThemeData lightTheme = mainTheme.copyWith(
   scaffoldBackgroundColor: kWhite,
-  splashColor: kLighterGrey.withOpacity(0.5),
+  splashColor: kLighterGrey.withValues(alpha: 0.5),
   disabledColor: kLighterGrey,
   primaryColor: kYellow,
-  colorScheme: const ColorScheme.highContrastLight(background: Colors.white, secondary: kBlack, error: Color(0xFFC30052)),
-  inputDecorationTheme: mainTheme.inputDecorationTheme.copyWith(hintStyle: mainTheme.inputDecorationTheme.hintStyle!.copyWith(color: Colors.black.withOpacity(0.5))),
+  colorScheme: const ColorScheme.highContrastLight(surface: Colors.white, secondary: kBlack, error: Color(0xFFC30052)),
+  inputDecorationTheme: mainTheme.inputDecorationTheme.copyWith(hintStyle: mainTheme.inputDecorationTheme.hintStyle!.copyWith(color: Colors.black.withValues(alpha: 0.5))),
   textTheme: mainTheme.textTheme.copyWith(
     titleLarge: mainTheme.textTheme.titleLarge!.copyWith(color: kBlack, fontWeight: FontWeight.w500),
     titleMedium: mainTheme.textTheme.titleMedium!.copyWith(color: kBlack, fontWeight: FontWeight.w500),

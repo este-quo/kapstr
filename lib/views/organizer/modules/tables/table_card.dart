@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/modules/tables.dart';
-import 'package:kapstr/controllers/places.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/models/modules/module.dart';
-import 'package:kapstr/models/place.dart';
 import 'package:kapstr/models/table.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/modules/tables/edit_table.dart';

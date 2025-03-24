@@ -57,9 +57,9 @@ class GuestHomePageTabBarButton extends StatelessWidget {
                       child:
                           (tabName == "Profil" && context.watch<UsersController>().user != null && context.watch<UsersController>().user!.imageUrl.isNotEmpty)
                               ? CircleAvatar(radius: 10, backgroundImage: CachedNetworkImageProvider(context.watch<UsersController>().user!.imageUrl))
-                              : CustomAssetSvgPicture(assetPath, color: index == currentIndex ? kBlack : Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.30)),
+                              : CustomAssetSvgPicture(assetPath, color: index == currentIndex ? kBlack : Theme.of(context).textTheme.bodyLarge!.color!.withValues(alpha: 0.30)),
                     ),
-                    Text(tabName, style: TextStyle(color: index == currentIndex ? kBlack : Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.30), fontSize: 10)),
+                    Text(tabName, style: TextStyle(color: index == currentIndex ? kBlack : Theme.of(context).textTheme.bodyLarge!.color!.withValues(alpha: 0.30), fontSize: 10)),
                   ],
                 ),
               ),

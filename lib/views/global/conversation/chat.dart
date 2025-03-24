@@ -31,6 +31,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
   final ScrollController _scrollController = ScrollController();
   String? _currentDateHeader;
 
+  @override
   bool get wantKeepAlive => true;
   final TextEditingController _messageController = TextEditingController();
   String? _chatId;
@@ -44,7 +45,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
   String? _currentlyPlayingMessageId;
   double _audioProgress = 0.0;
   Duration _audioDuration = Duration.zero;
-  bool _isTyping = false;
+
   List<DocumentSnapshot> messages = [];
   List<GlobalKey> messageKeys = [];
 
@@ -69,7 +70,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
     if (_scrollController.hasClients) {
       // Calcule la position du premier message visible
       double scrollOffset = _scrollController.offset;
-      double screenHeight = MediaQuery.of(context).size.height;
+
       double itemHeight = 80; // Hauteur approximative de chaque message (à ajuster selon votre layout)
 
       int firstVisibleIndex = (scrollOffset / itemHeight).floor();
@@ -383,11 +384,9 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
                                 var message = messages[index];
                                 var timestamp = _formatTimestamp(message['timestamp']); // Format the timestamp
 
-                                bool showDateHeader = false;
                                 var messageDate = _formatDateForHeader(message['timestamp'].toDate());
 
                                 if (lastMessageDate == null || lastMessageDate != messageDate) {
-                                  showDateHeader = true;
                                   lastMessageDate = messageDate;
                                 }
                                 return Column(
@@ -421,13 +420,13 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
                                                             children: [
                                                               TextSpan(
                                                                 text: '$timestamp - ', // Common part before the status
-                                                                style: TextStyle(fontSize: 10, color: message['sender'] == widget.userId ? kWhite.withOpacity(0.4) : kBlack.withOpacity(0.4)), // Style for the timestamp and common text
+                                                                style: TextStyle(fontSize: 10, color: message['sender'] == widget.userId ? kWhite.withValues(alpha: 0.4) : kBlack.withValues(alpha: 0.4)), // Style for the timestamp and common text
                                                               ),
                                                               TextSpan(
                                                                 text: message['status'] == 'sent' ? 'Envoyé' : 'Vu', // Status part
                                                                 style: TextStyle(
                                                                   fontSize: 10,
-                                                                  color: message['status'] == 'sent' ? Colors.white.withOpacity(0.4) : kPrimary, // "Vu" is in kPrimary, "Envoyé" in black54
+                                                                  color: message['status'] == 'sent' ? Colors.white.withValues(alpha: 0.4) : kPrimary, // "Vu" is in kPrimary, "Envoyé" in black54
                                                                 ),
                                                               ),
                                                             ],
@@ -438,7 +437,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
                                                             children: [
                                                               TextSpan(
                                                                 text: '$timestamp ', // Common part before the status
-                                                                style: TextStyle(fontSize: 10, color: message['sender'] == widget.userId ? kWhite.withOpacity(0.4) : kBlack.withOpacity(0.4)), // Style for the timestamp and common text
+                                                                style: TextStyle(fontSize: 10, color: message['sender'] == widget.userId ? kWhite.withValues(alpha: 0.4) : kBlack.withValues(alpha: 0.4)), // Style for the timestamp and common text
                                                               ),
                                                             ],
                                                           ),
@@ -490,7 +489,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
                             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                              decoration: BoxDecoration(color: Colors.blueGrey.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+                              decoration: BoxDecoration(color: Colors.blueGrey.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
                               child: Row(
                                 children: [
                                   if (isOtherUserTyping)
@@ -514,7 +513,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 6.0, bottom: Platform.isIOS ? 26.0 : 6.0, right: 10.0, left: 10.0),
-                    decoration: BoxDecoration(border: Border(top: BorderSide(color: kBlack.withOpacity(0.1))), color: kWhite),
+                    decoration: BoxDecoration(border: Border(top: BorderSide(color: kBlack.withValues(alpha: 0.1))), color: kWhite),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -526,7 +525,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
                         Expanded(
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
-                            decoration: BoxDecoration(color: kLightGrey.withOpacity(0.2), borderRadius: BorderRadius.circular(99)),
+                            decoration: BoxDecoration(color: kLightGrey.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(99)),
                             child: Row(
                               children: [
                                 Expanded(
@@ -597,7 +596,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
         onTap: () => _downloadFile(message['file_url'], 'document_${DateTime.now().millisecondsSinceEpoch}.pdf'),
         child: Container(
           padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(color: message['sender'] == widget.userId ? Colors.green[500] : kLightGrey.withOpacity(0.2), borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: message['sender'] == widget.userId ? Colors.green[500] : kLightGrey.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
           child: Row(
             children: [
               const Icon(Icons.insert_drive_file, size: 24, color: kWhite),
@@ -701,7 +700,7 @@ class _ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin 
         children: [
           Icon(_currentlyPlayingMessageId == message.id ? Icons.stop_rounded : Icons.play_arrow_rounded, size: 24, color: message['sender'] == widget.userId ? kWhite : Colors.green[200]),
           const SizedBox(width: 8),
-          Container(
+          SizedBox(
             width: 160,
             child: Stack(
               children: [
@@ -741,7 +740,7 @@ class FullScreenImage extends StatelessWidget {
   final String imageUrl;
   final String tag; // Hero tag for smooth transition
 
-  const FullScreenImage({Key? key, required this.imageUrl, required this.tag}) : super(key: key);
+  const FullScreenImage({super.key, required this.imageUrl, required this.tag});
 
   @override
   Widget build(BuildContext context) {

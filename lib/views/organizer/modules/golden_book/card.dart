@@ -42,7 +42,7 @@ class MessageCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 62, left: 16, right: 16, bottom: 16),
                 margin: const EdgeInsets.only(top: 40),
                 width: MediaQuery.of(context).size.width - 40,
-                decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.withOpacity(0.2), width: 1)),
+                decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.withValues(alpha: 0.2), width: 1)),
                 child: Column(
                   children: [
                     Text(message.message, textAlign: TextAlign.center, style: TextStyle(color: kBlack, fontSize: 22, fontWeight: FontWeight.w400, fontFamily: GoogleFonts.greatVibes().fontFamily)),

@@ -2,11 +2,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/organizers.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/models/app_event.dart';
-import 'package:kapstr/models/app_organizer.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
@@ -193,7 +190,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Divider(color: Colors.black.withOpacity(0.1), thickness: 1),
+                Divider(color: Colors.black.withValues(alpha: 0.1), thickness: 1),
                 const SizedBox(height: 4),
 
                 Center(
@@ -254,7 +251,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
   }
 
   Future<bool?> _showDeletionDialog(BuildContext context) {
-    TextEditingController _controller = TextEditingController();
+    TextEditingController controller = TextEditingController();
     return showDialog<bool>(
       context: context,
       builder: (context) {
@@ -269,7 +266,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
               const Text('Entrer "Je confirme" pour supprimer votre compte. Cette action est irréversible.'),
               const SizedBox(height: 16),
               TextField(
-                controller: _controller,
+                controller: controller,
                 style: const TextStyle(color: kDanger),
                 decoration: const InputDecoration(
                   hintText: "Je confirme",
@@ -294,7 +291,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
             TextButton(
               child: const Text('Supprimer', style: TextStyle(color: kDanger)),
               onPressed: () {
-                if (_controller.text == 'Je confirme') {
+                if (controller.text == 'Je confirme') {
                   Navigator.of(context).pop(true); // Returns true to the Future
                 } else {
                   // Show an error or handle invalid input
@@ -361,11 +358,11 @@ class _ModifyProfileState extends State<ModifyProfile> {
       if (pickedFile != null) {
         await _processPickedImage(pickedFile, dialogContext);
       } else {
-        Navigator.pop(context); // Close the dialog if no file was picked
+        Navigator.pop(context);
       }
     } catch (e) {
       Navigator.pop(context);
-      print("Error picking image: $e"); // Handle the error more gracefully
+      printOnDebug("Error picking image: $e");
     }
   }
 
@@ -421,12 +418,9 @@ class _ModifyProfileState extends State<ModifyProfile> {
 
       await context.read<UsersController>().saveUser();
 
-      print('Image uploaded. URL: $downloadUrl');
-
       if (!mounted) return;
       Navigator.pop(dialogContext); // Close the dialog after successful upload
     } catch (e) {
-      print('Error uploading image: $e');
       Navigator.pop(dialogContext); // Ensure dialog is closed even on error
     }
   }

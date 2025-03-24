@@ -33,9 +33,9 @@ class RSVPController extends ChangeNotifier {
   }
 
   RSVPController() {
-    rsvps.forEach((RSVP rsvp) {
+    for (var rsvp in rsvps) {
       if (!rsvp.isAnswered) isAllAnswered = false;
-    });
+    }
   }
 
   void clear() {
@@ -64,7 +64,6 @@ class RSVPController extends ChangeNotifier {
 
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
-      print("Error checking RSVP existence: $e");
       return false;
     }
   }
@@ -88,7 +87,7 @@ class RSVPController extends ChangeNotifier {
       return rsvps.firstWhere((rsvp) => rsvp.guestId == guestId && rsvp.moduleId == moduleId);
     } catch (e) {
       // Si une autre erreur survient, la journaliser et retourner null
-      print('Error in getRsvpByIds: $e');
+
       return null;
     }
   }
@@ -121,15 +120,6 @@ class RSVPController extends ChangeNotifier {
 
   Future<void> fetchRsvps(String guestId, List<String> allowedModules) async {
     try {
-      // Récupérer les RSVPs existants pour les modules autorisés
-      QuerySnapshot querySnapshot = await _rsvpCollection.where('guest_id', isEqualTo: guestId).where('module_id', whereIn: allowedModules).get();
-
-      List<RSVP> existingRsvps = querySnapshot.docs.map((doc) => RSVP.fromMap(doc.data()! as Map<String, dynamic>, doc.id)).toList();
-
-      // Identifier les modules sans RSVP
-      List<String> existingModuleIds = existingRsvps.map((rsvp) => rsvp.moduleId).toList();
-      List<String> missingModuleIds = allowedModules.where((moduleId) => !existingModuleIds.contains(moduleId)).toList();
-
       // Rafraîchir la liste complète des RSVPs
       QuerySnapshot updatedQuerySnapshot = await _rsvpCollection.where('guest_id', isEqualTo: guestId).where('module_id', whereIn: allowedModules).get();
 
@@ -137,12 +127,11 @@ class RSVPController extends ChangeNotifier {
 
       setRsvps(updatedRsvps);
     } catch (e) {
-      print("Erreur lors de la récupération des RSVPs : $e");
+      printOnDebug(e.toString());
     }
   }
 
   Future<void> createMissingRsvps(String guestId, List<String> allowedModules) async {
-    print("Création des RSVP manquant");
     try {
       // Obtenez les RSVPs existants pour cet invité
       QuerySnapshot existingRsvpSnapshot = await _rsvpCollection.where('guest_id', isEqualTo: guestId).get();
@@ -156,10 +145,9 @@ class RSVPController extends ChangeNotifier {
         final newRsvp = RSVP(guestId: guestId, moduleId: moduleId, isAllowed: true, response: 'En attente', adults: [], children: [], createdAt: DateTime.now(), isAnswered: false);
 
         await _rsvpCollection.add(newRsvp.toMap());
-        print("RSVP créé pour le module $moduleId");
       }
     } catch (e) {
-      print("Erreur lors de la création des RSVPs : $e");
+      printOnDebug(e.toString());
     }
   }
 
@@ -169,7 +157,6 @@ class RSVPController extends ChangeNotifier {
     if (querySnapshot.docs.isEmpty) {
       return [];
     } else {
-      print(querySnapshot.docs.map((doc) => RSVP.fromMap(doc.data()! as Map<String, dynamic>, doc.id)).toList());
       return querySnapshot.docs.map((doc) => RSVP.fromMap(doc.data()! as Map<String, dynamic>, doc.id)).toList();
     }
   }
@@ -182,9 +169,7 @@ class RSVPController extends ChangeNotifier {
       for (String guestModuleId in guest.allowedModules) {
         if (guestModuleId == moduleId) {
           List<RSVP>? rsvps = await getRSVPsByGuestId(guest.id, [moduleId]);
-          if (rsvps != null) {
-            filteredRSVPs.addAll(rsvps);
-          }
+          filteredRSVPs.addAll(rsvps);
         }
       }
     }
@@ -245,20 +230,17 @@ class RSVPController extends ChangeNotifier {
 
       await _rsvpCollection.add(newRsvp.toMap());
     } catch (e) {
-      print("Erreur lors de la création d'un RSVP pour le module $moduleId : $e");
+      printOnDebug(e.toString());
     }
   }
 
   Future<List<Map<String, TableModel>>> getAllAdultsForMainEvent(String eventId, String guestId, BuildContext context) async {
-    print('Récupération des Tables pour l\'événement : $eventId');
-
     List<Module> modules = await context.read<ModulesController>().getModules(eventId);
     Module module = modules.firstWhere((element) => element.type == "wedding");
-    print(module.id);
 
     try {
       final querySnapshot = await FirebaseFirestore.instance.collection('events').doc(eventId).collection('rsvps').where("guest_id", isEqualTo: guestId).get();
-      List<RSVP> rsvps = querySnapshot.docs.map((doc) => RSVP.fromMap(doc.data() as Map<String, dynamic>, doc.id)).toList();
+      List<RSVP> rsvps = querySnapshot.docs.map((doc) => RSVP.fromMap(doc.data(), doc.id)).toList();
 
       List<Map<String, TableModel>> tables = [];
       for (RSVP rsvp in rsvps) {
@@ -275,21 +257,17 @@ class RSVPController extends ChangeNotifier {
 
       return tables;
     } catch (e) {
-      print('Erreur lors de la récupération des RSVPs : $e');
       return [];
     }
   }
 
   Future<List<Map<String, TableModel>>> getAllChildrenForMainEvent(String eventId, String guestId, BuildContext context) async {
-    print('Récupération des Tables pour l\'événement : $eventId');
-
     List<Module> modules = await context.read<ModulesController>().getModules(eventId);
     Module module = modules.firstWhere((element) => element.type == "wedding");
-    print(module.id);
 
     try {
       final querySnapshot = await FirebaseFirestore.instance.collection('events').doc(eventId).collection('rsvps').where("guest_id", isEqualTo: guestId).get();
-      List<RSVP> rsvps = querySnapshot.docs.map((doc) => RSVP.fromMap(doc.data() as Map<String, dynamic>, doc.id)).toList();
+      List<RSVP> rsvps = querySnapshot.docs.map((doc) => RSVP.fromMap(doc.data(), doc.id)).toList();
 
       List<Map<String, TableModel>> tables = [];
       for (RSVP rsvp in rsvps) {
@@ -306,7 +284,6 @@ class RSVPController extends ChangeNotifier {
 
       return tables;
     } catch (e) {
-      print('Erreur lors de la récupération des RSVPs : $e');
       return [];
     }
   }

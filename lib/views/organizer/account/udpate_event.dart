@@ -309,7 +309,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                 // Crop the image
                 final croppedFile = await ImageCropper().cropImage(
                   aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                  sourcePath: pickedFile!.path,
+                  sourcePath: pickedFile.path,
                   compressFormat: ImageCompressFormat.jpg,
                   compressQuality: 100,
                   uiSettings: uiSettingsList, // Pass the list here
@@ -383,7 +383,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                   // Crop the image
                   final croppedFile = await ImageCropper().cropImage(
                     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                    sourcePath: pickedFile!.path,
+                    sourcePath: pickedFile.path,
                     compressFormat: ImageCompressFormat.jpg,
                     compressQuality: 100,
                     uiSettings: uiSettingsList, // Pass the list here

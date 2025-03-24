@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:kapstr/components/dialogs/organizer_sms_dialog.dart';
-import 'package:kapstr/controllers/contacts.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/guests.dart';
-import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/helpers/format_phone_number.dart';
 import 'package:kapstr/helpers/share_app.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/models/app_event.dart';
@@ -13,12 +9,8 @@ import 'package:kapstr/models/contact.dart';
 import 'package:kapstr/models/guest.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/events/create/completed.dart';
-import 'package:kapstr/views/organizer/guest_manager/share_button.dart';
-import 'package:kapstr/widgets/buttons/ic_button.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
-import 'package:kapstr/widgets/guests_manager/add_button.dart';
 import 'package:kapstr/widgets/guests_manager/search_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ManageOrganizers extends StatefulWidget {
@@ -138,14 +130,6 @@ class _ManageOrganizersState extends State<ManageOrganizers> {
     setState(() {});
   }
 
-  void _removeOrganizerToAdd(String guestPhone) {
-    Event.instance.removeOrganizerToAdd(guestPhone);
-
-    context.read<EventsController>().updateEventField(key: 'organizer_to_add', value: Event.instance.organizerToAdd);
-
-    setState(() {});
-  }
-
   void _removeOrganizerAdded(String guestPhone) {
     setState(() {
       Event.instance.removeOrganizerAdded(guestPhone);
@@ -181,11 +165,10 @@ class _ManageOrganizersState extends State<ManageOrganizers> {
 
             String globalGuestInitial = organizerName[0].toUpperCase();
             String globalGuestImageUrl = Event.instance.getOrganizerImageUrlByPhone(organizerPhone);
-            bool globalGuestHasJoined = Event.instance.getOrganizerHasJoinedByPhone(organizerPhone);
 
             return Column(
               children: [
-                if (index != 0) Divider(indent: 16, endIndent: 16, height: 0, thickness: 1, color: kLightGrey.withOpacity(0.2)),
+                if (index != 0) Divider(indent: 16, endIndent: 16, height: 0, thickness: 1, color: kLightGrey.withValues(alpha: 0.2)),
                 Dismissible(
                   key: Key(organizerPhone), // Unique key for Dismissible
                   direction: DismissDirection.endToStart, // Swipe direction
@@ -255,7 +238,6 @@ class _ManageOrganizersState extends State<ManageOrganizers> {
                   },
                 ),
                 TextButton(
-                  child: const Text('OK'),
                   onPressed:
                       (displayName != null && phoneNumber != null && phoneNumber!.isNotEmpty)
                           ? () async {
@@ -276,7 +258,8 @@ class _ManageOrganizersState extends State<ManageOrganizers> {
                             Navigator.of(context).pop();
                             await _addOrganizer(phoneNumber!, context);
                           }
-                          : null, // Désactiver le bouton si les champs ne sont pas remplis
+                          : null,
+                  child: const Text('OK'), // Désactiver le bouton si les champs ne sont pas remplis
                 ),
               ],
             );

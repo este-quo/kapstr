@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kapstr/components/dialogs/organizer_sms_dialog.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/guests.dart';
+import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/share_app.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/guest.dart';
@@ -102,7 +103,7 @@ Future showGuestDialog(BuildContext context, Guest guest) async {
                           await context.read<GuestsController>().deleteGuest(guest.id);
                           Navigator.of(context).pop(); // Fermer le modal une fois l'invité supprimé
                         } catch (e) {
-                          print("Erreur lors de la suppression de l'invité: $e");
+                          printOnDebug(e.toString());
                         }
                       }
                     },

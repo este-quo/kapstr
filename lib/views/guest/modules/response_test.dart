@@ -22,7 +22,7 @@ class ResponseTest extends StatefulWidget {
 }
 
 class _ResponseTestState extends State<ResponseTest> {
-  List<AddedGuest> _guests = [];
+  final List<AddedGuest> _guests = [];
   List<String> adultsIds = [];
   bool isLoading = false;
   bool isAnswered = false;
@@ -174,7 +174,7 @@ class _ResponseTestState extends State<ResponseTest> {
                 int index = entry.key;
                 AddedGuest guest = entry.value;
                 return _buildGuestEntry(index, guest, isGuestAnAdult(guest));
-              }).toList(),
+              }),
               const SizedBox(height: 16),
               ElevatedButton(onPressed: _addGuest, style: ElevatedButton.styleFrom(backgroundColor: kBlack, padding: const EdgeInsets.symmetric(vertical: 8)), child: const Text('+', style: TextStyle(color: kWhite, fontSize: 16))),
               SizedBox(height: 16),
@@ -205,7 +205,7 @@ class _ResponseTestState extends State<ResponseTest> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: kLightGrey), boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 8, offset: const Offset(0, 3))]),
+        decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: kLightGrey), boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 8, offset: const Offset(0, 3))]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

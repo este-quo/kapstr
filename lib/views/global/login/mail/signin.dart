@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/configuration/app_initializer/app_initializer.dart';
 import 'package:kapstr/controllers/authentication.dart';
-import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/events/events.dart';
 import 'package:kapstr/views/global/login/mail/signup.dart';

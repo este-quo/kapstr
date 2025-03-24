@@ -17,25 +17,28 @@ class TypeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Define common styles with conditional adjustments for non-available items
-    final borderColor = kBlack.withOpacity(0.3);
+    final borderColor = kBlack.withValues(alpha: 0.3);
     // Adjust text color based on isNotAvailableYet
     final textColor = isNotAvailableYet ? Colors.grey : (isSelected ? kWhite : kBlack);
     final backgroundColor = isSelected && !isNotAvailableYet ? kBlack : kWhite;
 
     return TextButton(
-      style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.transparent)),
+      style: ButtonStyle(overlayColor: WidgetStateProperty.all(Colors.transparent)),
       onPressed: isNotAvailableYet ? null : () => onSelected(),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 64,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: backgroundColor, border: Border.all(width: 1, color: borderColor)),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(title, textAlign: TextAlign.center, style: TextStyle(color: textColor, fontSize: 18, fontWeight: FontWeight.w400)), smallSpacerH(), _buildSelectionIndicator(isSelected && !isNotAvailableYet, borderColor)]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [Text(title, textAlign: TextAlign.center, style: TextStyle(color: textColor, fontSize: 18, fontWeight: FontWeight.w400)), smallSpacerH(context), _buildSelectionIndicator(isSelected && !isNotAvailableYet, borderColor, context)],
+        ),
       ),
     );
   }
 
-  Widget _buildSelectionIndicator(bool isSelected, Color borderColor) {
-    final indicatorSize = getDeviceType() == 'phone' ? 20.0 : 24.0;
+  Widget _buildSelectionIndicator(bool isSelected, Color borderColor, BuildContext context) {
+    final indicatorSize = getDeviceType(context) == 'phone' ? 20.0 : 24.0;
     return Container(
       width: indicatorSize,
       height: indicatorSize,

@@ -2,11 +2,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:kapstr/configuration/app_initializer/app_initializer.dart';
 import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/guests.dart';
-import 'package:kapstr/controllers/rsvps.dart';
 import 'package:kapstr/controllers/themes.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/controllers/version.dart';
@@ -57,16 +55,9 @@ class _AppRouterState extends State<AppRouter> with WidgetsBindingObserver {
     await _initThemes();
     //1
     String? userId = auth_firebase.getAuthId();
-    if (userId != null) {
-      print("nope");
-      userStream = cloud_firestore.streamUserWithAuthToken(userId);
-      _listenToUserStream();
-    } else {
-      // If no user ID, reset the app or show the login page
-      setState(() {
-        isSignedIn = false;
-      });
-    }
+
+    userStream = cloud_firestore.streamUserWithAuthToken(userId);
+    _listenToUserStream();
   }
 
   //2

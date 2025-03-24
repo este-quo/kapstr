@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/event_data.dart';
-import 'package:kapstr/controllers/in-app.dart';
-import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/event_type.dart';
-import 'package:kapstr/views/global/credits/credits.dart';
 import 'package:kapstr/views/global/events/create/type/types_list.dart';
 import 'package:kapstr/views/global/events/create/layout.dart';
 import 'package:kapstr/views/global/events/create/woman/woman_infos.dart';

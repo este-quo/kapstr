@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/guests.dart';
-import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/account/event_acessibility.dart';
 import 'package:kapstr/views/organizer/guest_manager/dashboard/dashboard.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:provider/provider.dart';

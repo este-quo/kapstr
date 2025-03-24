@@ -53,22 +53,6 @@ class _AboutGuestState extends State<AboutGuest> {
     return parts[parts.length - 2];
   }
 
-  Future<void> _launchMaps(String address) async {
-    // Construct the Google Maps URL with the address as the query
-    final url = 'https://www.google.com/maps/search/?api=1&query=${Uri.encodeFull(address)}';
-
-    final Uri uri = Uri.parse(url);
-
-    // Check if the URL can be launched
-    if (await canLaunchUrl(uri)) {
-      // Launch the URL
-      await launchUrl(uri);
-    } else {
-      // Handle the case where the URL cannot be launched
-      throw 'Could not launch $uri';
-    }
-  }
-
   Future<void> _launchEmail(String email) async {
     final Uri uri = Uri(scheme: 'mailto', path: email);
 
@@ -118,7 +102,7 @@ class _AboutGuestState extends State<AboutGuest> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  snapshot.data!.phone != null
+                  snapshot.data!.phone != ""
                       ? SizedBox(
                         width: 74,
                         child: MainButton(
@@ -131,7 +115,7 @@ class _AboutGuestState extends State<AboutGuest> {
                       )
                       : SizedBox(),
                   const SizedBox(width: 8),
-                  snapshot.data!.email != null
+                  snapshot.data!.email != ""
                       ? SizedBox(
                         width: MediaQuery.of(context).size.width - 74 - 40 - 8,
                         child: MainButton(
@@ -199,12 +183,7 @@ class _AboutGuestState extends State<AboutGuest> {
                                 children: [
                                   const Icon(Symbols.location_on, color: kGrey, size: 24, weight: 300, grade: 0, opticalSize: 20),
                                   const SizedBox(width: 8),
-                                  Flexible(
-                                    child: Text(
-                                      snapshot.data!.adress == 'Adresse du lieu' || snapshot.data!.adress == '' || snapshot.data!.adress == null ? 'Adresse non communiquée' : extractCity(snapshot.data!.adress),
-                                      style: const TextStyle(color: kGrey, fontSize: 16, fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
+                                  Flexible(child: Text(snapshot.data!.adress == 'Adresse du lieu' || snapshot.data!.adress == '' ? 'Adresse non communiquée' : extractCity(snapshot.data!.adress), style: const TextStyle(color: kGrey, fontSize: 16, fontWeight: FontWeight.w400))),
                                 ],
                               ),
 
@@ -259,7 +238,7 @@ class _AboutGuestState extends State<AboutGuest> {
                                       child: Stack(
                                         alignment: Alignment.bottomLeft,
                                         children: [
-                                          CachedNetworkImage(imageUrl: service.imageUrl, fit: BoxFit.cover, width: 175, height: 280, colorBlendMode: BlendMode.darken, color: Colors.black.withOpacity(0.5)),
+                                          CachedNetworkImage(imageUrl: service.imageUrl, fit: BoxFit.cover, width: 175, height: 280, colorBlendMode: BlendMode.darken, color: Colors.black.withValues(alpha: 0.5)),
                                           Positioned(
                                             left: 8,
                                             bottom: 8,
@@ -296,7 +275,7 @@ class _AboutGuestState extends State<AboutGuest> {
                           margin: const EdgeInsets.only(top: 16),
                           height: 40,
                           width: 40,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: kWhite, boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 20)]),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: kWhite, boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 20)]),
                           child: const Icon(Icons.close_rounded, color: kBlack, size: 24),
                         ),
                       ),

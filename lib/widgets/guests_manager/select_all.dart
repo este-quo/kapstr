@@ -34,7 +34,7 @@ class _SelectAllGuestsButtonState extends State<SelectAllGuestsButton> {
             child: Row(
               children: [
                 Checkbox(
-                  fillColor: MaterialStateProperty.resolveWith((states) => areAllSelected ? kYellow : kLighterGrey),
+                  fillColor: WidgetStateProperty.resolveWith((states) => areAllSelected ? kYellow : kLighterGrey),
                   side: const BorderSide(color: kLighterGrey),
                   checkColor: kWhite,
                   activeColor: kYellow,
@@ -50,7 +50,7 @@ class _SelectAllGuestsButtonState extends State<SelectAllGuestsButton> {
             ),
           ),
         ),
-        Divider(color: kLightGrey.withOpacity(0.2), thickness: 1),
+        Divider(color: kLightGrey.withValues(alpha: 0.2), thickness: 1),
       ],
     );
   }

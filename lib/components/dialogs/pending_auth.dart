@@ -25,7 +25,7 @@ class PendingAuthentificationDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Afficher l'image principale de l'événement
-          if (event.modules[0].image != null && event.modules[0].image.isNotEmpty)
+          if (event.modules[0].image.isNotEmpty)
             Stack(
               alignment: Alignment.center,
               children: [
@@ -35,7 +35,7 @@ class PendingAuthentificationDialog extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.black.withOpacity(0.4), // Opacité pour texte lisible
+                    color: Colors.black.withValues(alpha: 0.4), // Opacité pour texte lisible
                   ),
                 ),
                 Text(

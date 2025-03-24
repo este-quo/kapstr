@@ -11,7 +11,6 @@ import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/events/create/completed.dart';
 import 'package:kapstr/views/global/events/events.dart';
-import 'package:kapstr/views/global/login/name.dart';
 import 'package:kapstr/views/global/phone_verification/complete_name.dart';
 import 'package:kapstr/views/global/phone_verification/request.dart';
 import 'package:kapstr/widgets/layout/spacing.dart';
@@ -138,7 +137,7 @@ class PhoneCodeVerificationState extends State<PhoneCodeVerification> {
                   },
                   child: const Text('Utiliser un autre numéro', style: TextStyle(color: kBlueLink, fontSize: 14, fontWeight: FontWeight.w400)),
                 ),
-                xLargeSpacerH(),
+                xLargeSpacerH(context),
               ],
             ),
           ),

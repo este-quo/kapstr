@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kapstr/models/guest.dart';
 import 'package:kapstr/models/modules/golden_book_message.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/modules/golden_book/message.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 
 class ProfilePicture extends StatelessWidget {

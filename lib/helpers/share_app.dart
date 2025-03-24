@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/themes/constants.dart';
@@ -66,11 +65,9 @@ String getEventMessage(String eventType) {
   String formattedDate = formatter.format(date);
   String brideName = Event.instance.womanFirstName; // Remplacez par le vrai nom de la mariée
   String groomName = Event.instance.manFirstName; // Remplacez par le vrai nom du marié
-  String galaName = Event.instance.eventName; // Remplacez par le vrai nom du gala
   String partyName = Event.instance.modules.where((module) => module.type == 'wedding').first.name; // Remplacez par le vrai nom de la soirée
   String birthdayPersonName = Event.instance.manFirstName; // Remplacez par le vrai nom de la personne
   String barMitsvahName = Event.instance.manFirstName;
-  String companyName = Event.instance.eventName;
 
   switch (eventType.toLowerCase()) {
     case 'mariage':

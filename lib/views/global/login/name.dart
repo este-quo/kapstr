@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/events/events.dart';
-import 'package:kapstr/views/global/login/mail/signup.dart';
 import 'package:kapstr/views/global/phone_verification/request.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';

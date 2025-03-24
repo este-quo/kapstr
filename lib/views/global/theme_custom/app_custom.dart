@@ -69,7 +69,7 @@ class AppCustomState extends State<AppCustom> {
               },
               child: AppCustomCard(title: 'Couleur textes', color: Event.instance.textColor == '' ? '000000' : Event.instance.textColor),
             ),
-            mediumSpacerH(),
+            mediumSpacerH(context),
             GestureDetector(
               onTap: () async {
                 final selectedColor = await Navigator.push<String>(
@@ -89,7 +89,7 @@ class AppCustomState extends State<AppCustom> {
               },
               child: AppCustomCard(title: 'Couleur boutons', color: Event.instance.buttonColor == '' ? '000000' : Event.instance.buttonColor),
             ),
-            mediumSpacerH(),
+            mediumSpacerH(context),
             GestureDetector(
               onTap: () async {
                 final selectedColor = await Navigator.push<String>(

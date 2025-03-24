@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/configuration/navigation/entry_point.dart';
-import 'package:kapstr/views/splash_screen.dart';
 
 class AppRoute {
   Route<dynamic> onGenerateRoute(RouteSettings settings) {

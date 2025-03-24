@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/about.dart';
 import 'package:kapstr/models/modules/about_service.dart';
@@ -14,11 +13,11 @@ class ServiceDetailsView extends StatelessWidget {
   final List<AboutService> services;
   final ScrollController scrollController;
 
-  const ServiceDetailsView({Key? key, required this.initialPage, required this.module, required this.services, required this.scrollController}) : super(key: key);
+  const ServiceDetailsView({super.key, required this.initialPage, required this.module, required this.services, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _initiateCall(String phoneNumber) async {
+    Future<void> initiateCall(String phoneNumber) async {
       // Construct the phone call URL with the phone number
       final url = 'tel:$phoneNumber';
 
@@ -34,7 +33,7 @@ class ServiceDetailsView extends StatelessWidget {
       }
     }
 
-    Future<void> _launchEmail(String email) async {
+    Future<void> launchEmail(String email) async {
       final Uri uri = Uri(scheme: 'mailto', path: email);
 
       if (await canLaunchUrl(uri)) {
@@ -56,7 +55,7 @@ class ServiceDetailsView extends StatelessWidget {
               backgroundColor: kWhite,
               child: const Icon(Icons.phone_forwarded_rounded),
               onPressed: () {
-                _initiateCall(module.phone);
+                initiateCall(module.phone);
               },
             ),
           ),
@@ -66,7 +65,7 @@ class ServiceDetailsView extends StatelessWidget {
             child: MainButton(
               child: const Text('Nous contacter', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w500)),
               onPressed: () {
-                _launchEmail(module.email);
+                launchEmail(module.email);
               },
             ),
           ),
@@ -84,7 +83,7 @@ class ServiceDetailsView extends StatelessWidget {
           child: GestureDetector(onTap: () => Navigator.of(context).pop(), child: const Row(children: [Icon(Icons.arrow_back_ios, size: 16, color: kBlack), Text('Retour', style: TextStyle(color: kBlack, fontSize: 14, fontWeight: FontWeight.w500))])),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: PageView.builder(
           controller: PageController(initialPage: initialPage),
@@ -127,7 +126,7 @@ class ServiceDetailsView extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(32),
                               child: Container(
-                                decoration: BoxDecoration(boxShadow: [BoxShadow(color: kBlack.withOpacity(0.5), spreadRadius: 1, blurRadius: 5, offset: const Offset(0, 3))]),
+                                decoration: BoxDecoration(boxShadow: [BoxShadow(color: kBlack.withValues(alpha: 0.5), spreadRadius: 1, blurRadius: 5, offset: const Offset(0, 3))]),
                                 child: CircleAvatar(backgroundColor: kWhite, radius: 32, backgroundImage: module.logoUrl == "" ? CachedNetworkImageProvider(Event.instance.saveTheDateThumbnail, scale: 1) : CachedNetworkImageProvider(module.logoUrl, scale: 1)),
                               ),
                             ),

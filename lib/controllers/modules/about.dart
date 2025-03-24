@@ -27,7 +27,7 @@ class AboutController extends ChangeNotifier {
       }
       return null;
     } catch (e) {
-      print("Error fetching about module: $e"); // It's better to handle exceptions or log them accordingly
+      printOnDebug("Error fetching about module: $e"); // It's better to handle exceptions or log them accordingly
       throw Exception("Failed to fetch about module");
     }
   }
@@ -49,7 +49,7 @@ class AboutController extends ChangeNotifier {
 
       final AboutService newService = AboutService(
         id: newServiceRef.id,
-        name: "${getNameOfCategory()}",
+        name: getNameOfCategory(),
         imageUrl: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         description: "",
         imageUrls: [],

@@ -70,7 +70,7 @@ class CustomModuleDispatcher extends StatelessWidget {
         height: 64,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), border: Border.all(width: 1, color: kBlack.withOpacity(0.2), strokeAlign: BorderSide.strokeAlignOutside)),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), border: Border.all(width: 1, color: kBlack.withValues(alpha: 0.2), strokeAlign: BorderSide.strokeAlignOutside)),
         child: Row(),
       ),
     );

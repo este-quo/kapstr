@@ -1,16 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kapstr/controllers/events.dart';
-import 'package:kapstr/controllers/themes.dart';
 import 'package:kapstr/helpers/capitalize.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/widgets/buttons/ic_button.dart';
 import 'package:kapstr/views/guest/home/configuration.dart';
-import 'package:kapstr/widgets/logo_loader.dart';
-import 'package:provider/provider.dart';
 
 class GuestWelcomeScreen extends StatefulWidget {
   const GuestWelcomeScreen({super.key});
@@ -22,7 +16,6 @@ class GuestWelcomeScreen extends StatefulWidget {
 class _GuestWelcomeScreenState extends State<GuestWelcomeScreen> {
   @override
   void initState() {
-    print(Event.instance.eventType);
     super.initState();
   }
 
@@ -51,7 +44,7 @@ class _GuestWelcomeScreenState extends State<GuestWelcomeScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.45,
-            decoration: BoxDecoration(image: DecorationImage(colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.srcOver), image: NetworkImage(Event.instance.saveTheDateThumbnail), fit: BoxFit.cover)),
+            decoration: BoxDecoration(image: DecorationImage(colorFilter: ColorFilter.mode(Colors.black.withValues(alpha: 0.3), BlendMode.srcOver), image: NetworkImage(Event.instance.saveTheDateThumbnail), fit: BoxFit.cover)),
             child: const SizedBox.shrink(),
           ),
 
@@ -66,7 +59,7 @@ class _GuestWelcomeScreenState extends State<GuestWelcomeScreen> {
                 const SizedBox(height: 16),
 
                 Text(
-                  Event.instance.womanFirstName != '' ? '${capitalize(Event.instance.manFirstName)} & ${capitalize(Event.instance.womanFirstName)}' : '${capitalize(Event.instance.manFirstName)}',
+                  Event.instance.womanFirstName != '' ? '${capitalize(Event.instance.manFirstName)} & ${capitalize(Event.instance.womanFirstName)}' : capitalize(Event.instance.manFirstName),
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600, fontStyle: FontStyle.italic, fontFamily: GoogleFonts.playfairDisplay().fontFamily, color: kBlack),
                 ),
                 const SizedBox(height: 16),

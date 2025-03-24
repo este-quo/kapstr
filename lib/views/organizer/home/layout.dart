@@ -46,12 +46,6 @@ class OrgaHomePageState extends State<OrgaHomePage> {
   DispositionType _currentDisposition = DispositionType.grid;
   double buttonScale = 1.0;
 
-  void _updateScale(double scale) {
-    setState(() {
-      buttonScale = scale;
-    });
-  }
-
   void onButtonPressed() {
     setState(() {});
   }
@@ -99,8 +93,6 @@ class OrgaHomePageState extends State<OrgaHomePage> {
         return 'assets/icons/circle.svg';
       case DispositionType.card:
         return 'assets/icons/card.svg';
-      default:
-        return 'assets/icons/grid.svg';
     }
   }
 
@@ -295,7 +287,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                     ),
                   ),
                   _buildDisposition(),
-                  largeSpacerH(),
+                  largeSpacerH(context),
                   kNavBarSpacer(context),
                 ],
               ),
@@ -339,7 +331,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Container(
               padding: const EdgeInsets.all(6.0),
-              decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withOpacity(0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+              decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withValues(alpha: 0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
               child: Row(
                 mainAxisSize: context.read<EventsController>().isGuestPreview ? MainAxisSize.min : MainAxisSize.max,
                 children: [
@@ -360,7 +352,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                           child: Container(
                             height: 40,
                             width: double.infinity,
-                            decoration: BoxDecoration(color: kBlack, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withOpacity(0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+                            decoration: BoxDecoration(color: kBlack, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withValues(alpha: 0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
                             child: Center(child: Text("Ajouter un module", style: TextStyle(color: kWhite, fontSize: 14, fontWeight: FontWeight.w500))),
                           ),
                         ),
@@ -391,7 +383,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                       height: 40,
                       width: !context.read<EventsController>().isGuestPreview ? 40 : null,
                       padding: context.read<EventsController>().isGuestPreview ? EdgeInsets.symmetric(horizontal: 12.0) : null,
-                      decoration: BoxDecoration(color: context.read<EventsController>().isGuestPreview ? kPrimary : kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withOpacity(0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+                      decoration: BoxDecoration(color: context.read<EventsController>().isGuestPreview ? kPrimary : kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withValues(alpha: 0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -421,7 +413,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                         child: Container(
                           width: 40,
                           height: 40,
-                          decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withOpacity(0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+                          decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withValues(alpha: 0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
                           child: Center(child: CustomAssetSvgPicture('assets/icons/sparkle.svg', width: 16, height: 16, color: kBlack)),
                         ),
                       )
@@ -437,7 +429,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                         elevation: 10,
                         padding: const EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                        shadowColor: kBlack.withOpacity(0.2),
+                        shadowColor: kBlack.withValues(alpha: 0.2),
                         itemBuilder: (context) {
                           return [
                             PopupMenuItem(value: 'grid', child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [CustomAssetSvgPicture(_iconPath(DispositionType.grid), width: 16, height: 16, color: kBlack), Text('Grille', style: TextStyle(color: kBlack))])),
@@ -446,7 +438,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                               value: 'divider',
                               child: Container(
                                 height: 1,
-                                color: kBlack.withOpacity(0.1), // Couleur du Divider
+                                color: kBlack.withValues(alpha: 0.1), // Couleur du Divider
                               ),
                             ),
                             PopupMenuItem(
@@ -458,7 +450,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                               value: 'divider',
                               child: Container(
                                 height: 1,
-                                color: kBlack.withOpacity(0.1), // Couleur du Divider
+                                color: kBlack.withValues(alpha: 0.1), // Couleur du Divider
                               ),
                             ),
                             PopupMenuItem(
@@ -470,7 +462,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                               value: 'divider',
                               child: Container(
                                 height: 1,
-                                color: kBlack.withOpacity(0.1),
+                                color: kBlack.withValues(alpha: 0.1),
                                 // Couleur du Divider
                               ),
                             ),
@@ -480,7 +472,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                               value: 'divider',
                               child: Container(
                                 height: 1,
-                                color: kBlack.withOpacity(0.1),
+                                color: kBlack.withValues(alpha: 0.1),
                                 // Couleur du Divider
                               ),
                             ),
@@ -490,7 +482,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                             //   value: 'divider',
                             //   child: Container(
                             //     height: 1,
-                            //     color: kBlack.withOpacity(0.1),
+                            //     color: kBlack.withValues(alpha: 0.1),
                             //     // Couleur du Divider
                             //   ),
                             // ),
@@ -524,7 +516,7 @@ class OrgaHomePageState extends State<OrgaHomePage> {
                           padding: const EdgeInsets.all(10.0),
                           width: 40,
                           height: 40,
-                          decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withOpacity(0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+                          decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(999), border: Border.all(color: kBlack.withValues(alpha: 0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
                           child: CustomAssetSvgPicture(_iconPath(_currentDisposition), width: 16, height: 16, color: kBlack),
                         ),
                       )

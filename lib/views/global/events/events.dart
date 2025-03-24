@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:kapstr/components/dialogs/pending_auth.dart';
 import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/controllers/events.dart';
-import 'package:kapstr/controllers/guests.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/format_date.dart';
 import 'package:kapstr/helpers/vibration.dart';
-import 'package:kapstr/models/user.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/events/joining/enter_code.dart';
 import 'package:kapstr/views/global/profile/modify_profile.dart';
-import 'package:kapstr/views/global/tuto/tutorial.dart';
-
-import 'package:kapstr/widgets/buttons/ic_button.dart';
 import 'package:kapstr/views/global/events/card.dart';
 import 'package:kapstr/views/global/events/card_skeleton.dart';
 import 'package:kapstr/views/global/events/create/type/event_type.dart';
@@ -35,7 +30,6 @@ class MyEvents extends StatefulWidget {
 
 class _MyEventsState extends State<MyEvents> {
   bool isLoading = false;
-  bool _isRedirected = false;
 
   @override
   void initState() {
@@ -46,18 +40,6 @@ class _MyEventsState extends State<MyEvents> {
       Future.delayed(Duration.zero, () {
         showModalBottomSheet(context: context, isScrollControlled: true, shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12))), builder: (context) => const PendingAuthentificationDialog());
       });
-    }
-  }
-
-  void _navigateTo(Widget page) {
-    setState(() {});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => page));
-  }
-
-  void _handleOnboarding(User user) {
-    if (!user.onboardingComplete && !_isRedirected) {
-      _isRedirected = true; // Mark as redirected
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Tutorial()));
     }
   }
 
@@ -75,7 +57,6 @@ class _MyEventsState extends State<MyEvents> {
     try {
       return DateFormat('yyyy-MM-dd HH:mm:ss.SSSSSS').parse(dateString);
     } catch (e) {
-      print("Error parsing date: $e");
       return DateTime.now();
     }
   }
@@ -90,15 +71,13 @@ class _MyEventsState extends State<MyEvents> {
       for (var userEvent in userEvents) {
         var organisersData = await context.read<EventsController>().getEventOrganiser(userEvent);
 
-        print(organisersData.data());
-
         var eventData = await context.read<EventsController>().getEvent(organisersData["event_id"]);
 
         var organizersAdded = eventData["organizer_added"] as List;
         var organizersToAdd = eventData["organizer_to_add"] as List;
 
         if (organizersToAdd.contains(user!.phone)) {
-          if (!organizersAdded.contains(user!.phone)) {
+          if (!organizersAdded.contains(user.phone)) {
             context.read<EventsController>().createdToJoinedEvent(organisersData["event_id"]);
           } else {
             if (eventData["plan_end_at"] == null || parseEventDate(eventData["plan_end_at"]).isAfter(DateTime.now())) {
@@ -128,11 +107,6 @@ class _MyEventsState extends State<MyEvents> {
       // Combine the lists, with future events first
       events = [...futureEvents, ...pastEvents];
 
-      // Print sorted events
-      for (var event in events) {
-        print('Event: ${event.eventId}, Date: ${event.eventDate}');
-      }
-
       return events;
     } else {
       return [];
@@ -157,7 +131,7 @@ class _MyEventsState extends State<MyEvents> {
       }
 
       var createdEvents = context.read<UsersController>().user!.createdEvents; //CAUTION: Solution temporaire pour basculer un event qui viendrait juste d'etre repassé dans cette liste
-      print("Events qui viennent d'être passés");
+
       for (var userEvent in createdEvents) {
         var organisersData = await context.read<EventsController>().getEventOrganiser(userEvent);
         var eventData = await context.read<EventsController>().getEvent(organisersData["event_id"]);
@@ -166,7 +140,7 @@ class _MyEventsState extends State<MyEvents> {
         var organizersToAdd = eventData["organizer_to_add"] as List;
 
         if (organizersToAdd.contains(user!.phone)) {
-          if (organizersAdded.contains(user!.phone)) {
+          if (organizersAdded.contains(user.phone)) {
             context.read<EventsController>().joinedToCreatedEvent(organisersData["event_id"]);
           } else {
             if (eventData["plan_end_at"] == null || parseEventDate(eventData["plan_end_at"]).isAfter(DateTime.now())) {
@@ -190,11 +164,6 @@ class _MyEventsState extends State<MyEvents> {
 
       // Combine the lists, with future events first
       events = [...futureEvents, ...pastEvents];
-
-      // Print sorted events
-      for (var event in events) {
-        print('Event: ${event.eventId}, Date: ${event.eventDate}');
-      }
 
       return events;
     } else {
@@ -336,7 +305,7 @@ class _MyEventsState extends State<MyEvents> {
               },
             );
           } else {
-            return Container(height: MediaQuery.of(context).size.height * 0.5, child: const Center(child: Text('Vous n\'avez pas d\'évènements', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400))));
+            return SizedBox(height: MediaQuery.of(context).size.height * 0.5, child: const Center(child: Text('Vous n\'avez pas d\'évènements', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400))));
           }
         } else if (snapshot.hasError) {
           return const Center(child: Text('Error fetching events'));
@@ -365,77 +334,13 @@ class _MyEventsState extends State<MyEvents> {
               },
             );
           } else {
-            return Container(height: MediaQuery.of(context).size.height * 0.5, child: const Center(child: Text('Vous n\'avez pas d\'évènements', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400))));
+            return SizedBox(height: MediaQuery.of(context).size.height * 0.5, child: const Center(child: Text('Vous n\'avez pas d\'évènements', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400))));
           }
         } else if (snapshot.hasError) {
           return const Center(child: Text('Error fetching events'));
         } else {
           return CardSkeleton(count: context.watch<UsersController>().user!.joinedEvents.length);
         }
-      },
-    );
-  }
-
-  void _showCreateOrJoinDialog() {
-    triggerShortVibration();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: kWhite,
-          surfaceTintColor: kWhite,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          contentPadding: const EdgeInsets.only(top: 24, bottom: 24, left: 16, right: 16),
-          title: const Text('Que voulez-vous faire?', textAlign: TextAlign.center, style: TextStyle(color: kBlack, fontSize: 18, fontWeight: FontWeight.w400)),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                IcButton(
-                  onPressed: () {
-                    triggerShortVibration();
-
-                    Navigator.of(context).pop(); // Ferme le popup
-                    Navigator.of(context)
-                        .push(
-                          MaterialPageRoute(
-                            builder: (context) => const EventType(), // Assurez-vous d'importer cette page
-                          ),
-                        )
-                        .then((value) => callBack());
-                  },
-                  backgroundColor: kYellow,
-                  borderColor: const Color.fromARGB(30, 0, 0, 0),
-                  borderWidth: 1,
-                  radius: 8.0,
-                  child: const Text('Créer mon événement', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400)),
-                ),
-                const SizedBox(height: 8),
-                const Text('ou', style: TextStyle(color: kGrey, fontSize: 14, fontWeight: FontWeight.w400)),
-                const SizedBox(height: 8),
-                IcButton(
-                  onPressed: () {
-                    triggerShortVibration();
-
-                    Navigator.of(context).pop(); // Ferme le popup
-                    Navigator.of(context)
-                        .push(
-                          MaterialPageRoute(
-                            builder: (context) => const EnterGuestCode(), // Assurez-vous d'importer cette page
-                          ),
-                        )
-                        .then((value) => callBack());
-                  },
-                  borderColor: const Color.fromARGB(30, 0, 0, 0),
-                  borderWidth: 1,
-                  backgroundColor: Colors.white,
-                  radius: 8,
-                  child: const Text('Rejoindre un événement', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400)),
-                ),
-              ],
-            ),
-          ),
-        );
       },
     );
   }

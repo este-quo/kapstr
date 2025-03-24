@@ -41,7 +41,6 @@ class ThemeController extends ChangeNotifier {
   }
 
   Color getTextColor({Color? color}) {
-    print(Event.instance.themeType);
     if (textColor == '' && Event.instance.themeType != "dark") {
       return color ?? kBlack;
     } else if (textColor == '' && Event.instance.themeType == "dark") {

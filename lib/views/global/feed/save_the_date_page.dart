@@ -114,7 +114,7 @@ class _SaveTheDatePageState extends State<SaveTheDatePage> {
                             right: 16,
                             child: Container(
                               width: 32,
-                              decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), spreadRadius: 1, blurRadius: 2, offset: const Offset(0, 1))]),
+                              decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.5), spreadRadius: 1, blurRadius: 2, offset: const Offset(0, 1))]),
                               child: IconButton(
                                 icon: const Icon(Icons.edit, size: 16),
                                 color: kBlack,
@@ -132,7 +132,7 @@ class _SaveTheDatePageState extends State<SaveTheDatePage> {
                   const SizedBox(height: 32),
 
                   Text(
-                    event.eventType == 'mariage' ? '${capitalize(event.manFirstName)} & ${capitalize(event.womanFirstName)}' : '${capitalize(event.manFirstName)}',
+                    event.eventType == 'mariage' ? '${capitalize(event.manFirstName)} & ${capitalize(event.womanFirstName)}' : capitalize(event.manFirstName),
                     style: TextStyle(fontSize: 42, fontWeight: FontWeight.w400, fontFamily: GoogleFonts.greatVibes().fontFamily, color: context.read<ThemeController>().getTextColor()),
                   ),
 

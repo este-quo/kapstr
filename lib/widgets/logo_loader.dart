@@ -5,7 +5,7 @@ class PulsatingLogo extends StatefulWidget {
   final String svgPath;
   final double size;
 
-  const PulsatingLogo({required this.svgPath, this.size = 100.0, Key? key}) : super(key: key);
+  const PulsatingLogo({required this.svgPath, this.size = 100.0, super.key});
 
   @override
   _PulsatingLogoState createState() => _PulsatingLogoState();
@@ -18,17 +18,9 @@ class _PulsatingLogoState extends State<PulsatingLogo> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    )..repeat(reverse: true);
+    _controller = AnimationController(duration: const Duration(seconds: 1), vsync: this)..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.9, end: 1.1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
+    _animation = Tween<double>(begin: 0.9, end: 1.1).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -42,14 +34,7 @@ class _PulsatingLogoState extends State<PulsatingLogo> with SingleTickerProvider
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        return Transform.scale(
-          scale: _animation.value,
-          child: SvgPicture.asset(
-            widget.svgPath,
-            width: widget.size,
-            height: widget.size,
-          ),
-        );
+        return Transform.scale(scale: _animation.value, child: SvgPicture.asset(widget.svgPath, width: widget.size, height: widget.size));
       },
     );
   }

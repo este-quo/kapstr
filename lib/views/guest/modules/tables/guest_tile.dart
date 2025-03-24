@@ -29,7 +29,7 @@ class GuestTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
       width: MediaQuery.of(context).size.width - 40,
       height: 64,
-      decoration: BoxDecoration(color: context.watch<EventsController>().event.fullResThemeUrl == '' ? kWhite : kWhite.withOpacity(0.5), borderRadius: BorderRadius.circular(8), border: Border.all(color: kBlack.withOpacity(0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+      decoration: BoxDecoration(color: context.watch<EventsController>().event.fullResThemeUrl == '' ? kWhite : kWhite.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(8), border: Border.all(color: kBlack.withValues(alpha: 0.1), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
       child: Center(
         child: ListTile(
           textColor: kBlack,

@@ -93,7 +93,7 @@ class GetManInfosState extends State<ManInfosUI> {
                     FocusScope.of(context).requestFocus(_surnameFieldFocusNode);
                   },
                 ),
-                mediumSpacerH(),
+                mediumSpacerH(context),
               ],
             ),
           ),

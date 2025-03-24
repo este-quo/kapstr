@@ -13,7 +13,7 @@ class SearchBarGuest extends StatefulWidget {
 class _SearchBarGuestState extends State<SearchBarGuest> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 36,
       child: TextField(
         controller: widget.searchController,

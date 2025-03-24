@@ -5,7 +5,6 @@ import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/feed/send_post.dart';
 import 'package:kapstr/views/global/login/login.dart';
-import 'package:kapstr/views/organizer/modules/golden_book/profile_picture.dart';
 import 'package:provider/provider.dart';
 
 class SendPostQuick extends StatelessWidget {
@@ -19,7 +18,7 @@ class SendPostQuick extends StatelessWidget {
           showModalBottomSheet(
             isScrollControlled: true,
             context: context,
-            barrierColor: Colors.black.withOpacity(0.3),
+            barrierColor: Colors.black.withValues(alpha: 0.3),
             useSafeArea: true,
             builder: (context) {
               return DraggableScrollableSheet(
@@ -38,7 +37,7 @@ class SendPostQuick extends StatelessWidget {
           showModalBottomSheet(
             isScrollControlled: true,
             context: context,
-            barrierColor: Colors.black.withOpacity(0.3),
+            barrierColor: Colors.black.withValues(alpha: 0.3),
             useSafeArea: true,
             builder: (context) {
               return DraggableScrollableSheet(

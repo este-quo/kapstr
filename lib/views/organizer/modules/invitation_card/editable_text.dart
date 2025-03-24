@@ -23,8 +23,6 @@ class MyEditableText extends StatefulWidget {
 class MyEditableTextState extends State<MyEditableText> {
   bool _isEditing = false;
   bool _isBold = false;
-  bool _isItalic = false;
-  bool _isUnderlined = false;
   double _fontSize = 14.0;
   final TextEditingController _controller = TextEditingController();
 
@@ -44,8 +42,6 @@ class MyEditableTextState extends State<MyEditableText> {
     setState(() {
       _isBold = widget.styleMap['is_bold'] ?? false;
       _fontSize = widget.styleMap['fontSize']?.toDouble() ?? 14.0;
-      _isItalic = widget.styleMap['is_italic'] ?? false;
-      _isUnderlined = widget.styleMap['is_underlined'] ?? false;
     });
   }
 
@@ -225,7 +221,7 @@ class MyEditableTextState extends State<MyEditableText> {
                 : SizedBox(),
             _isEditing && !widget.preventTextEditing
                 ? Container(
-                  decoration: BoxDecoration(border: Border.all(color: kBorderColor), borderRadius: BorderRadius.circular(4), color: kLighterGrey.withOpacity(0.5)),
+                  decoration: BoxDecoration(border: Border.all(color: kBorderColor), borderRadius: BorderRadius.circular(4), color: kLighterGrey.withValues(alpha: 0.5)),
                   child: TextField(
                     controller: _controller,
                     style: getTextStyle(),
@@ -340,7 +336,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
       surfaceTintColor: kWhite,
       title: const Text('Choisissez une couleur'),
       content: SingleChildScrollView(child: ColorPicker(color: _currentColor, onColorChanged: (color) => setState(() => _currentColor = color))),
-      actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Annuler')), TextButton(onPressed: () => Navigator.of(context).pop(_currentColor.value.toRadixString(16)), child: const Text('Valider'))],
+      actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Annuler')), TextButton(onPressed: () => Navigator.of(context).pop(_currentColor.toARGB32().toRadixString(16)), child: const Text('Valider'))],
     );
   }
 }

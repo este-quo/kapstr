@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/helpers/share_app.dart';
-import 'package:kapstr/models/app_event.dart';
+
 import 'package:kapstr/themes/constants.dart';
 
 class MessageEditorDialog extends StatefulWidget {
   final String initialMessage;
 
-  const MessageEditorDialog({Key? key, required this.initialMessage}) : super(key: key);
+  const MessageEditorDialog({super.key, required this.initialMessage});
 
   @override
   _MessageEditorDialogState createState() => _MessageEditorDialogState();

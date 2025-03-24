@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/capitalize.dart';
-import 'package:kapstr/helpers/event_type.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/configuration/app_initializer/app_initializer.dart';
@@ -55,7 +53,7 @@ class _EventCardState extends State<EventCard> {
       if (eventType == 'mariage') {
         displayName = '$manFirstName & $womanFirstName';
       } else {
-        displayName = '$manFirstName';
+        displayName = manFirstName;
       }
     }
     return Container(
@@ -92,7 +90,6 @@ class _EventCardState extends State<EventCard> {
             // Error handling: Dismiss the loading dialog and possibly inform the user
             Navigator.pop(context);
             // Consider showing an error dialog or a toast message here to inform the user
-            print('Error initializing organizer: $error');
           }
         },
         child: Row(
@@ -128,7 +125,7 @@ class _EventCardState extends State<EventCard> {
                   elevation: 10,
                   padding: const EdgeInsets.all(16.0),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                  shadowColor: kBlack.withOpacity(0.2),
+                  shadowColor: kBlack.withValues(alpha: 0.2),
                   icon: const Icon(Icons.more_vert, color: kBlack),
                   itemBuilder:
                       (BuildContext context) => [
@@ -250,7 +247,7 @@ class _EventCardState extends State<EventCard> {
                                       // Crop the image
                                       final croppedFile = await ImageCropper().cropImage(
                                         aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                                        sourcePath: pickedFile!.path,
+                                        sourcePath: pickedFile.path,
                                         compressFormat: ImageCompressFormat.jpg,
                                         compressQuality: 100,
                                         uiSettings: uiSettingsList, // Pass the list here
@@ -337,7 +334,7 @@ class _EventCardState extends State<EventCard> {
                                         // Crop the image
                                         final croppedFile = await ImageCropper().cropImage(
                                           aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                                          sourcePath: pickedFile!.path,
+                                          sourcePath: pickedFile.path,
                                           compressFormat: ImageCompressFormat.jpg,
                                           compressQuality: 100,
                                           uiSettings: uiSettingsList, // Pass the list here
@@ -395,10 +392,10 @@ class _EventCardState extends State<EventCard> {
     TextEditingController lastNameManController = TextEditingController(text: widget.eventData["man_last_name"]);
     TextEditingController firstNameWomanController = TextEditingController(text: widget.eventData["woman_first_name"]);
     TextEditingController lastNameWomanController = TextEditingController(text: widget.eventData["woman_last_name"]);
-    final _womanFirstNameFieldFocusNode = FocusNode();
-    final _womanLastNameFieldFocusNode = FocusNode();
-    final _manFirstNameFieldFocusNode = FocusNode();
-    final _manLastNameFieldFocusNode = FocusNode();
+    final womanFirstNameFieldFocusNode = FocusNode();
+    final womanLastNameFieldFocusNode = FocusNode();
+    final manFirstNameFieldFocusNode = FocusNode();
+    final manLastNameFieldFocusNode = FocusNode();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     event_type_helper.EventTypes currentEventType = event_type_helper.Event.getEventTypeFromString(widget.eventData["event_type"]);
 
@@ -436,7 +433,7 @@ class _EventCardState extends State<EventCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   OnboardingTextField(
-                    focusNode: _manFirstNameFieldFocusNode,
+                    focusNode: manFirstNameFieldFocusNode,
                     key: const Key('firstNameMan'),
                     suffixIcon: const SizedBox(),
                     isPassword: false,
@@ -451,7 +448,7 @@ class _EventCardState extends State<EventCard> {
                     title: getEventTitle(currentEventType),
                     onValidatedInput: () {
                       FocusScope.of(context).unfocus();
-                      FocusScope.of(context).requestFocus(_manFirstNameFieldFocusNode);
+                      FocusScope.of(context).requestFocus(manFirstNameFieldFocusNode);
                     },
                   ),
                   if (currentEventType == event_type_helper.EventTypes.wedding || currentEventType == event_type_helper.EventTypes.birthday || currentEventType == event_type_helper.EventTypes.barMitsvah)
@@ -459,7 +456,7 @@ class _EventCardState extends State<EventCard> {
                       children: [
                         const SizedBox(height: 12),
                         OnboardingTextField(
-                          focusNode: _manLastNameFieldFocusNode,
+                          focusNode: manLastNameFieldFocusNode,
                           key: const Key('lastNameMan'),
                           suffixIcon: const SizedBox(),
                           isPassword: false,
@@ -474,7 +471,7 @@ class _EventCardState extends State<EventCard> {
                           title: 'Votre nom de famille',
                           onValidatedInput: () {
                             FocusScope.of(context).unfocus();
-                            FocusScope.of(context).requestFocus(_manLastNameFieldFocusNode);
+                            FocusScope.of(context).requestFocus(manLastNameFieldFocusNode);
                           },
                         ),
                         if (currentEventType == event_type_helper.EventTypes.wedding)
@@ -485,7 +482,7 @@ class _EventCardState extends State<EventCard> {
                               const Text('Votre partenaire', style: TextStyle(color: kBlack, fontSize: 18, fontFamily: "Inter", fontWeight: FontWeight.w500)),
                               const SizedBox(height: 8),
                               OnboardingTextField(
-                                focusNode: _womanFirstNameFieldFocusNode,
+                                focusNode: womanFirstNameFieldFocusNode,
                                 key: const Key('firstNameWoman'),
                                 suffixIcon: const SizedBox(),
                                 isPassword: false,
@@ -500,12 +497,12 @@ class _EventCardState extends State<EventCard> {
                                 title: 'Prénom de votre partenaire',
                                 onValidatedInput: () {
                                   FocusScope.of(context).unfocus();
-                                  FocusScope.of(context).requestFocus(_womanFirstNameFieldFocusNode);
+                                  FocusScope.of(context).requestFocus(womanFirstNameFieldFocusNode);
                                 },
                               ),
                               const SizedBox(height: 12),
                               OnboardingTextField(
-                                focusNode: _womanLastNameFieldFocusNode,
+                                focusNode: womanLastNameFieldFocusNode,
                                 key: const Key('lastNameWoman'),
                                 suffixIcon: const SizedBox(),
                                 isPassword: false,
@@ -520,7 +517,7 @@ class _EventCardState extends State<EventCard> {
                                 title: 'Nom de famille de votre partenaire',
                                 onValidatedInput: () {
                                   FocusScope.of(context).unfocus();
-                                  FocusScope.of(context).requestFocus(_womanLastNameFieldFocusNode);
+                                  FocusScope.of(context).requestFocus(womanLastNameFieldFocusNode);
                                 },
                               ),
                             ],
@@ -568,7 +565,7 @@ class _EventCardState extends State<EventCard> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: Colors.white.withOpacity(1), // Fond presque blanc
+      barrierColor: Colors.white.withValues(alpha: 1), // Fond presque blanc
       builder: (BuildContext context) {
         return PopScope(onPopInvoked: (value) async => false, child: const Center(child: PulsatingLogo(svgPath: 'assets/icons/app/svg_light.svg', size: 64)));
       },

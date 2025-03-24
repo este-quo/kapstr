@@ -28,9 +28,9 @@ class ModuleView extends StatefulWidget {
 class _ModuleViewState extends State<ModuleView> {
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<UpdateModuleState> _updateModuleKey = GlobalKey<UpdateModuleState>();
+    final GlobalKey<UpdateModuleState> updateModuleKey = GlobalKey<UpdateModuleState>();
     return Scaffold(
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -38,7 +38,7 @@ class _ModuleViewState extends State<ModuleView> {
             MainButton(
               onPressed: () async {
                 triggerShortVibration();
-                await _updateModuleKey.currentState?.saveData();
+                await updateModuleKey.currentState?.saveData();
                 Navigator.of(context).pop(widget.module);
               },
               backgroundColor: kBlack,
@@ -101,7 +101,7 @@ class _ModuleViewState extends State<ModuleView> {
               if (widget.module.type != 'wedding' && widget.module.type != 'mairie' && widget.module.type != 'event') ModuleAction(module: widget.module, text: optionsAccordingToEventType(widget.module.type), icon: Icons.edit),
               if (widget.module.type != 'wedding' && widget.module.type != 'mairie' && widget.module.type != 'event') const SizedBox(height: 24),
 
-              SizedBox(width: double.infinity, child: UpdateModule(module: widget.module, key: _updateModuleKey)),
+              SizedBox(width: double.infinity, child: UpdateModule(module: widget.module, key: updateModuleKey)),
               SizedBox(height: 150),
             ],
           ),

@@ -84,7 +84,6 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
 
       if (currentUser.docs.isNotEmpty) {
         phone = currentUser.docs.first["phone"];
-        print(phone);
       } else {
         Navigator.pop(context);
         return;

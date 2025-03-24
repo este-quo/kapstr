@@ -121,7 +121,7 @@ class _AlbumPhotoState extends State<AlbumPhoto> {
                                             }
                                             setState(() {});
                                           },
-                                          child: CircleAvatar(radius: 12, backgroundColor: kWhite.withOpacity(0.8), child: const Icon(Icons.close_rounded, color: kBlack, size: 16)),
+                                          child: CircleAvatar(radius: 12, backgroundColor: kWhite.withValues(alpha: 0.8), child: const Icon(Icons.close_rounded, color: kBlack, size: 16)),
                                         ),
                                       )
                                       : const SizedBox(),
@@ -191,7 +191,7 @@ class _AlbumPhotoState extends State<AlbumPhoto> {
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Prendre une photo', style: TextStyle(color: kBlack, fontWeight: FontWeight.w500, fontSize: 14)), Icon(Icons.camera_alt_outlined, color: kBlack, size: 20)]),
                 ),
               ),
-              Divider(color: kBlack.withOpacity(0.1), height: 1, thickness: 1),
+              Divider(color: kBlack.withValues(alpha: 0.1), height: 1, thickness: 1),
               InkWell(
                 onTap: () async {
                   XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);

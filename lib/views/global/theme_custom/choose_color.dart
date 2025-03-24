@@ -49,11 +49,11 @@ class _ChooseCustomColorState extends State<ChooseCustomColor> {
           if (widget.isBackgroundColor) {
             // Appliquer une opacité de 50% uniquement pour les couleurs de fond
             int alpha = (255 * 0.35).toInt(); // 50% d'opacité
-            int colorValueWithAlpha = (colorToUpdate.value & 0x00FFFFFF) | (alpha << 24); // Remplace le canal alpha
+            int colorValueWithAlpha = (colorToUpdate.toARGB32() & 0x00FFFFFF) | (alpha << 24); // Remplace le canal alpha
             myColor = colorValueWithAlpha.toRadixString(16).padLeft(8, '0');
           } else {
             // Utiliser la couleur telle quelle sans changer son opacité
-            myColor = colorToUpdate.value.toRadixString(16).padLeft(8, '0');
+            myColor = colorToUpdate.toARGB32().toRadixString(16).padLeft(8, '0');
           }
 
           // Ajouter aux couleurs favorites si elle n'existe pas déjà
@@ -102,12 +102,12 @@ class _ChooseCustomColorState extends State<ChooseCustomColor> {
               const SizedBox(height: 16),
 
               Event.instance.favoriteColors != []
-                  ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text('Récentes', style: TextStyle(color: kBlack, fontSize: 18, fontWeight: FontWeight.w500)), const SizedBox(height: 8), FavoriteColors(colorToUpdate: colorToUpdate, onColorSelected: _updateColor)])
+                  ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text('Récentes', style: TextStyle(color: kBlack, fontSize: 18, fontWeight: FontWeight.w500)), const SizedBox(height: 8), FavoriteColors(initialColor: colorToUpdate, onColorSelected: _updateColor)])
                   : const SizedBox(),
 
               const SizedBox(height: 16),
 
-              xLargeSpacerH(),
+              xLargeSpacerH(context),
               kNavBarSpacer(context),
             ],
           ),

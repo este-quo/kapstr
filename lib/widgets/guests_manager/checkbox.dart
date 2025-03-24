@@ -13,7 +13,7 @@ class MyCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Checkbox(
       splashRadius: 1,
-      fillColor: MaterialStateProperty.resolveWith((states) => guest.isSelected ? kYellow : kLighterGrey),
+      fillColor: WidgetStateProperty.resolveWith((states) => guest.isSelected ? kYellow : kLighterGrey),
       side: const BorderSide(color: kLighterGrey),
       checkColor: kWhite,
       activeColor: kYellow,

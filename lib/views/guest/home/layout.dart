@@ -6,13 +6,11 @@ import 'package:kapstr/controllers/themes.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/vibration.dart';
-
 import 'package:kapstr/models/app_guest.dart';
 import 'package:kapstr/views/global/notifications/notifications.dart';
 import 'package:kapstr/widgets/custom_svg_picture.dart';
 import 'package:kapstr/widgets/layout/feed_disposition/module_card.dart';
 import 'package:kapstr/widgets/layout/spacing.dart';
-import 'package:kapstr/helpers/capitalize.dart';
 import 'package:kapstr/helpers/format_colors.dart';
 import 'package:kapstr/helpers/users_letters.dart';
 import 'package:kapstr/themes/constants.dart';
@@ -50,18 +48,6 @@ class _GuestHomePageState extends State<GuestHomePage> {
   @override
   Widget build(BuildContext context) {
     printOnDebug('allowedModules: ${allowedModules.map((module) => module.name).toList()}');
-
-    String getFirstName(String fullName) {
-      // Vérifiez si le nom complet contient un espace
-      int spaceIndex = fullName.indexOf(' ');
-      if (spaceIndex != -1) {
-        // S'il y a un espace, retournez la partie du nom avant l'espace
-        return capitalize(fullName.substring(0, spaceIndex));
-      } else {
-        // S'il n'y a pas d'espace, retournez le nom complet
-        return capitalize(fullName);
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(

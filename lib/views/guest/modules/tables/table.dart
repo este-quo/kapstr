@@ -81,7 +81,6 @@ class _TablesGuestState extends State<TablesGuest> {
       });
     } catch (e) {
       // Gestion des erreurs
-      print('Erreur lors du chargement des tables: $e');
     } finally {
       setState(() {
         isLoading = false; // Désactiver le loader une fois le chargement terminé
@@ -125,7 +124,7 @@ class _TablesGuestState extends State<TablesGuest> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(32.0),
                             margin: const EdgeInsets.symmetric(horizontal: 32),
-                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 8, offset: const Offset(0, 3))]),
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), blurRadius: 8, offset: const Offset(0, 3))]),
                             child: const Text("Votre table s’affichera ici le jour J", style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400), textAlign: TextAlign.center),
                           ),
                         if (adults.isEmpty && children.isEmpty && context.read<EventsController>().event.showTablesEarly)
@@ -133,7 +132,7 @@ class _TablesGuestState extends State<TablesGuest> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(32.0),
                             margin: const EdgeInsets.symmetric(horizontal: 32),
-                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 8, offset: const Offset(0, 3))]),
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), blurRadius: 8, offset: const Offset(0, 3))]),
                             child: const Text("Aucune table n'a été renseignée par l'organisateur pour l'instant.", style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400), textAlign: TextAlign.center),
                           ),
                         // Display cards for each table
@@ -142,12 +141,12 @@ class _TablesGuestState extends State<TablesGuest> {
                             final table = tableMap.values.first;
                             final guest = tableMap.keys.first;
                             return _buildTableCard(guest, table, "Adulte");
-                          }).toList(),
+                          }),
                         ...children.map((tableMap) {
                           final table = tableMap.values.first;
                           final guest = tableMap.keys.first;
                           return _buildTableCard(guest, table, "Enfant");
-                        }).toList(),
+                        }),
                       ],
                     ),
                   ),
@@ -160,7 +159,7 @@ class _TablesGuestState extends State<TablesGuest> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Container(
-        decoration: BoxDecoration(color: const Color.fromARGB(200, 255, 255, 255), borderRadius: BorderRadius.circular(8), border: Border.all(), boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.2), spreadRadius: 1, blurRadius: 8, offset: const Offset(0, 3))]),
+        decoration: BoxDecoration(color: const Color.fromARGB(200, 255, 255, 255), borderRadius: BorderRadius.circular(8), border: Border.all(), boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.2), spreadRadius: 1, blurRadius: 8, offset: const Offset(0, 3))]),
         child: ListTile(
           title: Text(guest, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           subtitle: Column(
