@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/components/dialogs/pickers/number.dart';
-import 'package:kapstr/controllers/customization.dart';
-import 'package:provider/provider.dart';
 
 class NumberOptionButton extends StatefulWidget {
   final String title;

@@ -1,134 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <!-- Ajouter le reversed client ID ici -->
-                <string>com.googleusercontent.apps.1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq</string>
-                <!-- Votre App ID Facebook -->
-                <string>fb659340039693544</string>
-            </array>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-        </dict>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>com.googleusercontent.apps.1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq</string>
-            </array>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>firebase_sms</string>
-        </dict>
-    </array>
-    
-    <key>GIDClientID</key>
-    <!-- Utiliser le CLIENT_ID de votre fichier GoogleService-Info.plist -->
-    <string>1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq.apps.googleusercontent.com</string>
-    
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-
-    <!-- Configurations pour Firebase et autres services -->
-    <key>FacebookAppID</key>
-    <string>659340039693544</string>
-    <key>FacebookClientToken</key>
-    <string>cda2d86a3c5187be31590f984ab7c65b</string>
-    <key>FacebookDisplayName</key>
-    <string>Kapstr</string>
-    <key>FacebookAdvertiserIDCollectionEnabled</key>
-    <string>TRUE</string>
-    <key>FacebookAutoLogAppEventsEnabled</key>
-    <string>TRUE</string>
-    
-    <!-- App Infos -->
-    <key>CFBundleDevelopmentRegion</key>
-    <string>$(DEVELOPMENT_LANGUAGE)</string>
-    <key>CFBundleDisplayName</key>
-    <string>Kapstr</string>
-    <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
-    <key>CFBundleIdentifier</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>CFBundleInfoDictionaryVersion</key>
-    <string>6.0</string>
-    <key>CFBundleName</key>
-    <string>Kapstr</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleShortVersionString</key>
-    <string>$(FLUTTER_BUILD_NAME)</string>
-    <key>CFBundleSignature</key>
-    <string>????</string>
-    <key>CFBundleVersion</key>
-    <string>$(FLUTTER_BUILD_NUMBER)</string>
-
-    <!-- URL Schemes pour OAuth et autres -->
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>http</string>
-        <string>https</string>
-        <string>fbapi</string>
-        <string>fb-messenger-share-api</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-        <string>sms</string>
-        <string>tel</string>
-        <string>googlechromes</string>
-        <string>comgooglemaps</string>
-        <string>waze</string>
-    </array>
-
-    <key>LSRequiresIPhoneOS</key>
-    <true/>
-
-    <!-- Permissions d'usage des fonctionnalités -->
-    <key>NSCameraUsageDescription</key>
-    <string>Upload image from camera for screen background</string>
-    <key>NSContactsUsageDescription</key>
-    <string>This app requires contacts access to function properly.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We need your location to provide location-based features, like finding events near you.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Upload image from library for screen background</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>Permet d'ajouter des événements à l'agenda</string>
-
-    <!-- Firebase configuration -->
-    <key>FirebaseAppDelegateProxyEnabled</key>
-    <false/>
-
-    <key>UIApplicationSupportsIndirectInputEvents</key>
-    <true/>
-
-    <key>UILaunchStoryboardName</key>
-    <string>LaunchScreen</string>
-    <key>UIMainStoryboardFile</key>
-    <string>Main</string>
-
-    <!-- Support des orientations d'écran -->
-    <key>UISupportedInterfaceOrientations</key>
-    <array>
-        <string>UIInterfaceOrientationPortrait</string>
-        <string>UIInterfaceOrientationLandscapeLeft</string>
-        <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
-    <key>UISupportedInterfaceOrientations~ipad</key>
-    <array>
-        <string>UIInterfaceOrientationPortrait</string>
-        <string>UIInterfaceOrientationPortraitUpsideDown</string>
-        <string>UIInterfaceOrientationLandscapeLeft</string>
-        <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-</dict>
+	<dict>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<!-- Ajouter le reversed client ID ici -->
+					<string>com.googleusercontent.apps.1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq</string>
+					<!-- Votre App ID Facebook -->
+					<string>fb659340039693544</string>
+				</array>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq</string>
+				</array>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLName</key>
+				<string>firebase_sms</string>
+			</dict>
+		</array>
+		<key>GIDClientID</key>
+		<!-- Utiliser le CLIENT_ID de votre fichier GoogleService-Info.plist -->
+		<string>1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq.apps.googleusercontent.com</string>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
+		<!-- Configurations pour Firebase et autres services -->
+		<key>FacebookAppID</key>
+		<string>659340039693544</string>
+		<key>FacebookClientToken</key>
+		<string>cda2d86a3c5187be31590f984ab7c65b</string>
+		<key>FacebookDisplayName</key>
+		<string>Kapstr</string>
+		<key>FacebookAdvertiserIDCollectionEnabled</key>
+		<string>TRUE</string>
+		<key>FacebookAutoLogAppEventsEnabled</key>
+		<string>TRUE</string>
+		<!-- App Infos -->
+		<key>CFBundleDevelopmentRegion</key>
+		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>CFBundleDisplayName</key>
+		<string>Kapstr</string>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundleName</key>
+		<string>Kapstr</string>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleShortVersionString</key>
+		<string>$(FLUTTER_BUILD_NAME)</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleVersion</key>
+		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<!-- URL Schemes pour OAuth et autres -->
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>http</string>
+			<string>https</string>
+			<string>fbapi</string>
+			<string>fb-messenger-share-api</string>
+			<string>fbauth2</string>
+			<string>fbshareextension</string>
+			<string>sms</string>
+			<string>tel</string>
+			<string>googlechromes</string>
+			<string>comgooglemaps</string>
+			<string>waze</string>
+		</array>
+		<key>LSRequiresIPhoneOS</key>
+		<true/>
+		<!-- Permissions d'usage des fonctionnalités -->
+		<key>NSCameraUsageDescription</key>
+		<string>Upload image from camera for screen background</string>
+		<key>NSContactsUsageDescription</key>
+		<string>This app requires contacts access to function properly.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>We need your location to provide location-based features, like finding events near you.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Upload image from library for screen background</string>
+		<key>NSCalendarsUsageDescription</key>
+		<string>Permet d'ajouter des événements à l'agenda</string>
+		<!-- Firebase configuration -->
+		<key>FirebaseAppDelegateProxyEnabled</key>
+		<false/>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true/>
+		<key>UILaunchStoryboardName</key>
+		<string>LaunchScreen</string>
+		<key>UIMainStoryboardFile</key>
+		<string>Main</string>
+		<!-- Support des orientations d'écran -->
+		<key>UISupportedInterfaceOrientations</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>UISupportedInterfaceOrientations~ipad</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationPortraitUpsideDown</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
+		<key>UIStatusBarHidden</key>
+		<false/>
+	</dict>
 </plist>

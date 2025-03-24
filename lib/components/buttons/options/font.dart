@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kapstr/components/dialogs/pickers/font.dart';
-import 'package:provider/provider.dart';
 
 class FontOptionButton extends StatefulWidget {
   final String initialFont;
