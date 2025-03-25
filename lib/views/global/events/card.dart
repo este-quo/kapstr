@@ -437,7 +437,7 @@ class _EventCardState extends State<EventCard> {
                     key: const Key('firstNameMan'),
                     suffixIcon: const SizedBox(),
                     isPassword: false,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
                     controller: firstNameManController,
                     validateInput: (String? value) {
                       if (value == null || value.isEmpty) {
@@ -460,7 +460,7 @@ class _EventCardState extends State<EventCard> {
                           key: const Key('lastNameMan'),
                           suffixIcon: const SizedBox(),
                           isPassword: false,
-                          keyboardType: TextInputType.name,
+                          keyboardType: TextInputType.text,
                           controller: lastNameManController,
                           validateInput: (String? value) {
                             if (value == null || value.isEmpty) {
@@ -486,7 +486,7 @@ class _EventCardState extends State<EventCard> {
                                 key: const Key('firstNameWoman'),
                                 suffixIcon: const SizedBox(),
                                 isPassword: false,
-                                keyboardType: TextInputType.name,
+                                keyboardType: TextInputType.text,
                                 controller: firstNameWomanController,
                                 validateInput: (String? value) {
                                   if (value == null || value.isEmpty) {
@@ -506,7 +506,7 @@ class _EventCardState extends State<EventCard> {
                                 key: const Key('lastNameWoman'),
                                 suffixIcon: const SizedBox(),
                                 isPassword: false,
-                                keyboardType: TextInputType.name,
+                                keyboardType: TextInputType.text,
                                 controller: lastNameWomanController,
                                 validateInput: (String? value) {
                                   if (value == null || value.isEmpty) {

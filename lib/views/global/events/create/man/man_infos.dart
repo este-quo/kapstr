@@ -57,7 +57,7 @@ class GetManInfosState extends State<ManInfosUI> {
                   focusNode: _manFirstNameFieldFocusNode,
                   suffixIcon: const SizedBox(),
                   isPassword: false,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   validateInput: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez renseigner le prénom du marié';
@@ -78,7 +78,7 @@ class GetManInfosState extends State<ManInfosUI> {
                   key: const Key('lastNameMan'),
                   suffixIcon: const SizedBox(),
                   isPassword: false,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   validateInput: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez renseigner le nom de famille du marié';

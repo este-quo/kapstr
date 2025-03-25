@@ -7,6 +7,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:kapstr/components/credits_card.dart';
 import 'package:kapstr/configuration/navigation/entry_point.dart';
 import 'package:kapstr/controllers/authentication.dart';
+import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/rate_app.dart';
@@ -19,9 +20,11 @@ import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/views/organizer/account/manage_organizers.dart';
 import 'package:kapstr/views/organizer/account/udpate_event.dart';
+import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:kapstr/views/global/credits/credits.dart';
 
 class UserAccountPage extends StatefulWidget {
   const UserAccountPage({super.key});
@@ -32,6 +35,42 @@ class UserAccountPage extends StatefulWidget {
 
 class UserAccountPageState extends State<UserAccountPage> {
   File? imageFile;
+
+  void _showUseCreditDialog(BuildContext context, int availableCredits) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Utiliser 1 crédit", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text(availableCredits > 1 ? "Vous avez $availableCredits crédits. Un crédit sera utilisé pour activer cet évènement." : "Vous avez $availableCredits crédit. Il sera utilisé pour activer cet évènement.", style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 20),
+              MainButton(
+                backgroundColor: kPrimary,
+                onPressed: () async {
+                  await context.read<EventsController>().updateEventField(key: 'isUnlocked', value: true);
+                  int credits = context.read<UsersController>().user!.credits - 1;
+                  await context.read<UsersController>().updateUserFields({'credits': credits});
+
+                  Navigator.pop(context);
+                  setState(() {
+                    Event.instance.isUnlocked = true;
+                  });
+                },
+                child: const Text("Confirmer", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,21 +114,31 @@ class UserAccountPageState extends State<UserAccountPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(capitalizeNames(context.watch<UsersController>().user!.name), style: const TextStyle(fontSize: 20, color: kBlack, fontWeight: FontWeight.w700)),
-                            Row(
-                              children: [
-                                Event.instance.isUnlocked ? Text("Code évènement: ${Event.instance.code}", style: const TextStyle(fontSize: 16, color: kBlack, fontWeight: FontWeight.w400)) : SizedBox(),
-                                Event.instance.isUnlocked
-                                    ? IconButton(
+                            Event.instance.isUnlocked
+                                ? Row(
+                                  children: [
+                                    Text("Code évènement: ${Event.instance.code}", style: const TextStyle(fontSize: 16, color: kBlack, fontWeight: FontWeight.w400)),
+                                    IconButton(
                                       visualDensity: VisualDensity.compact,
                                       onPressed: () {
                                         Clipboard.setData(ClipboardData(text: Event.instance.code));
                                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(seconds: 1), content: Text('Code copié dans le presse-papier', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))));
                                       },
                                       icon: const Icon(Icons.copy, color: kBlack, size: 18),
-                                    )
-                                    : SizedBox(),
-                              ],
-                            ),
+                                    ),
+                                  ],
+                                )
+                                : GestureDetector(
+                                  onTap: () {
+                                    final credits = context.read<UsersController>().user!.credits;
+                                    if (credits > 0) {
+                                      _showUseCreditDialog(context, credits);
+                                    } else {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const CreditsPage(isCreditsEmpty: true)));
+                                    }
+                                  },
+                                  child: Text("Activer mon evenement", style: const TextStyle(fontSize: 16, color: kBlack, fontWeight: FontWeight.w400)),
+                                ),
                           ],
                         ),
                       ],

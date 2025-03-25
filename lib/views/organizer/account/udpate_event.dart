@@ -95,7 +95,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                   focusNode: _manFirstNameFieldFocusNode,
                   suffixIcon: const SizedBox(),
                   isPassword: false,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   validateInput: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez renseigner ce champ pour continuer';
@@ -119,7 +119,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                         key: const Key('lastNameMan'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -151,7 +151,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                         key: const Key('firstNameWoman'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -172,7 +172,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                         key: const Key('lastNameWoman'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';

@@ -87,7 +87,7 @@ class _NameFormPageState extends State<NameFormPage> {
                         textCapitalization: TextCapitalization.words,
                         controller: firstnameController,
                         decoration: _inputDecoration('Prénom'),
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         style: const TextStyle(color: kBlack, fontSize: 14, fontWeight: FontWeight.w400),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
