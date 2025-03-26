@@ -176,9 +176,10 @@ class _ResponseTestState extends State<ResponseTest> {
                 return _buildGuestEntry(index, guest, isGuestAnAdult(guest));
               }),
               const SizedBox(height: 16),
-              ElevatedButton(onPressed: _addGuest, style: ElevatedButton.styleFrom(backgroundColor: kBlack, padding: const EdgeInsets.symmetric(vertical: 8)), child: const Text('+', style: TextStyle(color: kWhite, fontSize: 16))),
+              Center(child: ElevatedButton(onPressed: _addGuest, style: ElevatedButton.styleFrom(backgroundColor: kBlack, shape: const CircleBorder(), padding: const EdgeInsets.all(8)), child: const Text('+', style: TextStyle(color: kWhite, fontSize: 24)))),
               SizedBox(height: 16),
               PrimaryButton(
+                backgroundColor: kPrimary,
                 onPressed: () {
                   _confirmPresence(true);
                 },
