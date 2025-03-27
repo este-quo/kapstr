@@ -325,7 +325,7 @@ class _WeddingGuestState extends State<WeddingGuest> {
                           // Infos
                           widget.module.moreInfos != "" ? const Text('Informations sur l\'événement', style: TextStyle(color: kBlack, fontSize: 20, fontWeight: FontWeight.w500)) : const SizedBox(),
                           const SizedBox(height: 12),
-                          widget.module.moreInfos != "" ? Text(widget.module.moreInfos == "" ? 'Pas d’information pour le moment.' : widget.module.moreInfos, style: const TextStyle(color: kGrey, letterSpacing: 0.0, height: 1.2, fontSize: 16, fontWeight: FontWeight.w400)) : const SizedBox(),
+                          widget.module.moreInfos != "" ? Text(widget.module.moreInfos == "" ? 'Pas d’information pour le moment.' : widget.module.moreInfos, style: const TextStyle(color: kBlack, letterSpacing: 0.0, height: 1.2, fontSize: 16, fontWeight: FontWeight.w400)) : const SizedBox(),
 
                           const SizedBox(height: 48),
 

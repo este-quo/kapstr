@@ -63,7 +63,7 @@ class _TablesGuestState extends State<TablesGuest> {
   }
 
   void _loadFakeRsvp() {
-    fakeRsvp = RSVP(id: 'fake_rsvp_id', guestId: 'fake_guest_id', response: 'En attente', adults: [AddedGuest(id: generateRandomId(), name: "Jean")], children: [], moduleId: widget.module.id, isAllowed: true, createdAt: DateTime.now(), isAnswered: false);
+    fakeRsvp = RSVP(id: 'fake_rsvp_id', guestId: 'fake_guest_id', response: 'En attente', adults: [AddedGuest(id: generateRandomId(), name: "John Doe")], children: [], moduleId: widget.module.id, isAllowed: true, createdAt: DateTime.now(), isAnswered: false);
     context.read<RSVPController>().setRsvps([fakeRsvp!]);
   }
 

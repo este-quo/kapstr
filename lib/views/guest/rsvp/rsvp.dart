@@ -65,7 +65,7 @@ class RsvpState extends State<RsvpPage> {
       setState(() {
         _allModules = modules;
         _filteredModules = _allModules.where((module) => !kNonEventModules.contains(module.type)).toList()..sort((a, b) => a.id.compareTo(b.id));
-        final fakeRsvps = _filteredModules.map((module) => RSVP(guestId: 'fakeId', moduleId: module.id, isAllowed: true, response: 'En attente', adults: [AddedGuest(id: generateRandomId(), name: "Jean")], children: [], createdAt: DateTime.now(), isAnswered: false)).toList();
+        final fakeRsvps = _filteredModules.map((module) => RSVP(guestId: 'fakeId', moduleId: module.id, isAllowed: true, response: 'En attente', adults: [AddedGuest(id: generateRandomId(), name: "John Doe")], children: [], createdAt: DateTime.now(), isAnswered: false)).toList();
         rsvpController.setRsvps(fakeRsvps);
         _dataLoaded = true;
       });

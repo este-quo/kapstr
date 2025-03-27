@@ -4,7 +4,7 @@ description: "Application de gestion d'évènements"
 publish_to: 'none'
 
 
-version: 2.5.1+1
+version: 2.5.2+1
 
 environment:
   sdk: ^3.7.0

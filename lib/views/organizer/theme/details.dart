@@ -40,7 +40,7 @@ class _ThemeDetailsState extends State<ThemeDetails> {
   void initState() {
     super.initState();
 
-    themeType = themeType;
+    themeType = widget.type;
     if (themeType == 'popular') {
       final themeName = context.read<EventsController>().getFileNameWithExtension(widget.themeUrl);
       themeType = extractCategory(themeName);

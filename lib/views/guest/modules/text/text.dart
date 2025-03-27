@@ -59,7 +59,11 @@ class _TextGuestState extends State<TextGuest> {
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: SizedBox(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height, child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [MyDisplayText(text: text.content, styleMap: text.contentStyle)])),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [MyDisplayText(text: text.content == "Cliquez pour éditer le texte" ? "" : text.content, styleMap: text.contentStyle)]),
+              ),
             ),
           ),
         ),
