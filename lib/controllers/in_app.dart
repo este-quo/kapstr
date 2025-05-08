@@ -11,6 +11,7 @@ class InAppController extends ChangeNotifier {
   int credits = 0;
   bool _isTransactionInProgress = false; // Empêche les transactions multiples
   bool transactionSuccess = false;
+  bool isLoading = false;
 
   InAppController() {
     _subscription = _inAppPurchase.purchaseStream.listen(
@@ -31,6 +32,11 @@ class InAppController extends ChangeNotifier {
   }
 
   Future<void> reset() async {}
+
+  void updateIsLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
 
   /// Récupère le nombre de crédits de l'utilisateur
   Future<int> getUserCredits(String userId) async {

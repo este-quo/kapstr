@@ -56,7 +56,7 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
   }
 
   Future confirmWhenConnected() async {
-    showLoadingDialog(context); // Show a loading dialog while processing
+    showLoadingDialog(context);
     QuerySnapshot event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
 
     if (event.docs.isEmpty) {

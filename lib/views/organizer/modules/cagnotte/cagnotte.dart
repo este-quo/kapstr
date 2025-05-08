@@ -151,7 +151,8 @@ class _CagnotteState extends State<Cagnotte> {
             TextButton(
               child: const Text('Valider'),
               onPressed: () async {
-                if (linkUrl.isNotEmpty) {
+                final Uri? uri = Uri.tryParse(linkUrl);
+                if (linkUrl.isNotEmpty && uri != null && (uri.hasScheme && uri.hasAuthority)) {
                   Navigator.of(context).pop();
                   setState(() {
                     isLoading = true;
@@ -167,6 +168,8 @@ class _CagnotteState extends State<Cagnotte> {
                       isLoading = false;
                     });
                   }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Lien invalide. Veuillez entrer une URL valide."), backgroundColor: Colors.red, duration: Duration(seconds: 2)));
                 }
               },
             ),

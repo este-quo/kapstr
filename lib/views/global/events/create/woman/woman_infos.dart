@@ -461,7 +461,7 @@ class GetWomanInfosState extends State<WomanInfosUI> {
       'favorite_colors': [],
       'favorite_fonts': [],
       'isUnlocked': false,
-      'code': getRandomString(5),
+      'code': getRandomString(6),
       'save_the_date_thumbnail': kEventModuleImages[Event.getStringFromEventType(onboardingData.eventType)]!["wedding"],
       'created_at': formattedDate,
     };

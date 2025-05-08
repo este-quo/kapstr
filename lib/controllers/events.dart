@@ -292,6 +292,13 @@ class EventsController extends ChangeNotifier {
     return await configuration.getCollectionPath('events').where('code', isEqualTo: code).get();
   }
 
+  Future<bool> isOrganizer(BuildContext context, String code) async {
+    String userId = context.read<UsersController>().user!.id;
+    QuerySnapshot<Object?> organiser = await configuration.getCollectionPath('organisers').where('event_id', isEqualTo: context.read<EventsController>()._event.id).get();
+    String eventOrganiszerId = organiser.docs.first["user_id"];
+    return userId == eventOrganiszerId;
+  }
+
   Future<bool> checkIfGuestIsAllowed(String eventId, String code, String guestPhone, String eventVisibility) async {
     bool isGuestAllowed = false;
 

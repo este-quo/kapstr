@@ -137,37 +137,32 @@ class _CreditsPageState extends State<CreditsPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    isLoading
-                        ? const CircularProgressIndicator()
-                        : ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: kPrimary, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                          onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor: kPrimary, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                      onPressed: () async {
+                        context.read<InAppController>().updateIsLoading(true);
 
-                            try {
-                              final selectedPlan = inAppController.availablePlans.firstWhere((plan) => plan.id == selectedPack, orElse: () => throw Exception("Plan introuvable"));
+                        try {
+                          final selectedPlan = inAppController.availablePlans.firstWhere((plan) => plan.id == selectedPack, orElse: () => throw Exception("Plan introuvable"));
 
-                              await inAppController.buyPlan(selectedPlan, context.read<UsersController>().user!.id);
+                          await inAppController.buyPlan(selectedPlan, context.read<UsersController>().user!.id);
 
-                              if (widget.isCreditsEmpty) {
-                                _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
-                                Navigator.of(context).pop();
-                              } else {
-                                Navigator.of(context).pop();
-                                _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
-                              }
-                            } catch (e) {
-                              // Gérer les erreurs éventuelles
-                            } finally {
-                              setState(() {
-                                isLoading = false;
-                              });
-                            }
-                          },
-                          child: isLoading ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)) : const Text("Activer mon évènement", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
-                        ),
+                          if (widget.isCreditsEmpty) {
+                            _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
+                            Navigator.of(context).pop();
+                          } else {
+                            Navigator.of(context).pop();
+                            _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
+                          }
+                        } catch (e) {
+                          // Gérer les erreurs éventuelles
+                        } finally {
+                          context.read<InAppController>().updateIsLoading(false);
+                        }
+                      },
+                      child:
+                          context.watch<InAppController>().isLoading ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)) : const Text("Activer mon évènement", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                    ),
                     const SizedBox(height: 8),
                     const Text("Payez une fois, sans engagement", style: TextStyle(fontSize: 14, color: kBlack)),
                   ],

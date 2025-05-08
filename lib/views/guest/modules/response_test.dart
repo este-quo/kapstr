@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/components/buttons/primary_button.dart';
 import 'package:kapstr/components/buttons/secondary_button.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/rsvps.dart';
-import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/rsvp.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/models/added_guest.dart';
@@ -63,27 +61,9 @@ class _ResponseTestState extends State<ResponseTest> {
   }
 
   Future<void> _confirmPresence(bool value) async {
-    QuerySnapshot event = await context.read<EventsController>().checkIfEventExistWithCode(context.read<EventsController>().event.code);
-    QuerySnapshot currentUser = await context.read<UsersController>().currentUser();
+    bool isOrganizer = await context.read<EventsController>().isOrganizer(context, context.read<EventsController>().event.code);
 
-    var organizerToAddField = event.docs.first["organizer_added"];
-    bool isOrganizer;
-
-    String? phone;
-
-    if (currentUser.docs.isNotEmpty) {
-      phone = currentUser.docs.first["phone"];
-    }
-
-    if (organizerToAddField is String) {
-      isOrganizer = organizerToAddField == phone;
-    } else if (organizerToAddField is List) {
-      isOrganizer = organizerToAddField.contains(phone);
-    } else {
-      isOrganizer = false;
-    }
-
-    if (!isOrganizer) {
+    if (isOrganizer) {
       showDialog(context: context, builder: (context) => AlertDialog(title: const Text("Vous êtes l'organisateur"), content: const Text("Vous ne pouvez pas répondre en tant qu'organisateur"), actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text("Compris"))]));
       return;
     }
@@ -203,9 +183,9 @@ class _ResponseTestState extends State<ResponseTest> {
                 AddedGuest guest = entry.value;
                 return _buildGuestEntry(index, guest, isGuestAnAdult(guest));
               }),
-              const SizedBox(height: 16),
-              Center(child: ElevatedButton(onPressed: _addGuest, style: ElevatedButton.styleFrom(backgroundColor: kBlack, shape: const CircleBorder(), padding: const EdgeInsets.all(8)), child: const Text('+', style: TextStyle(color: kWhite, fontSize: 24)))),
-              SizedBox(height: 16),
+
+              Center(child: ElevatedButton(onPressed: _addGuest, style: ElevatedButton.styleFrom(backgroundColor: kBlack, shape: const CircleBorder(), padding: const EdgeInsets.all(8)), child: const Icon(Icons.add, color: Colors.white))),
+              SizedBox(height: 24),
               PrimaryButton(
                 backgroundColor: kPrimary,
                 onPressed: () {
