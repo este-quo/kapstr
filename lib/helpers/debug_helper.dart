@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 printOnDebug(String message) {
-  if (kDebugMode) {}
+  if (kDebugMode) {
+    print(message);
+  }
 }

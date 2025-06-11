@@ -106,25 +106,31 @@ class _AlbumPhotoState extends State<AlbumPhoto> {
                                       height: double.infinity * 0.6,
                                     ),
                                   ),
-                                  !widget.isGuestView
-                                      ? Positioned(
-                                        top: 8,
-                                        right: 8,
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            try {
-                                              final storageRef = FirebaseStorage.instance.refFromURL(pictures[index]);
-                                              await context.read<ModulesController>().deletePictureInsideAlbumModule(pictures[index]);
-                                              await storageRef.delete();
-                                            } catch (e) {
-                                              throw Exception(e);
-                                            }
-                                            setState(() {});
-                                          },
-                                          child: CircleAvatar(radius: 12, backgroundColor: kWhite.withValues(alpha: 0.8), child: const Icon(Icons.close_rounded, color: kBlack, size: 16)),
-                                        ),
-                                      )
-                                      : const SizedBox(),
+                                  Positioned(
+                                    top: 8,
+                                    right: 8,
+                                    child:
+                                        widget.isGuestView
+                                            ? InkWell(
+                                              onTap: () {
+                                                showPhotoOptions(context, snapshot.data!.data()!['pictures'][index]);
+                                              },
+                                              child: const Icon(Icons.more_vert, color: Colors.white),
+                                            )
+                                            : GestureDetector(
+                                              onTap: () async {
+                                                try {
+                                                  final storageRef = FirebaseStorage.instance.refFromURL(pictures[index]);
+                                                  await context.read<ModulesController>().deletePictureInsideAlbumModule(pictures[index]);
+                                                  await storageRef.delete();
+                                                } catch (e) {
+                                                  throw Exception(e);
+                                                }
+                                                setState(() {});
+                                              },
+                                              child: CircleAvatar(radius: 12, backgroundColor: kWhite.withValues(alpha: 0.8), child: const Icon(Icons.close_rounded, color: kBlack, size: 16)),
+                                            ),
+                                  ),
                                 ],
                               );
                             },
@@ -268,4 +274,35 @@ void handleImageTap(BuildContext context, {required String imageUrl}) {
       );
     },
   );
+}
+
+void showPhotoOptions(BuildContext context, String imageUrl) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
+    builder: (BuildContext context) {
+      return SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Télécharger'),
+              onTap: () async {
+                Navigator.pop(context);
+                await downloadImage(imageUrl);
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+Future<void> downloadImage(String url) async {
+  try {} catch (e) {
+    debugPrint('Erreur téléchargement : $e');
+  }
 }

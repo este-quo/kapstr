@@ -30,7 +30,14 @@ class _ManageOrganizersState extends State<ManageOrganizers> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          MainButton(child: const Center(child: Text('Ajouter un Organisateur', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))), onPressed: () => !widget.isOnboarding ? _showGuestsDialog(context) : _showGuestsDialogOnboarding(context)),
+          MainButton(
+            child: const Center(child: Text('Inviter un Organisateur', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))),
+            onPressed: () {
+              sendSMSToOrganizers(context);
+            },
+          ),
+          const SizedBox(height: 8),
+          MainButton(child: const Center(child: Text('Mes invités', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))), onPressed: () => !widget.isOnboarding ? _showGuestsDialog(context) : _showGuestsDialogOnboarding(context)),
           const SizedBox(height: 8),
           widget.isOnboarding
               ? MainButton(

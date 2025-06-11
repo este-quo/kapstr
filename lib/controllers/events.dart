@@ -15,8 +15,21 @@ class EventsController extends ChangeNotifier {
   bool isGuestPreview = false;
   EventsController(this._event, {this.isGuestPreview = false});
   bool isLoading = false;
+  bool isOrganizerCodeEntered = false;
 
   Event get event => _event;
+
+  Future initOrganizer(String? phone, BuildContext context) async {
+    if (phone == null) {
+      isOrganizerCodeEntered = true;
+    } else {
+      Event.instance.addOrganizer(phone);
+
+      await context.read<EventsController>().updateEventField(key: 'organizer_added', value: Event.instance.organizerAdded);
+
+      await context.read<EventsController>().updateEventField(key: 'organizer_to_add', value: Event.instance.organizerAdded);
+    }
+  }
 
   void changeGuestPreview() {
     SchedulerBinding.instance.addPostFrameCallback((_) {

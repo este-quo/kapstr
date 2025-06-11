@@ -56,6 +56,68 @@ Future<void> sendSMSToGuests(BuildContext context, List<String> recipients) asyn
   }
 }
 
+Future<void> sendSMSToOrganizers(BuildContext context) async {
+  String eventType = Event.instance.eventType;
+  String eventMessage = getOrganizerMessage(eventType);
+
+  // Afficher la boîte de dialogue pour éditer le message
+  final editedMessage = await showDialog<String>(context: context, builder: (context) => MessageEditorDialog(initialMessage: eventMessage));
+
+  if (editedMessage != null && editedMessage.isNotEmpty) {
+    // Envoyer le message modifié
+  } else {
+    // L'utilisateur a annulé ou laissé le message vide
+    printOnDebug('L\'envoi du message a été annulé.');
+  }
+}
+
+String getOrganizerMessage(String eventType) {
+  String code = Event.instance.code_organizer;
+  String downloadLink = "https://kapstr.fr/download";
+  DateTime date = Event.instance.date!;
+
+  var formatter = DateFormat('d MMMM y', 'fr_FR');
+  String formattedDate = formatter.format(date);
+  String brideName = Event.instance.womanFirstName; // Remplacez par le vrai nom de la mariée
+  String groomName = Event.instance.manFirstName; // Remplacez par le vrai nom du marié
+  String partyName = Event.instance.modules.where((module) => module.type == 'wedding').first.name; // Remplacez par le vrai nom de la soirée
+  String birthdayPersonName = Event.instance.manFirstName; // Remplacez par le vrai nom de la personne
+  String barMitsvahName = Event.instance.manFirstName;
+
+  switch (eventType.toLowerCase()) {
+    case 'mariage':
+      return "Bonjour ! Nous serions ravis que tu nous aides à organiser notre mariage avec $brideName et $groomName, prévu le $formattedDate.\n\n"
+          "Pour participer à l’organisation, rejoins-nous sur l’application Kapstr avec ce code : $code\n"
+          "Lien pour télécharger l’app : $downloadLink";
+    case 'gala':
+      return "Bonjour ! Nous t’invitons à nous rejoindre pour organiser notre Gala qui se déroulera le $formattedDate.\n\n"
+          "Ta contribution serait précieuse pour faire de cette soirée un moment inoubliable.\n\n"
+          "Pour participer à l’organisation, télécharge l’application Kapstr et utilise ce code : $code\n"
+          "Lien pour télécharger l’app : $downloadLink";
+    case 'soirée':
+      return "Salut ! Nous avons besoin de ton aide pour organiser la soirée $partyName, prévue le $formattedDate.\n\n"
+          "Ta participation serait d’une grande aide pour rendre cette soirée exceptionnelle !\n\n"
+          "Télécharge Kapstr et entre ce code pour accéder à l’organisation : $code\n"
+          "Lien pour télécharger l’app : $downloadLink";
+    case 'anniversaire':
+      return "Hello ! $birthdayPersonName va fêter son anniversaire le $formattedDate, et nous aimerions que tu sois de la partie pour l’organiser !\n\n"
+          "Pour rejoindre l’équipe d’organisation, télécharge Kapstr et utilise ce code : $code\n"
+          "Lien pour télécharger l’app : $downloadLink";
+    case 'bar mitsvah':
+      return "Bonjour ! La Bar Mitsvah de $barMitsvahName aura lieu le $formattedDate, et nous aurions besoin de ton aide pour l’organisation.\n\n"
+          "Rejoins-nous sur Kapstr avec ce code : $code pour faire partie de l’organisation.\n"
+          "Lien pour télécharger l’app : $downloadLink";
+    case 'entreprise':
+      return "Bonjour ! Nous organisons un événement d’entreprise le $formattedDate et aimerions que tu nous aides à le préparer.\n\n"
+          "Télécharge Kapstr et entre ce code pour rejoindre l’organisation : $code\n"
+          "Lien pour télécharger l’app : $downloadLink";
+    default:
+      return "Salut ! Nous organisons un événement : $partyName, le $formattedDate, et aimerions t’avoir comme co-organisateur.\n\n"
+          "Pour participer, télécharge Kapstr et utilise ce code : $code\n"
+          "Lien pour télécharger l’app : $downloadLink";
+  }
+}
+
 String getEventMessage(String eventType) {
   String code = Event.instance.code;
   String downloadLink = "https://kapstr.fr/download";

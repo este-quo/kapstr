@@ -6,6 +6,12 @@ import 'package:kapstr/models/modules/album_photo.dart';
 import 'package:kapstr/widgets/layout/spacing.dart';
 import 'package:kapstr/views/guest/modules/layout.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'package:share_plus/share_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
 
 class AlbumPhotoGuest extends StatefulWidget {
   final String moduleId;
@@ -48,18 +54,32 @@ class _AlbumPhotoGuestState extends State<AlbumPhotoGuest> {
                         scrollDirection: Axis.vertical,
                         itemCount: albumPhotoModule.photosUrl.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: () {
-                              handleImageTap(context, imageUrl: albumPhotoModule.photosUrl[index]);
-                            },
-                            child: CachedNetworkImage(
-                              imageUrl: albumPhotoModule.photosUrl[index],
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => const Center(child: PulsatingLogo(svgPath: 'assets/icons/app/svg_light.svg', size: 64)),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
-                              width: double.infinity,
-                              height: double.infinity * 0.7,
-                            ),
+                          return Stack(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  handleImageTap(context, imageUrl: albumPhotoModule.photosUrl[index]);
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl: albumPhotoModule.photosUrl[index],
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const Center(child: PulsatingLogo(svgPath: 'assets/icons/app/svg_light.svg', size: 64)),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: InkWell(
+                                  onTap: () {
+                                    showPhotoOptions(context, albumPhotoModule.photosUrl[index]);
+                                  },
+                                  child: const Icon(Icons.more_vert, color: Colors.white),
+                                ),
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -111,4 +131,54 @@ void handleImageTap(BuildContext context, {required String imageUrl}) {
       );
     },
   );
+}
+
+void showPhotoOptions(BuildContext context, String imageUrl) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
+    builder: (BuildContext context) {
+      return SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Télécharger'),
+              onTap: () async {
+                await downloadImage(imageUrl);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.share),
+              title: const Text('Partager'),
+              onTap: () async {
+                try {
+                  final uri = Uri.parse(imageUrl);
+                  final response = await NetworkAssetBundle(uri).load(uri.path);
+                  final bytes = response.buffer.asUint8List();
+                  final tempDir = await getTemporaryDirectory();
+                  final file = await File('${tempDir.path}/shared_image.jpg').writeAsBytes(bytes);
+                  await Share.shareXFiles([XFile(file.path)], text: 'Voici une photo de l\'événement !');
+                } catch (e) {
+                  debugPrint('Erreur partage : $e');
+                }
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+Future<void> downloadImage(String url) async {
+  try {
+    var status = await Permission.storage.request();
+    if (status.isGranted) {}
+  } catch (e) {
+    debugPrint('Erreur téléchargement : $e');
+  }
 }

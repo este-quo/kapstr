@@ -156,19 +156,19 @@ class PhoneCodeVerificationState extends State<PhoneCodeVerification> {
       await cloud_firestore.createUser({
         "phone": widget.number.phoneNumber,
         "id_auth_token": FirebaseAuth.instance.currentUser!.uid,
-        "message_token": await FirebaseMessaging.instance.getToken(),
         "created_events": [],
         "joined_events": [],
         "image_url": FirebaseAuth.instance.currentUser!.photoURL ?? '',
         "name": FirebaseAuth.instance.currentUser!.displayName ?? '',
         "email": FirebaseAuth.instance.currentUser!.email ?? '',
         "onboarding_complete": false,
-        "credits": 1,
+        "credits": 0,
       });
 
       await context.read<UsersController>().initUser();
       if (context.read<AuthenticationController>().isPendingConnection) {
         await context.read<GuestsController>().createGuestFromUser(context.read<UsersController>().user!, context.read<EventsController>().event.id);
+
         if (!mounted) return;
         await context.read<UsersController>().addNewJoinedEvent(Event.instance.id, context);
         if (context.mounted) {

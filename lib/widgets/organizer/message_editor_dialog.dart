@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:kapstr/themes/constants.dart';
 
@@ -61,9 +62,10 @@ class _MessageEditorDialogState extends State<MessageEditorDialog> {
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: kPrimary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           onPressed: () {
+            Clipboard.setData(ClipboardData(text: _controller.text));
             Navigator.of(context).pop(_controller.text); // Valider le message modifié
           },
-          child: const Text('Confirmer', style: TextStyle(fontSize: 16, color: Colors.white)),
+          child: const Text('Copier', style: TextStyle(fontSize: 16, color: Colors.white)),
         ),
       ],
     );

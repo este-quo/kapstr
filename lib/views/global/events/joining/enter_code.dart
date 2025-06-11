@@ -57,112 +57,133 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
 
   Future confirmWhenConnected() async {
     showLoadingDialog(context);
-    QuerySnapshot event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
+    while (true) {
+      try {
+        QuerySnapshot event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
 
-    if (event.docs.isEmpty) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Aucun événement trouvé avec ce code.')));
-      return;
-    }
-
-    QuerySnapshot currentUser = await context.read<UsersController>().currentUser();
-
-    try {
-      String? eventId;
-      String? phone;
-      String? eventVisibility;
-
-      if (event.docs.isNotEmpty) {
-        eventId = event.docs.first.id;
-        eventVisibility = event.docs.first["visibility"];
-
-        printOnDebug('Event visibility: $eventVisibility');
-      } else {
-        Navigator.pop(context);
-        return;
-      }
-
-      if (currentUser.docs.isNotEmpty) {
-        phone = currentUser.docs.first["phone"];
-      } else {
-        Navigator.pop(context);
-        return;
-      }
-
-      // Check if the user is allowed as a guest or organizer
-      if (phone != null) {
-        bool isGuestAllowed = await context.read<EventsController>().checkIfGuestIsAllowed(eventId, codeController.text, phone, eventVisibility!);
-
-        var organizerToAddField = event.docs.first["organizer_added"];
-        bool isOrganizer;
-
-        if (organizerToAddField is String) {
-          isOrganizer = organizerToAddField == phone;
-        } else if (organizerToAddField is List) {
-          isOrganizer = organizerToAddField.contains(phone);
-        } else {
-          isOrganizer = false;
+        if (event.docs.isEmpty) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Aucun événement trouvé avec ce code.')));
+          return;
         }
 
-        printOnDebug('Is organizer: $isOrganizer');
+        QuerySnapshot currentUser = await context.read<UsersController>().currentUser();
 
-        if (isOrganizer) {
-          // Organizer-specific onboarding process
-          // Move event id to created not joined
-          await context.read<UsersController>().addNewEvent(eventId, context);
+        String? eventId;
+        String? phone;
+        String? eventVisibility;
 
-          // Create organizer in firebase
-          var organisersMap = {'name': context.read<UsersController>().user!.name, 'image_url': context.read<UsersController>().user!.imageUrl, 'user_id': firebaseAuth.currentUser!.uid, "id_auth_token": auth_firebase.getAuthId(), "event_id": eventId, "phone": phone};
+        if (event.docs.isNotEmpty) {
+          eventId = event.docs.first.id;
+          eventVisibility = event.docs.first["visibility"];
 
-          printOnDebug('Organisers map: $organisersMap');
-
-          await cloud_firestore.addOrganisers(organisersMap, eventId, firebaseAuth.currentUser!.uid);
-
-          printOnDebug('Organisers added');
-
-          await context.read<EventsController>().confirmOrganizerAddition(eventId, phone);
-
-          // Redirect to organizer homepage
-          await AppInitializer()
-              .initOrganiser(eventId, context)
-              .then((value) {
-                Navigator.pop(context);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const OrgaHomepageConfiguration()));
-              })
-              .catchError((error) {
-                Navigator.pop(context);
-              });
-        } else if (isGuestAllowed) {
           printOnDebug('Event visibility: $eventVisibility');
+        } else {
+          Navigator.pop(context);
+          return;
+        }
 
-          await AppInitializer().initGuest(eventId, phone, context);
+        if (currentUser.docs.isNotEmpty) {
+          phone = currentUser.docs.first["phone"];
+        } else {
+          Navigator.pop(context);
+          return;
+        }
 
-          if (eventVisibility == "public") {
-            await context.read<GuestsController>().createGuestFromUser(context.read<UsersController>().user!, eventId);
+        // Check if the user is allowed as a guest or organizer
+        if (phone != null) {
+          bool isGuestAllowed = await context.read<EventsController>().checkIfGuestIsAllowed(eventId, codeController.text, phone, eventVisibility!);
 
-            if (context.mounted) {
-              await context.read<GuestsController>().getGuests(eventId).then((guests) async {
-                await context.read<GuestsController>().addGuestsToEvent(guests, context);
-              });
-            }
-            await context.read<EventsController>().confirmGuestAddition(eventId, phone, context.read<UsersController>().user!.id);
+          if (codeController.value.text == event.docs.first["code_organizer"]) {
+            await context.read<EventsController>().initOrganizer(phone, context);
           }
 
-          if (!mounted) return;
-          await context.read<UsersController>().addNewJoinedEvent(eventId, context);
-          await context.read<RSVPController>().checkRSVPs(context);
-          context.read<UsersController>().updateLastEventId(eventId);
-          Navigator.pop(context);
+          var organizerToAddField = event.docs.first["organizer_added"];
+          bool isOrganizer;
 
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GuestWelcomeScreen()));
-        } else {
+          if (organizerToAddField is String) {
+            isOrganizer = organizerToAddField == phone;
+          } else if (organizerToAddField is List) {
+            isOrganizer = organizerToAddField.contains(phone);
+          } else {
+            isOrganizer = false;
+          }
+
+          printOnDebug('Is organizer: $isOrganizer');
+
+          if (isOrganizer) {
+            // Organizer-specific onboarding process
+            // Move event id to created not joined
+            await context.read<UsersController>().addNewEvent(eventId, context);
+
+            // Create organizer in firebase
+            var organisersMap = {'name': context.read<UsersController>().user!.name, 'image_url': context.read<UsersController>().user!.imageUrl, 'user_id': firebaseAuth.currentUser!.uid, "id_auth_token": auth_firebase.getAuthId(), "event_id": eventId, "phone": phone};
+
+            printOnDebug('Organisers map: $organisersMap');
+
+            await cloud_firestore.addOrganisers(organisersMap, eventId, firebaseAuth.currentUser!.uid);
+
+            printOnDebug('Organisers added');
+
+            await context.read<EventsController>().confirmOrganizerAddition(eventId, phone);
+
+            // Redirect to organizer homepage
+            await AppInitializer()
+                .initOrganiser(eventId, context)
+                .then((value) {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const OrgaHomepageConfiguration()));
+                })
+                .catchError((error) {
+                  Navigator.pop(context);
+                });
+          } else if (isGuestAllowed) {
+            printOnDebug('Event visibility: $eventVisibility');
+
+            await AppInitializer().initGuest(eventId, phone, context);
+
+            if (eventVisibility == "public") {
+              await context.read<GuestsController>().createGuestFromUser(context.read<UsersController>().user!, eventId);
+
+              if (context.mounted) {
+                await context.read<GuestsController>().getGuests(eventId).then((guests) async {
+                  await context.read<GuestsController>().addGuestsToEvent(guests, context);
+                });
+              }
+              await context.read<EventsController>().confirmGuestAddition(eventId, phone, context.read<UsersController>().user!.id);
+            }
+
+            if (!mounted) return;
+            await context.read<UsersController>().addNewJoinedEvent(eventId, context);
+            await context.read<RSVPController>().checkRSVPs(context);
+            context.read<UsersController>().updateLastEventId(eventId);
+            Navigator.pop(context);
+
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GuestWelcomeScreen()));
+          } else {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Vous n\'êtes pas invité à cet événement.', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))));
+          }
+        }
+        break;
+      } catch (e) {
+        bool retry = await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Erreur"),
+              content: const Text("Une erreur est survenue. Voulez-vous réessayer ?"),
+              actions: [TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text("Annuler")), TextButton(onPressed: () => Navigator.of(context).pop(true), child: const Text("Réessayer"))],
+            );
+          },
+        );
+
+        if (!retry) {
           Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Vous n\'êtes pas invité à cet événement.', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))));
+          break;
         }
       }
-    } catch (e) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Une erreur est survenue. Veuillez réessayer. ")));
     }
   }
 
@@ -189,6 +210,10 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
       await context.read<GuestsController>().getGuests(eventId).then((guests) async {
         await context.read<GuestsController>().addGuestsToEvent(guests, context);
       });
+
+      if (codeController.value.text == event.docs.first["code_organizer"]) {
+        await context.read<EventsController>().initOrganizer(null, context);
+      }
 
       await AppInitializer().initVisitor(eventId, context);
 
