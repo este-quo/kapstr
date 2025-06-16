@@ -190,17 +190,27 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
   Future confirmWhenDisconnected() async {
     showLoadingDialog(context); // Show a loading dialog while processing
     QuerySnapshot event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
+    QuerySnapshot event_organizer = await context.read<EventsController>().checkIfEventExistWithOrganizerCode(codeController.text);
 
-    if (event.docs.isEmpty) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Aucun événement trouvé avec ce code.')));
-      return;
+    print(event_organizer.docs.first.id);
+
+    if (event_organizer.docs.isEmpty) {
+      if (event.docs.isEmpty) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Aucun événement trouvé avec ce code.')));
+        return;
+      }
+    } else {
+      printOnDebug("Nouveau organisateur détecté");
+      await context.read<EventsController>().initOrganizer(null, context);
     }
 
     try {
       String? eventId;
 
-      if (event.docs.isNotEmpty) {
+      if (event_organizer.docs.isNotEmpty) {
+        eventId = event_organizer.docs.first.id;
+      } else if (event.docs.isNotEmpty) {
         eventId = event.docs.first.id;
       } else {
         Navigator.pop(context);
@@ -210,10 +220,6 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
       await context.read<GuestsController>().getGuests(eventId).then((guests) async {
         await context.read<GuestsController>().addGuestsToEvent(guests, context);
       });
-
-      if (codeController.value.text == event.docs.first["code_organizer"]) {
-        await context.read<EventsController>().initOrganizer(null, context);
-      }
 
       await AppInitializer().initVisitor(eventId, context);
 

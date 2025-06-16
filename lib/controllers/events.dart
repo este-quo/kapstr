@@ -305,6 +305,10 @@ class EventsController extends ChangeNotifier {
     return await configuration.getCollectionPath('events').where('code', isEqualTo: code).get();
   }
 
+  Future<QuerySnapshot<Object?>> checkIfEventExistWithOrganizerCode(String code) async {
+    return await configuration.getCollectionPath('events').where('code_organizer', isEqualTo: code).get();
+  }
+
   Future<bool> isOrganizer(BuildContext context, String code) async {
     String userId = context.read<UsersController>().user!.id;
     QuerySnapshot<Object?> organiser = await configuration.getCollectionPath('organisers').where('event_id', isEqualTo: context.read<EventsController>()._event.id).get();
