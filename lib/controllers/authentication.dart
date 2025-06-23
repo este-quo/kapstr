@@ -8,6 +8,7 @@ import 'package:kapstr/services/firebase/authentication/auth_apple.dart' as appl
 import 'package:kapstr/services/firebase/authentication/auth_email.dart' as email_auth;
 import 'package:provider/provider.dart';
 
+/// Contrôleur d'authentification centralisé et optimisé
 class AuthenticationController extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? _user;
@@ -20,8 +21,10 @@ class AuthenticationController extends ChangeNotifier {
   }
 
   void setPendingConnection(bool value) {
-    isPendingConnection = value;
-    notifyListeners();
+    if (isPendingConnection != value) {
+      isPendingConnection = value;
+      notifyListeners();
+    }
   }
 
   Future<void> _onAuthStateChanged(User? user) async {
@@ -29,45 +32,55 @@ class AuthenticationController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signInWithGoogle(BuildContext context) async {
-    await google_auth.signInGoogle(context);
-  }
-
-  Future<void> signInWithApple(BuildContext context) async {
-    await apple_auth.signInWithAppleAndFirebase(context);
-  }
-
-  // Sign in with email and password
-  Future<void> signInWithEmail(String email, String password) async {
+  /// Méthode utilitaire pour gérer les erreurs et notifier
+  Future<void> _runAuthAction(Future<void> Function() action) async {
     try {
-      await email_auth.signInWithEmailAndPassword(email, password);
+      await action();
     } catch (e) {
+      notifyListeners();
       rethrow;
     }
   }
 
+  Future<void> signInWithGoogle(BuildContext context) async {
+    await _runAuthAction(() => google_auth.signInGoogle(context));
+  }
+
+  Future<void> signInWithApple(BuildContext context) async {
+    await _runAuthAction(() => apple_auth.signInWithAppleAndFirebase(context));
+  }
+
+  /// Connexion avec email et mot de passe
+  Future<void> signInWithEmail(String email, String password) async {
+    await _runAuthAction(() => email_auth.signInWithEmailAndPassword(email, password));
+  }
+
+  /// Inscription avec email
   Future<void> registerWithEmail(String email, String password, String firstName, String lastName) async {
-    await email_auth.registerWithEmailAndPassword(email, password, firstName, lastName);
+    await _runAuthAction(() => email_auth.registerWithEmailAndPassword(email, password, firstName, lastName));
   }
 
+  /// Suppression de l'utilisateur courant
   Future<void> deleteUser(BuildContext context) async {
-    await _firebaseAuth.currentUser!.delete();
-    await logout(context);
+    await _runAuthAction(() async {
+      await _firebaseAuth.currentUser?.delete();
+      await logout(context);
+    });
   }
 
+  /// Déconnexion complète et nettoyage du contexte
   Future<void> logout(BuildContext context) async {
-    if (_user != null) {
+    if (_user == null) return;
+    await _runAuthAction(() async {
       await apple_auth.signOut();
       await google_auth.signOut();
       await _firebaseAuth.signOut();
-      _onAuthStateChanged(null);
+      await _onAuthStateChanged(null);
+      // Nettoyage des contrôleurs liés à l'utilisateur
       context.read<UsersController>().clear();
       context.read<RSVPController>().clear();
       context.read<PlacesController>().clear();
-
-      context.read<AuthenticationController>().setPendingConnection(false);
-
-      notifyListeners();
-    }
+      setPendingConnection(false);
+    });
   }
 }

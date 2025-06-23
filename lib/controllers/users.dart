@@ -72,20 +72,17 @@ class UsersController extends ChangeNotifier {
       return;
     }
 
-    // Update each field in the user object.
     updates.forEach((key, value) {
       user!.updateField(key, value);
     });
 
-    // After updating the fields, save the user to Firestore.
     try {
-      await saveUser(); // Assumes saveUser() is already correctly implemented to update Firestore.
+      await saveUser();
       printOnDebug('User updated successfully.');
     } catch (e) {
       printOnDebug('Error updating user: $e');
     }
 
-    // Notify listeners to update UI or whatever depends on the User data.
     notifyListeners();
   }
 
@@ -115,45 +112,34 @@ class UsersController extends ChangeNotifier {
     return userEventsIds;
   }
 
-  Future<void> addNewEvent(String eventId, BuildContext context) async {
+  Future<void> addEventToUser(String eventId, BuildContext context, {required bool isCreatedEvent}) async {
     var userDoc = await configuration.getCollectionPath('users').where('id_auth_token', isEqualTo: firebaseAuth.currentUser!.uid).get();
 
-    if (userDoc.docs.isNotEmpty) {
-      Map<String, dynamic> userDocData = userDoc.docs.first.data() as Map<String, dynamic>;
-      List<String>? userEvents = userDocData['created_events']?.cast<String>();
+    if (userDoc.docs.isEmpty) return;
 
-      // Check if the list is null or empty, or if it does not contain the eventId
-      if (userEvents == null) {
-        userEvents = [eventId];
-      } else if (!userEvents.contains(eventId)) {
-        userEvents.add(eventId);
-      } else {
-        // If eventId is already in the list, do nothing (return early)
-        return;
-      }
+    Map<String, dynamic> userDocData = userDoc.docs.first.data() as Map<String, dynamic>;
+    String eventField = isCreatedEvent ? 'created_events' : 'joined_events';
+    List<String>? userEvents = userDocData[eventField]?.cast<String>();
+
+    if (userEvents?.contains(eventId) ?? false) return;
+
+    userEvents = userEvents != null ? [...userEvents, eventId] : [eventId];
+
+    if (isCreatedEvent) {
       context.read<UsersController>().updateCreatedEvents(userEvents);
-      await configuration.getCollectionPath('users').doc(userDoc.docs.first.id).update({'created_events': userEvents});
+    } else {
+      context.read<UsersController>().updateJoinedEvents(userEvents);
     }
+
+    await configuration.getCollectionPath('users').doc(userDoc.docs.first.id).update({eventField: userEvents});
+  }
+
+  Future<void> addNewEvent(String eventId, BuildContext context) async {
+    await addEventToUser(eventId, context, isCreatedEvent: true);
   }
 
   Future<void> addNewJoinedEvent(String eventId, BuildContext context) async {
-    var userDoc = await configuration.getCollectionPath('users').where('id_auth_token', isEqualTo: firebaseAuth.currentUser!.uid).get();
-
-    if (userDoc.docs.isNotEmpty) {
-      Map<String, dynamic> userDocData = userDoc.docs.first.data() as Map<String, dynamic>;
-      List<String>? userEvents = userDocData['joined_events']?.cast<String>();
-
-      if ((userEvents == null || !userEvents.contains(eventId))) {
-        if (userEvents != null && userEvents.isNotEmpty) {
-          userEvents.add(eventId);
-        } else {
-          userEvents = [eventId];
-        }
-        context.read<UsersController>().updateJoinedEvents(userEvents);
-
-        await configuration.getCollectionPath('users').doc(userDoc.docs.first.id).update({'joined_events': userEvents});
-      }
-    }
+    await addEventToUser(eventId, context, isCreatedEvent: false);
   }
 
   Future<QuerySnapshot> currentUser() {

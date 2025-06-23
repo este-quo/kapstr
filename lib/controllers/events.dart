@@ -13,12 +13,12 @@ import 'package:provider/provider.dart';
 class EventsController extends ChangeNotifier {
   Event _event;
   bool isGuestPreview = false;
-  EventsController(this._event, {this.isGuestPreview = false});
+
   bool isLoading = false;
   bool isOrganizerCodeEntered = false;
 
   Event get event => _event;
-
+  EventsController(this._event, {this.isGuestPreview = false});
   Future initOrganizer(String? phone, BuildContext context) async {
     if (phone == null) {
       isOrganizerCodeEntered = true;
