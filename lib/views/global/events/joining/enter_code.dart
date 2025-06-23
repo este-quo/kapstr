@@ -28,6 +28,7 @@ class EnterGuestCode extends StatefulWidget {
 
 class _EnterGuestCodeState extends State<EnterGuestCode> {
   TextEditingController codeController = TextEditingController();
+  bool _isProcessing = false;
 
   @override
   void dispose() {
@@ -36,198 +37,314 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
   }
 
   void showLoadingDialog(BuildContext context) {
+    if (!mounted) return;
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return Center(
-          child: UnconstrainedBox(
-            child: Container(
-              width: 92,
-              height: 92,
-              padding: const EdgeInsets.all(16), // Optional: for inner spacing
-              decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8)),
-              child: const PulsatingLogo(svgPath: 'assets/icons/app/svg_light.svg', size: 64),
-            ),
-          ),
-        );
+        return Center(child: UnconstrainedBox(child: Container(width: 92, height: 92, padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8)), child: const PulsatingLogo(svgPath: 'assets/icons/app/svg_light.svg', size: 64))));
       },
     );
   }
 
-  Future confirmWhenConnected() async {
-    showLoadingDialog(context);
-    while (true) {
-      try {
-        QuerySnapshot event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
-
-        if (event.docs.isEmpty) {
-          Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Aucun événement trouvé avec ce code.')));
-          return;
-        }
-
-        QuerySnapshot currentUser = await context.read<UsersController>().currentUser();
-
-        String? eventId;
-        String? phone;
-        String? eventVisibility;
-
-        if (event.docs.isNotEmpty) {
-          eventId = event.docs.first.id;
-          eventVisibility = event.docs.first["visibility"];
-
-          printOnDebug('Event visibility: $eventVisibility');
-        } else {
-          Navigator.pop(context);
-          return;
-        }
-
-        if (currentUser.docs.isNotEmpty) {
-          phone = currentUser.docs.first["phone"];
-        } else {
-          Navigator.pop(context);
-          return;
-        }
-
-        // Check if the user is allowed as a guest or organizer
-        if (phone != null) {
-          bool isGuestAllowed = await context.read<EventsController>().checkIfGuestIsAllowed(eventId, codeController.text, phone, eventVisibility!);
-
-          if (codeController.value.text == event.docs.first["code_organizer"]) {
-            await context.read<EventsController>().initOrganizer(phone, context);
-          }
-
-          var organizerToAddField = event.docs.first["organizer_added"];
-          bool isOrganizer;
-
-          if (organizerToAddField is String) {
-            isOrganizer = organizerToAddField == phone;
-          } else if (organizerToAddField is List) {
-            isOrganizer = organizerToAddField.contains(phone);
-          } else {
-            isOrganizer = false;
-          }
-
-          printOnDebug('Is organizer: $isOrganizer');
-
-          if (isOrganizer) {
-            // Organizer-specific onboarding process
-            // Move event id to created not joined
-            await context.read<UsersController>().addNewEvent(eventId, context);
-
-            // Create organizer in firebase
-            var organisersMap = {'name': context.read<UsersController>().user!.name, 'image_url': context.read<UsersController>().user!.imageUrl, 'user_id': firebaseAuth.currentUser!.uid, "id_auth_token": auth_firebase.getAuthId(), "event_id": eventId, "phone": phone};
-
-            printOnDebug('Organisers map: $organisersMap');
-
-            await cloud_firestore.addOrganisers(organisersMap, eventId, firebaseAuth.currentUser!.uid);
-
-            printOnDebug('Organisers added');
-
-            await context.read<EventsController>().confirmOrganizerAddition(eventId, phone);
-
-            // Redirect to organizer homepage
-            await AppInitializer()
-                .initOrganiser(eventId, context)
-                .then((value) {
-                  Navigator.pop(context);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const OrgaHomepageConfiguration()));
-                })
-                .catchError((error) {
-                  Navigator.pop(context);
-                });
-          } else if (isGuestAllowed) {
-            printOnDebug('Event visibility: $eventVisibility');
-
-            await AppInitializer().initGuest(eventId, phone, context);
-
-            if (eventVisibility == "public") {
-              await context.read<GuestsController>().createGuestFromUser(context.read<UsersController>().user!, eventId);
-
-              if (context.mounted) {
-                await context.read<GuestsController>().getGuests(eventId).then((guests) async {
-                  await context.read<GuestsController>().addGuestsToEvent(guests, context);
-                });
-              }
-              await context.read<EventsController>().confirmGuestAddition(eventId, phone, context.read<UsersController>().user!.id);
-            }
-
-            if (!mounted) return;
-            await context.read<UsersController>().addNewJoinedEvent(eventId, context);
-            await context.read<RSVPController>().checkRSVPs(context);
-            context.read<UsersController>().updateLastEventId(eventId);
-            Navigator.pop(context);
-
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GuestWelcomeScreen()));
-          } else {
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Vous n\'êtes pas invité à cet événement.', style: TextStyle(color: kWhite, fontSize: 16, fontWeight: FontWeight.w400))));
-          }
-        }
-        break;
-      } catch (e) {
-        bool retry = await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Erreur"),
-              content: const Text("Une erreur est survenue. Voulez-vous réessayer ?"),
-              actions: [TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text("Annuler")), TextButton(onPressed: () => Navigator.of(context).pop(true), child: const Text("Réessayer"))],
-            );
-          },
-        );
-
-        if (!retry) {
-          Navigator.pop(context);
-          break;
-        }
-      }
+  void _dismissLoadingDialog() {
+    if (mounted && Navigator.canPop(context)) {
+      Navigator.pop(context);
     }
   }
 
-  Future confirmWhenDisconnected() async {
-    showLoadingDialog(context); // Show a loading dialog while processing
-    QuerySnapshot event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
-    QuerySnapshot event_organizer = await context.read<EventsController>().checkIfEventExistWithOrganizerCode(codeController.text);
+  void _showErrorSnackBar(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), backgroundColor: Colors.red, duration: const Duration(seconds: 4)));
+  }
 
-    print(event_organizer.docs.first.id);
-
-    if (event_organizer.docs.isEmpty) {
-      if (event.docs.isEmpty) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Aucun événement trouvé avec ce code.')));
-        return;
-      }
-    } else {
-      printOnDebug("Nouveau organisateur détecté");
-      await context.read<EventsController>().initOrganizer(null, context);
+  Future<void> _safeNavigateTo(Widget page) async {
+    if (!mounted) return;
+    try {
+      _dismissLoadingDialog();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => page));
+    } catch (e) {
+      printOnDebug('Navigation error: $e');
+      _showErrorSnackBar('Erreur de navigation. Veuillez réessayer.');
     }
+  }
+
+  Future<void> confirmWhenConnected() async {
+    if (_isProcessing) return;
+    _isProcessing = true;
 
     try {
-      String? eventId;
+      showLoadingDialog(context);
 
-      if (event_organizer.docs.isNotEmpty) {
-        eventId = event_organizer.docs.first.id;
-      } else if (event.docs.isNotEmpty) {
-        eventId = event.docs.first.id;
-      } else {
-        Navigator.pop(context);
+      // Validation du code
+      if (codeController.text.trim().isEmpty) {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Veuillez entrer un code d\'invitation.');
         return;
       }
 
-      await context.read<GuestsController>().getGuests(eventId).then((guests) async {
-        await context.read<GuestsController>().addGuestsToEvent(guests, context);
-      });
+      // Vérification de l'événement
+      QuerySnapshot event;
+      try {
+        event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
+      } catch (e) {
+        printOnDebug('Error checking event: $e');
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Erreur lors de la vérification de l\'événement.');
+        return;
+      }
 
-      await AppInitializer().initVisitor(eventId, context);
+      if (event.docs.isEmpty) {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Aucun événement trouvé avec ce code.');
+        return;
+      }
 
-      Navigator.pop(context);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GuestWelcomeScreen()));
+      // Récupération de l'utilisateur actuel
+      QuerySnapshot currentUser;
+      try {
+        currentUser = await context.read<UsersController>().currentUser();
+      } catch (e) {
+        printOnDebug('Error getting current user: $e');
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Erreur lors de la récupération des informations utilisateur.');
+        return;
+      }
+
+      if (currentUser.docs.isEmpty) {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Informations utilisateur non trouvées.');
+        return;
+      }
+
+      // Extraction des données de l'événement
+      String? eventId;
+      String? phone;
+      String? eventVisibility;
+
+      try {
+        eventId = event.docs.first.id;
+        eventVisibility = event.docs.first["visibility"] as String?;
+        phone = currentUser.docs.first["phone"] as String?;
+
+        printOnDebug('Event visibility: $eventVisibility');
+        printOnDebug('Event ID: $eventId');
+        printOnDebug('Phone: $phone');
+      } catch (e) {
+        printOnDebug('Error extracting event data: $e');
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Erreur lors de la lecture des données de l\'événement.');
+        return;
+      }
+
+      if (eventId == null || phone == null || eventVisibility == null) {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Données d\'événement incomplètes.');
+        return;
+      }
+
+      // Vérification des permissions
+      bool isGuestAllowed;
+      try {
+        isGuestAllowed = await context.read<EventsController>().checkIfGuestIsAllowed(eventId, codeController.text, phone, eventVisibility);
+      } catch (e) {
+        printOnDebug('Error checking guest permissions: $e');
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Erreur lors de la vérification des permissions.');
+        return;
+      }
+
+      // Vérification du code organisateur
+      try {
+        if (codeController.value.text == event.docs.first["code_organizer"]) {
+          await context.read<EventsController>().initOrganizer(phone, context);
+        }
+      } catch (e) {
+        printOnDebug('Error initializing organizer: $e');
+        // Continue execution, not critical
+      }
+
+      // Détermination du rôle
+      var organizerToAddField = event.docs.first["organizer_added"];
+      bool isOrganizer = false;
+
+      try {
+        if (organizerToAddField is String) {
+          isOrganizer = organizerToAddField == phone;
+        } else if (organizerToAddField is List) {
+          isOrganizer = organizerToAddField.contains(phone);
+        }
+        printOnDebug('Is organizer: $isOrganizer');
+      } catch (e) {
+        printOnDebug('Error determining organizer status: $e');
+        isOrganizer = false;
+      }
+
+      // Traitement selon le rôle
+      if (isOrganizer) {
+        await _handleOrganizerFlow(eventId, phone);
+      } else if (isGuestAllowed) {
+        await _handleGuestFlow(eventId, phone, eventVisibility);
+      } else {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Vous n\'êtes pas invité à cet événement.');
+      }
     } catch (e) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Une erreur est survenue. Veuillez réessayer.')));
+      printOnDebug('Unexpected error in confirmWhenConnected: $e');
+      _dismissLoadingDialog();
+      _showErrorSnackBar('Une erreur inattendue s\'est produite. Veuillez réessayer.');
+    } finally {
+      _isProcessing = false;
+    }
+  }
+
+  Future<void> _handleOrganizerFlow(String eventId, String phone) async {
+    try {
+      // Ajout de l'événement à l'utilisateur
+      await context.read<UsersController>().addNewEvent(eventId, context);
+
+      // Création de l'organisateur dans Firebase
+      var organisersMap = {'name': context.read<UsersController>().user!.name, 'image_url': context.read<UsersController>().user!.imageUrl, 'user_id': firebaseAuth.currentUser!.uid, "id_auth_token": auth_firebase.getAuthId(), "event_id": eventId, "phone": phone};
+
+      printOnDebug('Organisers map: $organisersMap');
+
+      await cloud_firestore.addOrganisers(organisersMap, eventId, firebaseAuth.currentUser!.uid);
+      printOnDebug('Organisers added');
+
+      await context.read<EventsController>().confirmOrganizerAddition(eventId, phone);
+
+      // Initialisation et redirection
+      await AppInitializer().initOrganiser(eventId, context);
+      await _safeNavigateTo(const OrgaHomepageConfiguration());
+    } catch (e) {
+      printOnDebug('Error in organizer flow: $e');
+      _dismissLoadingDialog();
+      _showErrorSnackBar('Erreur lors de la configuration de l\'organisateur.');
+    }
+  }
+
+  Future<void> _handleGuestFlow(String eventId, String phone, String eventVisibility) async {
+    try {
+      printOnDebug('Event visibility: $eventVisibility');
+
+      await AppInitializer().initGuest(eventId, phone, context);
+
+      if (eventVisibility == "public") {
+        await context.read<GuestsController>().createGuestFromUser(context.read<UsersController>().user!, eventId);
+
+        if (context.mounted) {
+          var guests = await context.read<GuestsController>().getGuests(eventId);
+          await context.read<GuestsController>().addGuestsToEvent(guests, context);
+        }
+
+        await context.read<EventsController>().confirmGuestAddition(eventId, phone, context.read<UsersController>().user!.id);
+      }
+
+      if (!mounted) return;
+
+      await context.read<UsersController>().addNewJoinedEvent(eventId, context);
+      await context.read<RSVPController>().checkRSVPs(context);
+      context.read<UsersController>().updateLastEventId(eventId);
+
+      await _safeNavigateTo(const GuestWelcomeScreen());
+    } catch (e) {
+      printOnDebug('Error in guest flow: $e');
+      _dismissLoadingDialog();
+      _showErrorSnackBar('Erreur lors de la configuration de l\'invité.');
+    }
+  }
+
+  Future<void> confirmWhenDisconnected() async {
+    if (_isProcessing) return;
+    _isProcessing = true;
+
+    try {
+      showLoadingDialog(context);
+
+      // Validation du code
+      if (codeController.text.trim().isEmpty) {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Veuillez entrer un code d\'invitation.');
+        return;
+      }
+
+      // Vérification des événements
+      QuerySnapshot event;
+      QuerySnapshot event_organizer;
+
+      try {
+        event = await context.read<EventsController>().checkIfEventExistWithCode(codeController.text);
+        event_organizer = await context.read<EventsController>().checkIfEventExistWithOrganizerCode(codeController.text);
+      } catch (e) {
+        printOnDebug('Error checking events: $e');
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Erreur lors de la vérification des événements.');
+        return;
+      }
+
+      // Vérification sécurisée des résultats
+      if (event_organizer.docs.isNotEmpty) {
+        try {
+          printOnDebug('Event organizer ID: ${event_organizer.docs.first.id}');
+          printOnDebug("Nouveau organisateur détecté");
+          await context.read<EventsController>().initOrganizer(null, context);
+        } catch (e) {
+          printOnDebug('Error initializing organizer: $e');
+          // Continue execution
+        }
+      } else if (event.docs.isEmpty) {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Aucun événement trouvé avec ce code.');
+        return;
+      }
+
+      // Détermination de l'ID de l'événement
+      String? eventId;
+      try {
+        if (event_organizer.docs.isNotEmpty) {
+          eventId = event_organizer.docs.first.id;
+        } else if (event.docs.isNotEmpty) {
+          eventId = event.docs.first.id;
+        }
+      } catch (e) {
+        printOnDebug('Error extracting event ID: $e');
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Erreur lors de la récupération de l\'ID de l\'événement.');
+        return;
+      }
+
+      if (eventId == null) {
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Impossible de déterminer l\'événement.');
+        return;
+      }
+
+      // Récupération et ajout des invités
+      try {
+        var guests = await context.read<GuestsController>().getGuests(eventId);
+        await context.read<GuestsController>().addGuestsToEvent(guests, context);
+      } catch (e) {
+        printOnDebug('Error handling guests: $e');
+        // Continue execution, not critical
+      }
+
+      // Initialisation du visiteur
+      try {
+        await AppInitializer().initVisitor(eventId, context);
+      } catch (e) {
+        printOnDebug('Error initializing visitor: $e');
+        _dismissLoadingDialog();
+        _showErrorSnackBar('Erreur lors de l\'initialisation du visiteur.');
+        return;
+      }
+
+      await _safeNavigateTo(const GuestWelcomeScreen());
+    } catch (e) {
+      printOnDebug('Unexpected error in confirmWhenDisconnected: $e');
+      _dismissLoadingDialog();
+      _showErrorSnackBar('Une erreur inattendue s\'est produite. Veuillez réessayer.');
+    } finally {
+      _isProcessing = false;
     }
   }
 
@@ -236,7 +353,18 @@ class _EnterGuestCodeState extends State<EnterGuestCode> {
     return OnBoardingLayout(
       title: 'Code d\'invitation',
       confirm: () async {
-        context.read<UsersController>().user != null ? await confirmWhenConnected() : await confirmWhenDisconnected();
+        if (_isProcessing) return;
+
+        try {
+          if (context.read<UsersController>().user != null) {
+            await confirmWhenConnected();
+          } else {
+            await confirmWhenDisconnected();
+          }
+        } catch (e) {
+          printOnDebug('Error in confirm action: $e');
+          _showErrorSnackBar('Erreur lors de la validation du code.');
+        }
       },
       children: [
         Column(
