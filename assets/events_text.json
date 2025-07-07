@@ -1,0 +1,42 @@
+{
+  "mariage": {
+    "invitation_introduction": "Ont l'immense joie de vous faire part de leur mariage et seront très honorés de votre présence le",
+    "invitation_conclusion": "À l’issue de la cérémonie suivra la réception.",
+    "about_subcategory_name": "services"
+  },
+  "anniversaire": {
+    "invitation_introduction": "Nous avons le plaisir de vous inviter à fêter cet anniversaire spécial avec nous le",
+    "invitation_conclusion": "Nous partagerons ensuite un moment convivial pour célébrer cette occasion.",
+    "about_subcategory_name": "services"
+  },
+  "gala": {
+    "invitation_introduction": "Joignez-vous à nous pour ce gala exceptionnel le",
+    "invitation_conclusion": "La soirée sera suivie d'une réception prestigieuse.",
+    "about_subcategory_name": "services"
+  },
+  "entreprise": {
+    "invitation_introduction": "Nous sommes ravis de vous accueillir à cet événement d'entreprise le",
+    "invitation_conclusion": "Nous terminerons avec un réseautage convivial.",
+    "about_subcategory_name": "services"
+  },
+  "bar_mitzvah": {
+    "invitation_introduction": "C'est avec grande joie que nous vous invitons à célébrer cette Bar Mitzvah le",
+    "invitation_conclusion": "Nous aurons ensuite une réception pour marquer ce moment.",
+    "about_subcategory_name": "services"
+  },
+  "salon": {
+    "invitation_introduction": "Soyez les bienvenus à ce salon professionnel le",
+    "invitation_conclusion": "Nous conclurons par un échange ouvert entre les participants.",
+    "about_subcategory_name": "services"
+  },
+  "soirée": {
+    "invitation_introduction": "Préparez-vous pour une soirée inoubliable le",
+    "invitation_conclusion": "La fête continuera tard dans la nuit.",
+    "about_subcategory_name": "services"
+  },
+  "default": {
+    "invitation_introduction": "Nous sommes heureux de vous inviter à cet événement spécial le",
+    "invitation_conclusion": "Nous espérons que vous apprécierez cet événement unique.",
+    "about_subcategory_name": "services"
+  }
+}

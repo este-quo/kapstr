@@ -1,0 +1,7 @@
+<?xml version = "1.0" encoding = "utf-8" ?>
+<resources>
+    <string name="app_name">I.C Event</string>
+    <string name="facebook_app_id">659340039693544</string>
+    <string name="fb_login_protocol_scheme">fb659340039693544</string>
+    <string name="facebook_client_token">742e1ce7cde4f9dd3d524f0c2fddfb80</string>
+</resources>

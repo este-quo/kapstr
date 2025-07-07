@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="33px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>téléchargement</title>
+    <g id="V2-IC-EVENT" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BACK-HOME" transform="translate(-319.000000, -317.000000)" fill-rule="nonzero">
+            <g id="téléchargement" transform="translate(319.000000, 317.000000)">
+                <circle id="Oval" fill="#151514" cx="16.219" cy="16.1474" r="16.0247"></circle>
+                <path d="M15.0145,11.5791 L15.0145,12.9647 C15.0145,13.6507 14.5193,14.2365 13.8428,14.3506 L9.76847,15.0377 C9.05199,15.1585 8.52744,15.7789 8.52744,16.5055 C8.52744,17.2476 9.07399,17.8763 9.80884,17.9796 L13.8047,18.5411 C14.4985,18.6386 15.0145,19.2322 15.0145,19.9328 L15.0145,20.8165 C15.0145,22.0117 16.4118,22.6614 17.3257,21.8911 L22.6678,17.3888 C23.3232,16.8363 23.3358,15.8309 22.6943,15.2623 L17.3522,10.5273 C16.4454,9.72358 15.0145,10.3673 15.0145,11.5791 Z" id="Path" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="34px" viewBox="0 0 25 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 3</title>
+    <g id="V2-IC-EVENT" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BACK-HOME" transform="translate(-86.000000, -188.000000)" fill="#B9B2B2">
+            <g id="Group-3" transform="translate(86.000000, 188.000000)">
+                <rect id="Rectangle" x="0" y="0" width="25" height="22" rx="1.4"></rect>
+                <path d="M2,25 L23,25 C24.1045695,25 25,25.8954305 25,27 L25,34 L25,34 L0,34 L0,27 C-1.3527075e-16,25.8954305 0.8954305,25 2,25 Z" id="Rectangle"></path>
+            </g>
+        </g>
+    </g>
+</svg>
