@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/users.dart';
+import 'package:kapstr/controllers/rsvps.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/guest.dart';
 import 'package:kapstr/controllers/guests.dart';
@@ -31,6 +32,7 @@ class _DisplayModuleContactsState extends State<DisplayModuleContacts> {
   bool isFiltered = false;
   bool isAllSelected = false;
   String currentAvailability = 'Tous';
+  bool isActivatingEvent = false;
 
   @override
   void initState() {
@@ -40,52 +42,90 @@ class _DisplayModuleContactsState extends State<DisplayModuleContacts> {
         isFiltered = searchController.text.isNotEmpty;
       });
     });
+    
+    // Removed all RSVP loading from initState to prevent infinite loading
+    // RSVPs will be loaded only after event activation
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!Event.instance.isUnlocked) {
-      return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(padding: EdgeInsets.symmetric(horizontal: 16.0), child: Text("Pour partager votre invitation, et obtenir votre code invité, veuillez activer votre événement.", textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black))),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (context.read<UsersController>().user!.credits > 0) {
-                    showDialog(
-                      context: context,
-                      builder:
-                          (context) => ConfirmationDialog(
-                            title: "Activer l'événement",
-                            confirmationText: "Utiliser 1 crédit",
-                            cancelText: "Annuler",
-                            onPressed: () async {
-                              await context.read<EventsController>().updateEventField(key: 'isUnlocked', value: true);
-                              int credits = context.read<UsersController>().user!.credits - 1;
-                              await context.read<UsersController>().updateUserFields({'credits': credits});
+    print("DisplayModuleContacts build - isUnlocked: ${Event.instance.isUnlocked}");
+    
+    return Consumer<EventsController>(
+      builder: (context, eventsController, child) {
+        final isUnlocked = Event.instance.isUnlocked;
+        
+        if (!isUnlocked) {
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 16.0), child: Text("Pour partager votre invitation, et obtenir votre code invité, veuillez activer votre événement.", textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black))),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: isActivatingEvent ? null : () {
+                      if (context.read<UsersController>().user!.credits > 0) {
+                        showDialog(
+                          context: context,
+                          builder:
+                              (context) => ConfirmationDialog(
+                                title: "Activer l'événement",
+                                confirmationText: "Utiliser 1 crédit",
+                                cancelText: "Annuler",
+                                onPressed: () async {
+                                  setState(() {
+                                    isActivatingEvent = true;
+                                  });
+                                  
+                                  try {
+                                    await context.read<EventsController>().updateEventField(key: 'isUnlocked', value: true);
+                                    int credits = context.read<UsersController>().user!.credits - 1;
+                                    await context.read<UsersController>().updateUserFields({'credits': credits});
 
-                              Navigator.pop(context);
-                              setState(() {
-                                Event.instance.isUnlocked = true;
-                              });
-                            },
+                                    Navigator.pop(context);
+                                    
+                                    // Force a complete rebuild by setting the state
+                                    if (mounted) {
+                                      setState(() {
+                                        Event.instance.isUnlocked = true;
+                                        isActivatingEvent = false;
+                                      });
+                                      
+                                      // Load RSVPs only once after unlocking the event
+                                      await context.read<RSVPController>().fetchAllRsvps();
+                                    }
+                                  } finally {
+                                    if (mounted) {
+                                      setState(() {
+                                        isActivatingEvent = false;
+                                      });
+                                    }
+                                  }
+                                },
+                              ),
+                        );
+                      } else {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreditsPage(isCreditsEmpty: true)));
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(backgroundColor: kPrimary),
+                    child: isActivatingEvent 
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
-                    );
-                  } else {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreditsPage(isCreditsEmpty: true)));
-                  }
-                },
-                style: ElevatedButton.styleFrom(backgroundColor: kPrimary),
-                child: const Text("Activer mon événement", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        )
+                      : const Text("Activer mon événement", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      );
-    }
+            ),
+          );
+        }
 
     return GestureDetector(
       onTap: () {
@@ -177,6 +217,8 @@ class _DisplayModuleContactsState extends State<DisplayModuleContacts> {
           );
         },
       ),
+    );
+      },
     );
   }
 }

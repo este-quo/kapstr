@@ -138,36 +138,43 @@ class _CreditsPageState extends State<CreditsPage> {
                 isLoading
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: kPrimary, minimumSize: const Size(double.infinity, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                      onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-
-                        try {
-                          final selectedPlan = inAppController.availablePlans.firstWhere((plan) => plan.id == selectedPack, orElse: () => throw Exception("Plan introuvable"));
-
-                          await inAppController.buyPlan(selectedPlan, context.read<UsersController>().user!.id);
-
-                          if (widget.isCreditsEmpty) {
-                            _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
-                            Navigator.of(context).pop();
-                          } else {
-                            Navigator.of(context).pop();
-                            _showConfirmationDialog("Vous avez ajouté ${selectedPlan.title} crédits à votre compte !");
-                          }
-                        } catch (e) {
-                          // Gérer les erreurs éventuelles
-                        } finally {
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kPrimary,
+                          minimumSize: const Size(double.infinity, 48),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                        onPressed: () async {
                           setState(() {
-                            isLoading = false;
+                            isLoading = true;
                           });
-                        }
-                      },
-                      child: const Text("Activer mon évènement", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
-                    ),
+
+                          try {
+                            final selectedPlan = inAppController.availablePlans.firstWhere((plan) => plan.id == selectedPack, orElse: () => throw Exception("Plan introuvable"));
+
+                            await inAppController.buyPlan(selectedPlan, context.read<UsersController>().user!.id);
+
+                            if (widget.isCreditsEmpty) {
+                              _showConfirmationDialog("Vous avez ajouté \\${selectedPlan.title} crédits à votre compte !");
+                              Navigator.of(context).pop();
+                            } else {
+                              Navigator.of(context).pop();
+                              _showConfirmationDialog("Vous avez ajouté \\${selectedPlan.title} crédits à votre compte !");
+                            }
+                          } catch (e) {
+                            // Gérer les erreurs éventuelles
+                          } finally {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                        },
+                        child: const Text(
+                          "Activer mon évènement",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)
+                        ),
+                      ),
                 const SizedBox(height: 8),
                 const Text("Payez une fois, sans engagement", style: TextStyle(fontSize: 14, color: kBlack)),
+                const SizedBox(height: 48), // Espace supplémentaire pour éviter la navigation Android
               ],
             ),
           ),

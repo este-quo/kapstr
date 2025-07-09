@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/organizers.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/app_organizer.dart';
+import 'package:kapstr/models/user.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
@@ -16,6 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:kapstr/configuration/navigation/entry_point.dart';
 import 'package:kapstr/controllers/authentication.dart';
+import 'package:kapstr/views/global/profile/change_password.dart';
 
 class ModifyProfile extends StatefulWidget {
   const ModifyProfile({super.key});
@@ -170,6 +173,11 @@ class _ModifyProfileState extends State<ModifyProfile> {
                     ],
                   ),
                 ),
+
+                const SizedBox(height: 32),
+                
+                // Bouton Changer de mot de passe
+                _buildChangePasswordButton(),
 
                 const SizedBox(height: 32),
 
@@ -413,7 +421,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
 
   Future<void> _uploadImage(File image, BuildContext dialogContext) async {
     try {
-      final storageRef = FirebaseStorage.instance.ref().child("users_picture/${firebaseAuth.currentUser!.uid}/${DateTime.now()}.jpg");
+      final storageRef = FirebaseStorage.instance.ref().child("users_picture/${FirebaseAuth.instance.currentUser!.uid}/${DateTime.now()}.jpg");
       await storageRef.putFile(image);
       final downloadUrl = await storageRef.getDownloadURL();
 
@@ -421,13 +429,84 @@ class _ModifyProfileState extends State<ModifyProfile> {
 
       await context.read<UsersController>().saveUser();
 
-      print('Image uploaded. URL: $downloadUrl');
+      printOnDebug('Image uploaded. URL: $downloadUrl');
 
       if (!mounted) return;
       Navigator.pop(dialogContext); // Close the dialog after successful upload
     } catch (e) {
-      print('Error uploading image: $e');
+      printOnDebug('Error uploading image: $e');
       Navigator.pop(dialogContext); // Ensure dialog is closed even on error
     }
+  }
+
+  Widget _buildChangePasswordButton() {
+    // Détermine si l'utilisateur peut changer son mot de passe
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return const SizedBox.shrink();
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(color: kLightGrey.withOpacity(0.3)),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => const ChangePassword()),
+          );
+        },
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: kPrimary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: const Icon(
+                  Icons.lock_outline,
+                  color: kPrimary,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 16),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Changer de mot de passe',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: kBlack,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Modifier votre mot de passe de connexion',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: kLightGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.chevron_right,
+                color: kLightGrey,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

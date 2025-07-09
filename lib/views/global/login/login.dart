@@ -6,6 +6,7 @@ import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/widgets/cgu.dart';
 import 'package:provider/provider.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class LogIn extends StatelessWidget {
   const LogIn({super.key});
@@ -21,7 +22,40 @@ class LogIn extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(height: 164),
+                const SizedBox(height: 60),
+                
+                // Bouton retour
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Symbols.chevron_left_rounded,
+                            color: kBlack,
+                            size: 32,
+                            weight: 300,
+                          ),
+                          const SizedBox(width: 4),
+                          const Text(
+                            'Retour',
+                            style: TextStyle(
+                              color: kBlack,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                
+                const SizedBox(height: 40),
 
                 // Logo Kapstr
                 Image.asset('assets/logos/kapstr_logo.png', width: MediaQuery.of(context).size.width * 0.4),

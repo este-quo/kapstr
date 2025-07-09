@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "1016658555930-n047jf7cka3nvum2cnkdvnhjh1a5d2c5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "f6872cb76c537b8ae9b59aaee0b6c970f3ad8971"
+          }
+        },
+        {
           "client_id": "1016658555930-pkonanq96navu38j83g2lifg3294j2q1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
