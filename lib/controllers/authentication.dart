@@ -8,7 +8,6 @@ import 'package:kapstr/services/firebase/authentication/auth_apple.dart' as appl
 import 'package:kapstr/services/firebase/authentication/auth_email.dart' as email_auth;
 import 'package:provider/provider.dart';
 
-/// Contrôleur d'authentification centralisé et optimisé
 class AuthenticationController extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User? _user;
