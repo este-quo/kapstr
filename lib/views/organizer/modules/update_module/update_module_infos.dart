@@ -128,7 +128,7 @@ class UpdateModuleInfosState extends State<UpdateModuleInfos> {
                             builder: (context, child) {
                               return Theme(
                                 data: ThemeData.light().copyWith(
-                                  dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                  dialogTheme: DialogThemeData(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
                                   colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack),
                                   dialogBackgroundColor: kWhite,
                                 ),
@@ -185,7 +185,7 @@ class UpdateModuleInfosState extends State<UpdateModuleInfos> {
                           builder: (context, child) {
                             return Theme(
                               data: ThemeData.light().copyWith(
-                                dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                dialogTheme: DialogThemeData(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
                                 colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack, background: Colors.white),
                                 dialogBackgroundColor: kWhite,
                               ),
