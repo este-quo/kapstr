@@ -5,7 +5,7 @@ import 'package:kapstr/themes/constants.dart';
 import 'package:provider/provider.dart';
 
 class CreateTableDialog extends StatefulWidget {
-  const CreateTableDialog({Key? key}) : super(key: key);
+  const CreateTableDialog({super.key});
 
   @override
   _CreateTableDialogState createState() => _CreateTableDialogState();

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/themes.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/views/organizer/theme/details.dart';
 import 'package:provider/provider.dart';
-import 'package:kapstr/themes/constants.dart';
 import 'package:loading_skeleton_niu/loading_skeleton.dart';
 
 class BrowseThemesFromType extends StatefulWidget {
@@ -109,7 +107,6 @@ class _BrowseThemesFromTypeState extends State<BrowseThemesFromType> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        print("test");
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ThemeDetails(type: widget.type, themeUrl: images[index], isOnBoarding: widget.isOnBoarding))).then((value) {
                           if (widget.callBack != null) {
                             widget.callBack!();
@@ -131,7 +128,7 @@ class _BrowseThemesFromTypeState extends State<BrowseThemesFromType> {
                           //   child: Container(
                           //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           //     decoration: BoxDecoration(
-                          //       color: kBlack.withOpacity(0.6),
+                          //       color: kBlack.withValues(alpha: 0.6),
                           //       borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8)),
                           //     ),
                           //     child: Text(

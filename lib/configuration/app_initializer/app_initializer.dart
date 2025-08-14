@@ -58,8 +58,9 @@ class AppInitializer {
   }
 
   Future<bool> initGuest(String eventId, String phone, BuildContext context) async {
+    printOnDebug("[initGuest] Start for eventId: $eventId");
     try {
-      printOnDebug("Initializing guest with phone: $phone for event ID: $eventId");
+      printOnDebug("Initializing guest with phone: $phone for : $eventId");
       final eventsController = context.read<EventsController>();
 
       // Fetch event and organizer data in parallel
@@ -67,6 +68,7 @@ class AppInitializer {
       final organiserFuture = eventsController.getEventOrganiser(eventId);
 
       final List<dynamic> results = await Future.wait([eventFuture, organiserFuture]);
+      printOnDebug("[initGuest] Event and organiser fetched");
 
       final Map<String, dynamic>? eventData = results[0];
       final QueryDocumentSnapshot? organiserDoc = results[1];
@@ -77,17 +79,20 @@ class AppInitializer {
       }
 
       AppOrganizer(organiserDoc.data() as Map<String, dynamic>, organiserDoc.id);
+      printOnDebug("[initGuest] AppOrganizer initialized with id: ${organiserDoc.id}");
 
       // Set guest
       _guestsController.setGuest(eventId, phone);
 
       // Fetch guest, modules and all guests in parallel
       printOnDebug("Fetching guest, modules and all guests in parallel");
+      printOnDebug("[initGuest] Starting parallel fetch of guest, modules, and guests");
       final guestFuture = _guestsController.currentGuest(eventId, phone);
       final modulesFuture = cloud_firestore.getAllModulesFromEvent(eventId);
       final guestsFuture = _guestsController.getGuests(eventId);
 
       final List<dynamic> eventDetails = await Future.wait([guestFuture, modulesFuture, guestsFuture]);
+      printOnDebug("[initGuest] Parallel fetch completed");
 
       printOnDebug("Fetching guest, modules and all guests in parallel completed");
       final QuerySnapshot guestSnapshot = eventDetails[0];
@@ -99,16 +104,19 @@ class AppInitializer {
         return false;
       }
       printOnDebug("Guest found with phone: $phone for event ID: $eventId");
+      printOnDebug("[initGuest] Guest data loaded, ID: ${guestSnapshot.docs.first.id}");
       AppGuest(guestSnapshot.docs.first.data() as Map<String, dynamic>, guestSnapshot.docs.first.id);
       printOnDebug("Allowed modules appguest : ${AppGuest.instance.allowedModules} and guest id : ${AppGuest.instance.id}");
 
-      // Initialize Event instance
-
+      // Initialisation de l'évènement
+      printOnDebug("[initGuest] Initializing Event with ID: $eventId and ${modules.length} modules, ${guests.length} guests");
       Event(eventData, eventId, modules, guests);
+      printOnDebug("[initGuest] Event.instance initialized: ${Event.instance.id}");
       await createRsvpsForGuest(AppGuest.instance.id, AppGuest.instance.name, context);
 
       // Update the event in the controller
       eventsController.updateEvent(Event.instance);
+      printOnDebug("[initGuest] Event instance updated in EventsController with ID: ${Event.instance.id}");
 
       printOnDebug('Event and guest initialization completed successfully');
       return true;

@@ -56,7 +56,7 @@ class _FontPickerState extends State<FontPicker> {
                         Navigator.of(context).pop(font); // Pop le BottomSheet avec la police sélectionnée
                       },
                     );
-                  }).toList(),
+                  }),
                   const SizedBox(height: 16),
                   const Text('Toutes :', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
                   ...allFonts.map((font) {
@@ -70,7 +70,7 @@ class _FontPickerState extends State<FontPicker> {
                         Navigator.of(context).pop(font); // Pop le BottomSheet avec la police sélectionnée
                       },
                     );
-                  }).toList(),
+                  }),
                 ],
               ),
             ),

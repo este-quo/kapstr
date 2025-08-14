@@ -5,7 +5,7 @@ class CoOrganizerSMSDialog extends StatelessWidget {
   final VoidCallback onSend;
   final VoidCallback onSkip;
 
-  const CoOrganizerSMSDialog({Key? key, required this.onSend, required this.onSkip}) : super(key: key);
+  const CoOrganizerSMSDialog({super.key, required this.onSend, required this.onSkip});
 
   @override
   Widget build(BuildContext context) {

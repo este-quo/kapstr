@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-///return tablet or phone according to screen size
-String getDeviceType() {
-  final data = MediaQueryData.fromView(WidgetsBinding.instance.window);
+/// Returns 'tablet' or 'phone' based on screen size.
+String getDeviceType(BuildContext context) {
+  final data = MediaQuery.of(context);
   return data.size.shortestSide < 600 ? 'phone' : 'tablet';
 }

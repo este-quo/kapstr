@@ -6,6 +6,6 @@ class IcDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider(color: kGrey.withOpacity(0.2), indent: MediaQuery.of(context).size.width * 0.2, endIndent: MediaQuery.of(context).size.width * 0.2, thickness: 1);
+    return Divider(color: kGrey.withValues(alpha: 0.2), indent: MediaQuery.of(context).size.width * 0.2, endIndent: MediaQuery.of(context).size.width * 0.2, thickness: 1);
   }
 }

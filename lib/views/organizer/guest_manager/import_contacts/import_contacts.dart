@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/contacts.dart';
 import 'package:kapstr/views/organizer/guest_manager/import_contacts/contact_row.dart';
-import 'package:kapstr/views/organizer/guest_manager/import_contacts/contacts_list.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/widgets/guests_manager/search_bar.dart';
 import 'package:provider/provider.dart';

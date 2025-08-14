@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/configuration/app_initializer/app_initializer.dart';
 import 'package:kapstr/controllers/authentication.dart';
+import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/rsvps.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/models/app_event.dart';
@@ -25,7 +26,7 @@ class PendingAuthentificationDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Afficher l'image principale de l'événement
-          if (event.modules[0].image != null && event.modules[0].image.isNotEmpty)
+          if (event.modules[0].image.isNotEmpty)
             Stack(
               alignment: Alignment.center,
               children: [
@@ -35,7 +36,7 @@ class PendingAuthentificationDialog extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.black.withOpacity(0.4), // Opacité pour texte lisible
+                    color: Colors.black.withValues(alpha: 0.4), // Opacité pour texte lisible
                   ),
                 ),
                 Text(
@@ -61,6 +62,10 @@ class PendingAuthentificationDialog extends StatelessWidget {
               String? phone = currentUser.docs.first["phone"];
               if (phone != null) {
                 await AppInitializer().initGuest(Event.instance.id, phone, context);
+
+                if (context.read<EventsController>().isOrganizerCodeEntered) {
+                  await context.read<EventsController>().initOrganizer(phone, context);
+                }
 
                 await context.read<UsersController>().addNewJoinedEvent(Event.instance.id, context);
 

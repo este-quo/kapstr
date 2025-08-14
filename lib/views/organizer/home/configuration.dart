@@ -21,7 +21,6 @@ class OrgaHomepageConfiguration extends StatefulWidget {
 class _OrgaHomepageConfigurationState extends State<OrgaHomepageConfiguration> with WidgetsBindingObserver {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<ThemeController>().initTheme(textColor: Event.instance.textColor, buttonColor: Event.instance.buttonColor, buttonTextColor: Event.instance.buttonTextColor);
 

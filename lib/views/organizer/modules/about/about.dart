@@ -2,10 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kapstr/controllers/modules/about.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/vibration.dart';
@@ -14,7 +11,6 @@ import 'package:kapstr/models/modules/about.dart';
 import 'package:kapstr/models/modules/about_service.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/modules/about/update_service.dart';
-import 'package:kapstr/views/organizer/modules/media/media.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:kapstr/widgets/organizer/modules/infos_textfield.dart';
@@ -222,20 +218,6 @@ class _AboutState extends State<About> {
                                           onTap: () async {
                                             XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
 
-                                            CropAspectRatioPreset getAspectRatio(String disposition) {
-                                              switch (disposition) {
-                                                case 'grid':
-                                                  return CropAspectRatioPreset.square;
-                                                case 'linear':
-                                                  return CropAspectRatioPreset.ratio3x2;
-                                                case 'slider':
-                                                  return CropAspectRatioPreset.ratio4x3;
-                                                // Add more cases as needed
-                                                default:
-                                                  return CropAspectRatioPreset.original;
-                                              }
-                                            }
-
                                             try {
                                               List<PlatformUiSettings> uiSettingsList = []; // Initialize the list
 
@@ -312,20 +294,6 @@ class _AboutState extends State<About> {
                                           title: const Text('Prendre une photo', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w500)),
                                           onTap: () async {
                                             XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
-
-                                            CropAspectRatioPreset getAspectRatio(String disposition) {
-                                              switch (disposition) {
-                                                case 'grid':
-                                                  return CropAspectRatioPreset.square;
-                                                case 'linear':
-                                                  return CropAspectRatioPreset.ratio3x2;
-                                                case 'slider':
-                                                  return CropAspectRatioPreset.ratio4x3;
-                                                // Add more cases as needed
-                                                default:
-                                                  return CropAspectRatioPreset.original;
-                                              }
-                                            }
 
                                             try {
                                               List<PlatformUiSettings> uiSettingsList = []; // Initialize the list
@@ -494,7 +462,7 @@ class _AboutState extends State<About> {
                                 child: Stack(
                                   alignment: Alignment.bottomLeft,
                                   children: [
-                                    CachedNetworkImage(imageUrl: service.imageUrl, fit: BoxFit.cover, width: 175, height: 280, colorBlendMode: BlendMode.darken, color: Colors.black.withOpacity(0.5)),
+                                    CachedNetworkImage(imageUrl: service.imageUrl, fit: BoxFit.cover, width: 175, height: 280, colorBlendMode: BlendMode.darken, color: Colors.black.withValues(alpha: 0.5)),
                                     Positioned(
                                       left: 8,
                                       bottom: 8,

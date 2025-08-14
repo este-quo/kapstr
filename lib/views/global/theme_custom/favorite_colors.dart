@@ -3,11 +3,24 @@ import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/helpers/format_colors.dart';
 import 'package:kapstr/themes/constants.dart';
 
-class FavoriteColors extends StatelessWidget {
-  FavoriteColors({super.key, required this.colorToUpdate, required this.onColorSelected});
+class FavoriteColors extends StatefulWidget {
+  const FavoriteColors({super.key, required this.initialColor, required this.onColorSelected});
 
-  Color colorToUpdate;
+  final Color initialColor;
   final Function(Color) onColorSelected;
+
+  @override
+  State<FavoriteColors> createState() => _FavoriteColorsState();
+}
+
+class _FavoriteColorsState extends State<FavoriteColors> {
+  late Color colorToUpdate;
+
+  @override
+  void initState() {
+    super.initState();
+    colorToUpdate = widget.initialColor;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +33,15 @@ class FavoriteColors extends StatelessWidget {
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         reverse: true,
-        itemCount: totalCount, // Utilise le itemCount ajusté.
+        itemCount: totalCount,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: (() {
-              colorToUpdate = fromHex(Event.instance.favoriteColors[index]);
-              onColorSelected(colorToUpdate);
-            }),
+            onTap: () {
+              setState(() {
+                colorToUpdate = fromHex(Event.instance.favoriteColors[index]);
+              });
+              widget.onColorSelected(colorToUpdate);
+            },
             child: Container(
               margin: const EdgeInsets.only(right: 8.0),
               padding: const EdgeInsets.all(2),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/modules/media/media.dart';
 
 class FeaturesSection extends StatelessWidget {
-  const FeaturesSection({Key? key, required this.children}) : super(key: key);
+  const FeaturesSection({super.key, required this.children});
 
   final List<Widget> children;
 

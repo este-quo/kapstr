@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/controllers/modules/golden_book.dart';
 import 'package:kapstr/controllers/notification.dart';
-import 'package:kapstr/controllers/themes.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/models/app_guest.dart';
 import 'package:kapstr/models/modules/golden_book_message.dart';
@@ -10,7 +9,6 @@ import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/login/login.dart';
 import 'package:kapstr/views/guest/modules/golden_book/card_preview.dart';
 import 'package:kapstr/views/guest/modules/layout.dart';
-import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/layout/spacing.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:kapstr/widgets/theme/background_theme.dart';
@@ -66,7 +64,7 @@ class _GoldenBookGuestState extends State<GoldenBookGuest> {
       showModalBottomSheet(
         isScrollControlled: true,
         context: context,
-        barrierColor: Colors.black.withOpacity(0.3),
+        barrierColor: Colors.black.withValues(alpha: 0.3),
         useSafeArea: true,
         builder: (context) {
           return DraggableScrollableSheet(
@@ -114,7 +112,7 @@ class _GoldenBookGuestState extends State<GoldenBookGuest> {
                       return SingleChildScrollView(
                         child: GestureDetector(
                           onTap: () => FocusScope.of(context).unfocus(),
-                          child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [smallSpacerH(), SizedBox(height: MediaQuery.of(context).size.height * 0.65, width: MediaQuery.of(context).size.width, child: CardPreview(controller: _controller)), xLargeSpacerH()]),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [smallSpacerH(context), SizedBox(height: MediaQuery.of(context).size.height * 0.65, width: MediaQuery.of(context).size.width, child: CardPreview(controller: _controller)), xLargeSpacerH(context)]),
                         ),
                       );
                     } else {

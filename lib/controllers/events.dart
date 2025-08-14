@@ -15,8 +15,21 @@ class EventsController extends ChangeNotifier {
   bool isGuestPreview = false;
   EventsController(this._event, {this.isGuestPreview = false});
   bool isLoading = false;
+  bool isOrganizerCodeEntered = false;
 
   Event get event => _event;
+
+  Future initOrganizer(String? phone, BuildContext context) async {
+    if (phone == null) {
+      isOrganizerCodeEntered = true;
+    } else {
+      Event.instance.addOrganizer(phone);
+
+      await context.read<EventsController>().updateEventField(key: 'organizer_added', value: Event.instance.organizerAdded);
+
+      await context.read<EventsController>().updateEventField(key: 'organizer_to_add', value: Event.instance.organizerAdded);
+    }
+  }
 
   void changeGuestPreview() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -49,8 +62,6 @@ class EventsController extends ChangeNotifier {
     }
   }
 
-  //TODO: Séparer la customisation complètement -> Necessite la séparatation des modules et controllers
-
   void updateModuleCustomization({required String moduleId, required Customization customization}) {
     int index = _event.modules.indexWhere((module) => module.id == moduleId);
 
@@ -73,7 +84,7 @@ class EventsController extends ChangeNotifier {
 
   Future<void> confirmGuestAddition(String eventId, String phone, String userId) async {
     printOnDebug('Confirming guest addition with phone: $phone');
-    printOnDebug('Event ID: ${eventId}');
+    printOnDebug('Event ID: $eventId');
     try {
       await configuration.getCollectionPath('events').doc(eventId).collection('guests').where('phone', isEqualTo: phone).get().then((value) {
         value.docs.first.reference.update({"user_id": userId, 'has_joined': true});
@@ -224,13 +235,13 @@ class EventsController extends ChangeNotifier {
       context.read<UsersController>().user!.createdEvents.remove(eventId);
       // Commit the batch
       await batch.commit();
-    } on FirebaseException catch (firebaseEx) {
-      // Handle Firebase-specific errors
-      print("FirebaseException: ${firebaseEx.message}");
+    } on FirebaseException catch (e) {
+      printOnDebug(e.code);
+
       rethrow;
     } catch (e) {
       // Handle any other errors
-      print("An error occurred: $e");
+
       throw Exception("Failed to delete event: $e");
     }
   }
@@ -292,6 +303,13 @@ class EventsController extends ChangeNotifier {
 
   Future<QuerySnapshot<Object?>> checkIfEventExistWithCode(String code) async {
     return await configuration.getCollectionPath('events').where('code', isEqualTo: code).get();
+  }
+
+  Future<bool> isOrganizer(BuildContext context, String code) async {
+    String userId = context.read<UsersController>().user!.id;
+    QuerySnapshot<Object?> organiser = await configuration.getCollectionPath('organisers').where('event_id', isEqualTo: context.read<EventsController>()._event.id).get();
+    String eventOrganiszerId = organiser.docs.first["user_id"];
+    return userId == eventOrganiszerId;
   }
 
   Future<bool> checkIfGuestIsAllowed(String eventId, String code, String guestPhone, String eventVisibility) async {

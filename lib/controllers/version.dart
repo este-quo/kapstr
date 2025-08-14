@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kapstr/services/api/api.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class VersionProvider with ChangeNotifier {
@@ -15,7 +15,6 @@ class VersionProvider with ChangeNotifier {
   Future<void> initVersion() async {
     try {
       // Récupérer la version installée
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       currentVersion = Api().version;
 

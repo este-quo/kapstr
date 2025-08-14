@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kapstr/configuration/in_app_purchase_service.dart';
-import 'package:kapstr/controllers/guests.dart';
 import 'package:kapstr/controllers/places.dart';
 import 'package:kapstr/controllers/rsvps.dart';
 import 'package:kapstr/controllers/users.dart';

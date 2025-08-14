@@ -90,10 +90,10 @@ class _TablesState extends State<Tables> {
                       await context.read<TablesController>().updateShowTablesEarly(value);
                     },
                     activeColor: kBlack,
-                    activeTrackColor: kBlack.withOpacity(0.5),
+                    activeTrackColor: kBlack.withValues(alpha: 0.5),
                     inactiveThumbColor: kWhite,
-                    inactiveTrackColor: kLightGrey.withOpacity(0.5),
-                    trackOutlineColor: MaterialStateColor.resolveWith((states) => kLightGrey),
+                    inactiveTrackColor: kLightGrey.withValues(alpha: 0.5),
+                    trackOutlineColor: WidgetStateColor.resolveWith((states) => kLightGrey),
                   ),
                 ],
               ),
@@ -108,7 +108,7 @@ class _TablesState extends State<Tables> {
                       onTap: () async {
                         await showCreateTableDialog(context);
                       },
-                      child: Column(children: [xLargeSpacerH(), const Text('Vous n\'avez pas encore créé de table', style: TextStyle(color: kGrey, fontSize: 16))]),
+                      child: Column(children: [xLargeSpacerH(context), const Text('Vous n\'avez pas encore créé de table', style: TextStyle(color: kGrey, fontSize: 16))]),
                     ),
                   )
                   : !context.watch<PlacesController>().isLoading

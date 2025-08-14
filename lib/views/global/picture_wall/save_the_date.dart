@@ -48,7 +48,7 @@ class _SaveTheDateState extends State<SaveTheDate> {
                 right: 10,
                 child: Container(
                   width: 32,
-                  decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), spreadRadius: 1, blurRadius: 2, offset: const Offset(0, 1))]),
+                  decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.5), spreadRadius: 1, blurRadius: 2, offset: const Offset(0, 1))]),
                   child: IconButton(
                     icon: const Icon(Icons.edit, size: 16),
                     color: kBlack,
@@ -84,7 +84,7 @@ class _SaveTheDateState extends State<SaveTheDate> {
           Column(
             children: [
               const Text("La date n'est pas encore connue", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-              mediumSpacerH(),
+              mediumSpacerH(context),
               if (!isGuestView)
                 IcButton(
                   text: 'Modifier',

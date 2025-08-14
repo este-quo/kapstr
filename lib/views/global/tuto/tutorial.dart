@@ -3,7 +3,6 @@ import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/events/events.dart';
 import 'package:kapstr/views/global/tuto/tutorial_1.dart';
 import 'package:kapstr/views/global/tuto/tutorial_2.dart';
 import 'package:kapstr/views/global/tuto/tutorial_3.dart';

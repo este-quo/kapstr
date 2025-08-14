@@ -41,7 +41,6 @@ class ModulesController extends ChangeNotifier {
     return await configuration.getCollectionPath('events').doc(eventId).collection('modules').get().then((value) => value.docs.map((e) => Module.fromMap(e.id, e.data(), stringToType(e['type']))).toList());
   }
 
-  //TODO: Remove -> Outdated
   Future<void> updateAllModulesWithChoosenCustom({required String colorFilter, required String font, required String textColor, required int textSize}) async {
     try {
       var modules = await configuration.getCollectionPath('events').doc(Event.instance.id).collection('modules').get();
@@ -232,7 +231,7 @@ class ModulesController extends ChangeNotifier {
             'text_size': 32,
             'text_color': 'FFFFFF',
             'typographie': 'Great Vibes',
-            'color_filter': selectedColor.withOpacity(0.6).value.toRadixString(16).padLeft(8, '0'),
+            'color_filter': selectedColor.withValues(alpha: 0.6).toARGB32().toRadixString(16).padLeft(8, '0'),
             'image': image,
           });
         }
@@ -408,7 +407,7 @@ class ModulesController extends ChangeNotifier {
         }
 
         // Mettre à jour le champ colorFilter du module créé
-        await context.read<ModulesController>().updateModuleField(key: 'color_filter', value: selectedColor.withOpacity(0.6).value.toRadixString(16).padLeft(8, '0'), moduleId: moduleId);
+        await context.read<ModulesController>().updateModuleField(key: 'color_filter', value: selectedColor.withValues(alpha: 0.6).toARGB32().toRadixString(16).padLeft(8, '0'), moduleId: moduleId);
       }
     }
 
@@ -563,11 +562,9 @@ class ModulesController extends ChangeNotifier {
         final data = moduleSnapshot.data() as Map<String, dynamic>;
         return data['event_type'] == eventType;
       } else {
-        print('Module introuvable avec l\'ID : $moduleId');
         return false;
       }
     } catch (e) {
-      print('Erreur lors de la vérification de l\'event_type : $e');
       return false;
     }
   }

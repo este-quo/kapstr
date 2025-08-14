@@ -21,7 +21,7 @@ class SecondaryButton extends StatelessWidget {
         child:
             text == null
                 ? Center(child: Icon(icon, color: kBlack))
-                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(text ?? "", style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)), const SizedBox(width: 12), icon != null ? Icon(icon, color: kBlack) : SizedBox()]),
+                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [Text(text ?? "", style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal)), const SizedBox(width: 12), icon != null ? Icon(icon, color: kBlack) : SizedBox()]),
       ),
     );
   }

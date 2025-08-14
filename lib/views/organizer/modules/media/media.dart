@@ -548,7 +548,7 @@ class _MediaState extends State<Media> {
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Prendre une photo', style: TextStyle(color: kBlack, fontWeight: FontWeight.w500, fontSize: 14)), Icon(Icons.camera_alt_outlined, color: kBlack, size: 20)]),
                   ),
                 ),
-                Divider(color: kBlack.withOpacity(0.1), height: 1, thickness: 1),
+                Divider(color: kBlack.withValues(alpha: 0.1), height: 1, thickness: 1),
                 InkWell(
                   onTap: () => Navigator.of(context).pop(MediaSource.imageGallery),
                   child: const Padding(
@@ -556,7 +556,7 @@ class _MediaState extends State<Media> {
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Voir ma galerie', style: TextStyle(color: kBlack, fontWeight: FontWeight.w500, fontSize: 14)), Icon(Icons.photo_library_outlined, color: kBlack, size: 20)]),
                   ),
                 ),
-                Divider(color: kBlack.withOpacity(0.1), height: 1, thickness: 1),
+                Divider(color: kBlack.withValues(alpha: 0.1), height: 1, thickness: 1),
                 InkWell(
                   onTap: () => Navigator.of(context).pop(MediaSource.fileSystem),
                   child: const Padding(
@@ -565,7 +565,7 @@ class _MediaState extends State<Media> {
                   ),
                 ),
                 // Divider(
-                //   color: kBlack.withOpacity(0.1),
+                //   color: kBlack.withValues(alpha: 0.1),
                 //   height: 1,
                 //   thickness: 1,
                 // ),

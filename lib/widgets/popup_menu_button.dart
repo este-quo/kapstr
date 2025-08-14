@@ -70,8 +70,6 @@ class _DispoButtonState extends State<DispoButton> {
         return 'assets/icons/circle.svg';
       case DispositionType.card:
         return 'assets/icons/card.svg';
-      default:
-        return 'assets/icons/grid.svg';
     }
   }
 

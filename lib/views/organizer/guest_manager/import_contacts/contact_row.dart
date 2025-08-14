@@ -19,13 +19,13 @@ class _ImportContactRowState extends State<ImportContactRow> {
     List<Contact> selectedContacts = widget.phoneContacts;
 
     return Container(
-      decoration: BoxDecoration(border: Border(top: BorderSide(color: kGrey.withOpacity(0.2)))),
+      decoration: BoxDecoration(border: Border(top: BorderSide(color: kGrey.withValues(alpha: 0.2)))),
       padding: const EdgeInsets.only(top: 12, bottom: 24, right: 16, left: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(flex: 5, child: ImportContactButton(selectedContacts: selectedContacts)),
-          smallSpacerW(),
+          smallSpacerW(context),
           Expanded(
             flex: 1,
             child: Container(

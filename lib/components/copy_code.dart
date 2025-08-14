@@ -6,7 +6,7 @@ import 'package:kapstr/widgets/buttons/tertiary_button.dart';
 class CopyCodeButton extends StatelessWidget {
   final String code;
 
-  const CopyCodeButton({Key? key, required this.code}) : super(key: key);
+  const CopyCodeButton({super.key, required this.code});
 
   void _copyCodeToClipboard(BuildContext context) {
     Clipboard.setData(ClipboardData(text: code));

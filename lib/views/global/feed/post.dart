@@ -116,7 +116,7 @@ class Post extends StatelessWidget {
                                 splashRadius: 1,
                                 padding: const EdgeInsets.all(0.0),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                                shadowColor: kBlack.withOpacity(0.2),
+                                shadowColor: kBlack.withValues(alpha: 0.2),
                                 onSelected: (String result) {
                                   if (result == 'delete') {
                                     context.read<FeedController>().removePost(id);

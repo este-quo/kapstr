@@ -5,7 +5,7 @@ class DeleteEventBottomDialog extends StatelessWidget {
   final VoidCallback onConfirm;
   final VoidCallback onCancel;
 
-  const DeleteEventBottomDialog({Key? key, required this.onConfirm, required this.onCancel}) : super(key: key);
+  const DeleteEventBottomDialog({super.key, required this.onConfirm, required this.onCancel});
 
   @override
   Widget build(BuildContext context) {

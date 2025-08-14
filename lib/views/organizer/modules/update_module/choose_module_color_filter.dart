@@ -2,7 +2,6 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/modules/modules.dart';
-import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/views/global/theme_custom/favorite_colors.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
@@ -91,7 +90,7 @@ class _ChooseModuleColorFilterState extends State<ChooseModuleColorFilter> {
         onPressed: () async {
           triggerShortVibration();
 
-          String colorValue = myColor == kModuleFilterTransparent ? '00000000' : myColor.value.toRadixString(16).padLeft(8, '0');
+          String colorValue = myColor == kModuleFilterTransparent ? '00000000' : myColor.toARGB32().toRadixString(16).padLeft(8, '0');
 
           if (!Event.instance.favoriteColors.contains(colorValue)) {
             Event.instance.favoriteColors.insert(0, colorValue);
@@ -148,7 +147,7 @@ class _ChooseModuleColorFilterState extends State<ChooseModuleColorFilter> {
                                     color: myColor, // Initial color
                                     onColorChanged: (Color color) {
                                       setState(() {
-                                        myColor = color.withOpacity(0.6);
+                                        myColor = color.withValues(alpha: 0.6);
                                       });
                                     },
                                     width: 44,
@@ -183,15 +182,16 @@ class _ChooseModuleColorFilterState extends State<ChooseModuleColorFilter> {
                         onTap: () {
                           triggerShortVibration();
                           setState(() {
-                            myColor = colors[index - 1].withOpacity(0.6);
+                            myColor = colors[index - 1].withValues(alpha: 0.6);
                           });
                         },
                         child: Stack(
                           children: [
-                            Container(decoration: BoxDecoration(color: colors[index - 1].withOpacity(1.0), borderRadius: BorderRadius.circular(8.0), border: Border.all(color: kBorderColor, width: 1, strokeAlign: BorderSide.strokeAlignOutside))),
+                            Container(decoration: BoxDecoration(color: colors[index - 1].withValues(alpha: 1.0), borderRadius: BorderRadius.circular(8.0), border: Border.all(color: kBorderColor, width: 1, strokeAlign: BorderSide.strokeAlignOutside))),
 
                             // Display a checkmark if the color is selected
-                            if (myColor == colors[index - 1].withOpacity(0.6)) Positioned(right: 4, bottom: 4, child: Container(padding: EdgeInsets.all(2), decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(100.0)), child: const Icon(Icons.check, color: kBlack, size: 12))),
+                            if (myColor == colors[index - 1].withValues(alpha: 0.6))
+                              Positioned(right: 4, bottom: 4, child: Container(padding: EdgeInsets.all(2), decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(100.0)), child: const Icon(Icons.check, color: kBlack, size: 12))),
                           ],
                         ),
                       );
@@ -206,7 +206,7 @@ class _ChooseModuleColorFilterState extends State<ChooseModuleColorFilter> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Couleur séléctionnée :', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, color: kBlack)),
-                  xSmallSpacerW(),
+                  xSmallSpacerW(context),
                   Container(width: 25, height: 25, decoration: BoxDecoration(color: myColor, borderRadius: BorderRadius.circular(100.0), border: Border.all(color: kBorderColor, width: 1, strokeAlign: BorderSide.strokeAlignOutside))),
                 ],
               ),
@@ -219,12 +219,12 @@ class _ChooseModuleColorFilterState extends State<ChooseModuleColorFilter> {
 
               SizedBox(
                 child: FavoriteColors(
-                  colorToUpdate: myColor,
+                  initialColor: myColor,
                   onColorSelected: (Color color) {
                     setState(() {
                       triggerShortVibration();
 
-                      myColor = color.withOpacity(0.6);
+                      myColor = color.withValues(alpha: 0.6);
                     });
                   },
                 ),
@@ -235,10 +235,10 @@ class _ChooseModuleColorFilterState extends State<ChooseModuleColorFilter> {
                 onPressed: () async {
                   triggerShortVibration();
 
-                  await context.read<ModulesController>().updateFieldForAllModules(key: "color_filter", value: myColor.value.toRadixString(16).padLeft(8, '0'));
+                  await context.read<ModulesController>().updateFieldForAllModules(key: "color_filter", value: myColor.toARGB32().toRadixString(16).padLeft(8, '0'));
 
                   for (var module in Event.instance.modules) {
-                    module.colorFilter = myColor.value.toRadixString(16).padLeft(8, '0');
+                    module.colorFilter = myColor.toARGB32().toRadixString(16).padLeft(8, '0');
                   }
 
                   if (!mounted) return;

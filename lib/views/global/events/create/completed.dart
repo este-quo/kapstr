@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
-import 'package:kapstr/widgets/custom_svg_picture.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/home/configuration.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -62,10 +61,10 @@ class _OnboardingCompleteState extends State<OnboardingComplete> {
               ),
               const SizedBox(height: 48),
               Container(
-                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1.5, color: kWhite.withOpacity(0.2))),
+                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1.5, color: kWhite.withValues(alpha: 0.2))),
                 child: Container(
                   margin: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1.5, color: kWhite.withOpacity(0.6))),
+                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 1.5, color: kWhite.withValues(alpha: 0.6))),
                   child: Container(
                     margin: const EdgeInsets.all(8),
                     child: CircularPercentIndicator(

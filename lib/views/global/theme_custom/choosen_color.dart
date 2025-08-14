@@ -18,7 +18,7 @@ class _ChoosenColorRowState extends State<ChoosenColorRow> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('Couleur sélectionnée :', style: TextStyle(fontWeight: FontWeight.w400, fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize, color: kBlack)),
-        xSmallSpacerW(),
+        xSmallSpacerW(context),
         Container(width: 16, height: 16, decoration: BoxDecoration(color: widget.choosenColor, borderRadius: BorderRadius.circular(8), border: Border.all(color: kBorderColor, width: 1, strokeAlign: BorderSide.strokeAlignOutside))),
       ],
     );

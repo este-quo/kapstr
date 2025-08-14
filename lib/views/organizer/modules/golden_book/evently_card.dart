@@ -41,7 +41,7 @@ class EventlyMessageCard extends StatelessWidget {
           padding: const EdgeInsets.only(top: 64, left: 16, right: 16, bottom: 16),
           margin: const EdgeInsets.only(top: 40),
           width: MediaQuery.of(context).size.width - 40,
-          decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.withOpacity(0.2), width: 1)),
+          decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.withValues(alpha: 0.2), width: 1)),
           child: Column(
             children: [
               Text(getEventMessage(), textAlign: TextAlign.center, style: TextStyle(color: kBlack, fontSize: 22, fontWeight: FontWeight.w400, fontFamily: GoogleFonts.greatVibes().fontFamily)),
@@ -58,7 +58,7 @@ class EventlyMessageCard extends StatelessWidget {
           child: Container(
             width: 80,
             height: 80,
-            decoration: BoxDecoration(color: Event.instance.fullResThemeUrl == '' ? kLightGrey.withOpacity(0.2) : kWhite, borderRadius: BorderRadius.circular(100), border: Border.all(color: kLighterGrey, width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+            decoration: BoxDecoration(color: Event.instance.fullResThemeUrl == '' ? kLightGrey.withValues(alpha: 0.2) : kWhite, borderRadius: BorderRadius.circular(100), border: Border.all(color: kLighterGrey, width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
             child: ClipRRect(borderRadius: BorderRadius.circular(100), child: Center(child: Image.asset('assets/logos/evently_logo.png', fit: BoxFit.cover))),
           ),
         ),

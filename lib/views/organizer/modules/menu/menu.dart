@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/modules/menu.dart';
 import 'package:kapstr/controllers/themes.dart';
-import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/menu.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/modules/invitation_card/editable_text.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:kapstr/widgets/theme/background_theme.dart';
-import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
 
 GlobalKey<MyEditableTextState> menuEditableTextKey = GlobalKey<MyEditableTextState>();
@@ -39,25 +38,6 @@ class _MenuPreviewState extends State<MenuPreview> {
 
   @override
   Widget build(BuildContext context) {
-    String capitalizeFirstLetter(String text) {
-      if (text.isEmpty) return text;
-      return text[0].toUpperCase() + text.substring(1);
-    }
-
-    String formatPartyDate(DateTime? date) {
-      var formatter = DateFormat('EEEE d MMMM à H:mm', 'fr_FR');
-      String formattedDate = formatter.format(date!);
-
-      formattedDate = formattedDate.replaceAll(':', 'h');
-
-      // Divisez la date en parties et mettez en majuscule chaque partie
-      List<String> parts = formattedDate.split(' ');
-      parts[0] = capitalizeFirstLetter(parts[0]); // Jour
-      parts[2] = capitalizeFirstLetter(parts[2]); // Mois
-
-      return parts.join(' ');
-    }
-
     MenuModule menu = context.watch<MenuModuleController>().currentMenu;
 
     return Scaffold(

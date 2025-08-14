@@ -8,15 +8,13 @@ import 'package:kapstr/controllers/modules/modules.dart';
 import 'package:kapstr/views/organizer/modules/update_module/place_picker.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/module.dart';
-import 'package:kapstr/widgets/organizer/modules/change_module_picture.dart';
-import 'package:kapstr/widgets/organizer/modules/infos_image.dart';
 import 'package:kapstr/widgets/organizer/modules/infos_textfield.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UpdateModule extends StatefulWidget {
   final Module module;
+  @override
   final GlobalKey<UpdateModuleState> key;
 
   const UpdateModule({required this.module, required this.key}) : super(key: key);
@@ -72,8 +70,6 @@ class UpdateModuleState extends State<UpdateModule> {
 
   @override
   Widget build(BuildContext context) {
-    var currentModule = widget.module;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -145,7 +141,7 @@ class UpdateModuleState extends State<UpdateModule> {
                                     ),
                                   ),
                                   // Your PlacePicker widget or other content
-                                  Expanded(child: PlacePicker(module: widget.module, moduleId: widget.module.id, placeAdress: widget.module.placeAddress ?? '')),
+                                  Expanded(child: PlacePicker(module: widget.module, moduleId: widget.module.id, initialPlaceAddress: widget.module.placeAddress ?? '')),
                                 ],
                               );
                             },
@@ -220,8 +216,7 @@ class UpdateModuleState extends State<UpdateModule> {
                             return Theme(
                               data: ThemeData.light().copyWith(
                                 dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack, background: Colors.white),
-                                dialogBackgroundColor: kWhite,
+                                colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack),
                               ),
                               child: child!,
                             );
@@ -274,8 +269,7 @@ class UpdateModuleState extends State<UpdateModule> {
                           return Theme(
                             data: ThemeData.light().copyWith(
                               dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                              colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack, background: Colors.white),
-                              dialogBackgroundColor: kWhite,
+                              colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack),
                             ),
                             child: child!,
                           );

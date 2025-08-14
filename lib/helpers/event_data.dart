@@ -1,41 +1,12 @@
 import 'package:kapstr/controllers/event_data.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/models/app_event.dart';
+
 import 'package:kapstr/services/firebase/paid_modules/add_paid_modules.dart' as paid_modules_firestore;
 
 Future<void> generateModulesFromEventType(String eventId, String eventType, EventDataController onboardingData) async {
   printOnDebug("Generating modules for event type: $eventType");
   printOnDebug('Man name: ${onboardingData.manFirstName}');
   printOnDebug('Woman name: ${onboardingData.womanFirstName}');
-  String getIntroduction() {
-    switch (Event.instance.eventType) {
-      case 'anniversaire':
-        return "Nous avons le plaisir de vous inviter à fêter cet anniversaire spécial avec nous le";
-      case 'bar mitsvah':
-        return "C'est avec grande joie que nous vous invitons à célébrer cette Bar Mitzvah le";
-      case 'salon':
-        return "Soyez les bienvenus à ce salon professionnel le";
-      case 'soirée':
-        return "Préparez-vous pour une soirée inoubliable le";
-      default:
-        return "Nous sommes heureux de vous inviter à cet événement spécial le";
-    }
-  }
-
-  String getConclusion() {
-    switch (Event.instance.eventType) {
-      case 'anniversaire':
-        return "Nous partagerons ensuite un moment convivial pour célébrer cette occasion.";
-      case 'bar mitsvah':
-        return "Nous aurons ensuite une réception pour marquer ce moment.";
-      case 'salon':
-        return "Nous conclurons par un échange ouvert entre les participants.";
-      case 'soirée':
-        return "La fête continuera tard dans la nuit.";
-      default:
-        return "Nous espérons que vous apprécierez cet événement unique.";
-    }
-  }
 
   switch (eventType) {
     case 'mariage':

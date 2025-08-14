@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:kapstr/controllers/modules/media.dart';
+import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/models/modules/media.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/modules/media/media.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -45,7 +45,7 @@ class _MediaGuestState extends State<MediaGuest> {
         });
       }
     } catch (e) {
-      print("Error fetching media module: $e");
+      printOnDebug(e.toString());
     }
   }
 

@@ -29,7 +29,7 @@ class _CardPreviewState extends State<CardPreview> {
           padding: const EdgeInsets.only(top: 64, left: 16, right: 16, bottom: 16),
           margin: const EdgeInsets.only(top: 40),
           width: MediaQuery.of(context).size.width - 40,
-          decoration: BoxDecoration(color: context.watch<EventsController>().event.fullResThemeUrl == '' ? kWhite : kWhite.withOpacity(1), borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.withOpacity(0.2), width: 1)),
+          decoration: BoxDecoration(color: context.watch<EventsController>().event.fullResThemeUrl == '' ? kWhite : kWhite.withValues(alpha: 1), borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey.withValues(alpha: 0.2), width: 1)),
           child: Column(
             children: [
               TextInput(controller: widget.controller),

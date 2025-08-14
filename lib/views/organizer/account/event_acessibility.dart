@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/event_data.dart';
 import 'package:kapstr/controllers/events.dart';
 
 import 'package:kapstr/helpers/debug_helper.dart';
@@ -7,9 +6,6 @@ import 'package:kapstr/models/app_event.dart';
 
 import 'package:kapstr/themes/constants.dart';
 
-import 'package:kapstr/views/global/events/create/layout.dart';
-
-import 'package:kapstr/views/global/events/create/woman/woman_infos.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 
 import 'package:kapstr/widgets/layout/get_device_type.dart';
@@ -28,7 +24,6 @@ class EventAcessPageState extends State<EventAcessPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     final visibility = Event.instance.visibility;
@@ -98,7 +93,7 @@ class EventAcessPageState extends State<EventAcessPage> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: _isPrivateSelected ? kBlack : kWhite, border: Border.all(width: 1, color: _isPrivateSelected ? kBlack : kBlack.withOpacity(0.3))),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: _isPrivateSelected ? kBlack : kWhite, border: Border.all(width: 1, color: _isPrivateSelected ? kBlack : kBlack.withValues(alpha: 0.3))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -113,7 +108,7 @@ class EventAcessPageState extends State<EventAcessPage> {
                       ],
                     ),
                     const Spacer(),
-                    _buildSelectionIndicator(_isPrivateSelected, kBlack),
+                    _buildSelectionIndicator(_isPrivateSelected, kBlack, context),
                   ],
                 ),
               ),
@@ -130,7 +125,7 @@ class EventAcessPageState extends State<EventAcessPage> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: _isPublicSelected ? kBlack : kWhite, border: Border.all(width: 1, color: _isPublicSelected ? kBlack : kBlack.withOpacity(0.3))),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: _isPublicSelected ? kBlack : kWhite, border: Border.all(width: 1, color: _isPublicSelected ? kBlack : kBlack.withValues(alpha: 0.3))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -145,7 +140,7 @@ class EventAcessPageState extends State<EventAcessPage> {
                       ],
                     ),
                     const Spacer(),
-                    _buildSelectionIndicator(_isPublicSelected, kBlack),
+                    _buildSelectionIndicator(_isPublicSelected, kBlack, context),
                   ],
                 ),
               ),
@@ -157,8 +152,8 @@ class EventAcessPageState extends State<EventAcessPage> {
   }
 }
 
-Widget _buildSelectionIndicator(bool isSelected, Color borderColor) {
-  final indicatorSize = getDeviceType() == 'phone' ? 20.0 : 24.0;
+Widget _buildSelectionIndicator(bool isSelected, Color borderColor, BuildContext context) {
+  final indicatorSize = getDeviceType(context) == 'phone' ? 20.0 : 24.0;
   return Container(
     width: indicatorSize,
     height: indicatorSize,

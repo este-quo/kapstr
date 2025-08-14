@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/helpers/share_app.dart';
-import 'package:kapstr/models/app_event.dart';
+import 'package:flutter/services.dart';
+
 import 'package:kapstr/themes/constants.dart';
 
 class MessageEditorDialog extends StatefulWidget {
   final String initialMessage;
 
-  const MessageEditorDialog({Key? key, required this.initialMessage}) : super(key: key);
+  const MessageEditorDialog({super.key, required this.initialMessage});
 
   @override
   _MessageEditorDialogState createState() => _MessageEditorDialogState();
@@ -63,9 +62,10 @@ class _MessageEditorDialogState extends State<MessageEditorDialog> {
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: kPrimary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           onPressed: () {
+            Clipboard.setData(ClipboardData(text: _controller.text));
             Navigator.of(context).pop(_controller.text); // Valider le message modifié
           },
-          child: const Text('Confirmer', style: TextStyle(fontSize: 16, color: Colors.white)),
+          child: const Text('Copier', style: TextStyle(fontSize: 16, color: Colors.white)),
         ),
       ],
     );

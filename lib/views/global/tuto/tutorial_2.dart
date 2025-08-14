@@ -3,9 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/tuto/tutorial_3.dart';
-import 'package:kapstr/widgets/buttons/main_button.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TutorialTwo extends StatefulWidget {
   const TutorialTwo({super.key});

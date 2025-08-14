@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kapstr/configuration/navigation/entry_point.dart';
 import 'package:kapstr/controllers/authentication.dart';
-import 'package:kapstr/controllers/event_data.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/phone_verification/verification.dart';
@@ -10,7 +9,6 @@ import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:provider/provider.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 
 class PhoneNumberRequestUI extends StatefulWidget {
   const PhoneNumberRequestUI({super.key});

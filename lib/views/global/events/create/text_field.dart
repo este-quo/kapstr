@@ -12,22 +12,12 @@ class OnboardingTextField extends StatelessWidget {
   final Widget suffixIcon;
   final FocusNode? focusNode;
 
-  const OnboardingTextField({
-    super.key,
-    required this.title,
-    required this.onValidatedInput,
-    required this.controller,
-    required this.validateInput,
-    required this.keyboardType,
-    required this.isPassword,
-    required this.suffixIcon,
-    required this.focusNode,
-  });
+  const OnboardingTextField({super.key, required this.title, required this.onValidatedInput, required this.controller, required this.validateInput, required this.keyboardType, required this.isPassword, required this.suffixIcon, required this.focusNode});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      maxLength: 20,
+      maxLength: 30,
       focusNode: focusNode,
       controller: controller,
       textCapitalization: TextCapitalization.words,
@@ -42,12 +32,8 @@ class OnboardingTextField extends StatelessWidget {
         filled: true,
         fillColor: kLightWhiteTransparent1,
         hintStyle: const TextStyle(color: kLightGrey),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: kBlack),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: kBlack),
-        ),
+        enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: kBlack)),
+        focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: kBlack)),
         suffixIcon: suffixIcon,
       ),
     );

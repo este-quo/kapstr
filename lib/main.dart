@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:kapstr/controllers/customization.dart';
 import 'package:kapstr/controllers/event_data.dart';
 import 'package:kapstr/controllers/feed.dart';
-import 'package:kapstr/controllers/in-app.dart';
+import 'package:kapstr/controllers/in_app.dart';
 import 'package:kapstr/controllers/modules/about.dart';
 import 'package:kapstr/controllers/modules/cagnotte.dart';
 import 'package:kapstr/controllers/modules/golden_book.dart';

@@ -33,6 +33,7 @@ class Event {
   String id = "";
   List<Guest> guests = [];
   String code = "";
+  String code_organizer = "";
   String saveTheDateThumbnail = "";
   DateTime? createdAt;
   String visibility = "";
@@ -75,6 +76,8 @@ class Event {
     _instance.guests = guests;
     _instance.visibility = eventData['visibility'] ?? "";
     _instance.code = eventData["code"] ?? "";
+    _instance.code_organizer = eventData["code_organizer"] ?? "";
+
     _instance.saveTheDateThumbnail = eventData["save_the_date_thumbnail"] ?? "";
     _instance.createdAt = DateTime.parse(eventData["created_at"] ?? "");
     _instance.logoUrl = eventData["event_logo_url"] ?? "";
@@ -115,6 +118,7 @@ class Event {
       'custom_theme_urls': customThemeUrls,
       'visibility': visibility,
       'code': code,
+      'code_organizer': code_organizer,
       'save_the_date_thumbnail': saveTheDateThumbnail,
       'created_at': createdAt?.toIso8601String(),
       'event_logo_url': logoUrl,

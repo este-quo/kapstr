@@ -7,25 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:kapstr/controllers/event_data.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/configuration/app_initializer/app_initializer.dart';
-import 'package:kapstr/helpers/capitalize.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/event_data.dart';
 import 'package:kapstr/helpers/event_type.dart';
 import 'package:kapstr/helpers/generate_code.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/global/events/create/browse_themes_onboarding.dart';
-import 'package:kapstr/views/global/events/create/completed.dart';
 import 'package:kapstr/views/global/events/create/layout.dart';
 import 'package:kapstr/views/global/events/create/text_field.dart';
-import 'package:kapstr/views/organizer/theme/browse_all.dart';
-import 'package:kapstr/views/organizer/theme/browse_type.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:kapstr/services/firebase/cloud_firestore/cloud_firestore.dart' as cloud_firestore;
 import 'package:kapstr/services/firebase/authentication/auth_firebase.dart' as auth_firebase;
-import 'package:kapstr/services/firebase/paid_modules/add_paid_modules.dart' as paid_modules_firestore;
 
 class WomanInfosUI extends StatefulWidget {
   const WomanInfosUI({super.key});
@@ -92,7 +87,7 @@ class GetWomanInfosState extends State<WomanInfosUI> {
                   focusNode: _manFirstNameFieldFocusNode,
                   suffixIcon: const SizedBox(),
                   isPassword: false,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   validateInput: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez renseigner ce champ pour continuer';
@@ -117,7 +112,7 @@ class GetWomanInfosState extends State<WomanInfosUI> {
                         key: const Key('lastNameMan'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -150,7 +145,7 @@ class GetWomanInfosState extends State<WomanInfosUI> {
                         key: const Key('firstNameWoman'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -173,7 +168,7 @@ class GetWomanInfosState extends State<WomanInfosUI> {
                         key: const Key('lastNameWoman'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -308,7 +303,7 @@ class GetWomanInfosState extends State<WomanInfosUI> {
                 // Crop the image
                 final croppedFile = await ImageCropper().cropImage(
                   aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                  sourcePath: pickedFile!.path,
+                  sourcePath: pickedFile.path,
                   compressFormat: ImageCompressFormat.jpg,
                   compressQuality: 100,
                   uiSettings: uiSettingsList, // Pass the list here
@@ -381,7 +376,7 @@ class GetWomanInfosState extends State<WomanInfosUI> {
                   // Crop the image
                   final croppedFile = await ImageCropper().cropImage(
                     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                    sourcePath: pickedFile!.path,
+                    sourcePath: pickedFile.path,
                     compressFormat: ImageCompressFormat.jpg,
                     compressQuality: 100,
                     uiSettings: uiSettingsList, // Pass the list here
@@ -466,7 +461,8 @@ class GetWomanInfosState extends State<WomanInfosUI> {
       'favorite_colors': [],
       'favorite_fonts': [],
       'isUnlocked': false,
-      'code': getRandomString(5),
+      'code': getRandomString(6),
+      'code_organizer': getRandomString(6),
       'save_the_date_thumbnail': kEventModuleImages[Event.getStringFromEventType(onboardingData.eventType)]!["wedding"],
       'created_at': formattedDate,
     };

@@ -16,14 +16,14 @@ class _AppCustomCardState extends State<AppCustomCard> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white, border: Border.all(color: kBlack.withOpacity(0.2), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white, border: Border.all(color: kBlack.withValues(alpha: 0.2), width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         width: MediaQuery.of(context).size.width - 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Preview
-            Container(width: 20, height: 20, decoration: BoxDecoration(color: Color(int.parse('0xFF${widget.color}')), border: Border.all(color: kBlack.withOpacity(0.2), width: 1, strokeAlign: BorderSide.strokeAlignOutside), borderRadius: BorderRadius.circular(Sizer(context).getRadius()))),
+            Container(width: 20, height: 20, decoration: BoxDecoration(color: Color(int.parse('0xFF${widget.color}')), border: Border.all(color: kBlack.withValues(alpha: 0.2), width: 1, strokeAlign: BorderSide.strokeAlignOutside), borderRadius: BorderRadius.circular(Sizer(context).getRadius()))),
 
             const SizedBox(width: 20.0),
 

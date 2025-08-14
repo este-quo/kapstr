@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/modules/invitations.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/invitation.dart';

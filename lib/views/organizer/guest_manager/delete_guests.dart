@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/guest.dart';
 import 'package:kapstr/controllers/guests.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/widgets/buttons/main_button.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DeleteGuestsButton extends StatelessWidget {

@@ -3,14 +3,12 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/modules/about.dart'; // Assurez-vous que le chemin est correct
-import 'package:kapstr/controllers/modules/modules.dart';
+import 'package:kapstr/controllers/modules/about.dart';
 import 'package:kapstr/helpers/capitalize.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/about_service.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/home/configuration.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:kapstr/widgets/organizer/modules/infos_textfield.dart';
@@ -19,7 +17,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class UpdateServicePage extends StatefulWidget {
-  const UpdateServicePage({Key? key, required this.service, required this.moduleId}) : super(key: key);
+  const UpdateServicePage({super.key, required this.service, required this.moduleId});
 
   final AboutService service;
   final String moduleId;
@@ -29,11 +27,11 @@ class UpdateServicePage extends StatefulWidget {
 }
 
 class _UpdateServicePageState extends State<UpdateServicePage> {
-  late TextEditingController _serviceNameController = TextEditingController();
-  late TextEditingController _serviceDescriptionController = TextEditingController();
+  late final TextEditingController _serviceNameController = TextEditingController();
+  late final TextEditingController _serviceDescriptionController = TextEditingController();
 
-  FocusNode _serviceNameFocusNode = FocusNode();
-  FocusNode _serviceDescriptionFocusNode = FocusNode();
+  final FocusNode _serviceNameFocusNode = FocusNode();
+  final FocusNode _serviceDescriptionFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -111,25 +109,11 @@ class _UpdateServicePageState extends State<UpdateServicePage> {
                   surfaceTintColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                  shadowColor: kBlack.withOpacity(0.2),
+                  shadowColor: kBlack.withValues(alpha: 0.2),
                   onSelected: (String value) async {
                     switch (value) {
                       case 'gallery':
                         XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
-
-                        CropAspectRatioPreset getAspectRatio(String disposition) {
-                          switch (disposition) {
-                            case 'grid':
-                              return CropAspectRatioPreset.square;
-                            case 'linear':
-                              return CropAspectRatioPreset.ratio3x2;
-                            case 'slider':
-                              return CropAspectRatioPreset.ratio4x3;
-                            // Add more cases as needed
-                            default:
-                              return CropAspectRatioPreset.original;
-                          }
-                        }
 
                         try {
                           List<PlatformUiSettings> uiSettingsList = []; // Initialize the list
@@ -201,20 +185,6 @@ class _UpdateServicePageState extends State<UpdateServicePage> {
                         break;
                       case 'camera':
                         XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
-
-                        CropAspectRatioPreset getAspectRatio(String disposition) {
-                          switch (disposition) {
-                            case 'grid':
-                              return CropAspectRatioPreset.square;
-                            case 'linear':
-                              return CropAspectRatioPreset.ratio3x2;
-                            case 'slider':
-                              return CropAspectRatioPreset.ratio4x3;
-                            // Add more cases as needed
-                            default:
-                              return CropAspectRatioPreset.original;
-                          }
-                        }
 
                         try {
                           List<PlatformUiSettings> uiSettingsList = []; // Initialize the list
@@ -299,7 +269,7 @@ class _UpdateServicePageState extends State<UpdateServicePage> {
                         value: 'divider',
                         child: Container(
                           height: 1,
-                          color: kBlack.withOpacity(0.1), // Couleur du Divider
+                          color: kBlack.withValues(alpha: 0.1), // Couleur du Divider
                         ),
                       ),
                       const PopupMenuItem(value: 'camera', child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Prendre une photo', style: TextStyle(color: kBlack)), Icon(Icons.camera_alt_outlined, color: kBlack, size: 20)])),
@@ -330,20 +300,6 @@ class _UpdateServicePageState extends State<UpdateServicePage> {
                             title: const Text('Voir ma galerie', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w500)),
                             onTap: () async {
                               XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
-
-                              CropAspectRatioPreset getAspectRatio(String disposition) {
-                                switch (disposition) {
-                                  case 'grid':
-                                    return CropAspectRatioPreset.square;
-                                  case 'linear':
-                                    return CropAspectRatioPreset.ratio3x2;
-                                  case 'slider':
-                                    return CropAspectRatioPreset.ratio4x3;
-                                  // Add more cases as needed
-                                  default:
-                                    return CropAspectRatioPreset.original;
-                                }
-                              }
 
                               try {
                                 List<PlatformUiSettings> uiSettingsList = []; // Initialize the list
@@ -421,20 +377,6 @@ class _UpdateServicePageState extends State<UpdateServicePage> {
                             title: const Text('Prendre une photo', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w500)),
                             onTap: () async {
                               XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
-
-                              CropAspectRatioPreset getAspectRatio(String disposition) {
-                                switch (disposition) {
-                                  case 'grid':
-                                    return CropAspectRatioPreset.square;
-                                  case 'linear':
-                                    return CropAspectRatioPreset.ratio3x2;
-                                  case 'slider':
-                                    return CropAspectRatioPreset.ratio4x3;
-                                  // Add more cases as needed
-                                  default:
-                                    return CropAspectRatioPreset.original;
-                                }
-                              }
 
                               try {
                                 List<PlatformUiSettings> uiSettingsList = []; // Initialize the list
@@ -562,20 +504,6 @@ class _UpdateServicePageState extends State<UpdateServicePage> {
                                     onTap: () async {
                                       XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
 
-                                      CropAspectRatioPreset getAspectRatio(String disposition) {
-                                        switch (disposition) {
-                                          case 'grid':
-                                            return CropAspectRatioPreset.square;
-                                          case 'linear':
-                                            return CropAspectRatioPreset.ratio3x2;
-                                          case 'slider':
-                                            return CropAspectRatioPreset.ratio4x3;
-                                          // Add more cases as needed
-                                          default:
-                                            return CropAspectRatioPreset.original;
-                                        }
-                                      }
-
                                       try {
                                         List<PlatformUiSettings> uiSettingsList = []; // Initialize the list
 
@@ -652,20 +580,6 @@ class _UpdateServicePageState extends State<UpdateServicePage> {
                                     title: const Text('Prendre une photo', style: TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w500)),
                                     onTap: () async {
                                       XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
-
-                                      CropAspectRatioPreset getAspectRatio(String disposition) {
-                                        switch (disposition) {
-                                          case 'grid':
-                                            return CropAspectRatioPreset.square;
-                                          case 'linear':
-                                            return CropAspectRatioPreset.ratio3x2;
-                                          case 'slider':
-                                            return CropAspectRatioPreset.ratio4x3;
-                                          // Add more cases as needed
-                                          default:
-                                            return CropAspectRatioPreset.original;
-                                        }
-                                      }
 
                                       try {
                                         List<PlatformUiSettings> uiSettingsList = []; // Initialize the list

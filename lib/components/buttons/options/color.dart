@@ -68,6 +68,6 @@ class _ColorOptionButtonState extends State<ColorOptionButton> {
   }
 
   String selectedColorToHex(Color color) {
-    return color.value.toRadixString(16).substring(2).toUpperCase(); // Retourne sans '0xFF'
+    return color.toARGB32().toRadixString(16).substring(2).toUpperCase(); // Retourne sans '0xFF'
   }
 }

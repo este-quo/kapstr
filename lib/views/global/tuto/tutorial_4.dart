@@ -1,11 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/home/configuration.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TutorialFour extends StatefulWidget {
   const TutorialFour({super.key});
@@ -71,12 +68,12 @@ class _TutorialFourState extends State<TutorialFour> {
                               curve: Curves.easeInOut,
                               margin: const EdgeInsets.only(bottom: 8),
                               padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(boxShadow: [BoxShadow(color: kGrey.withOpacity(0.2), blurRadius: 8, offset: const Offset(0, 4))], color: kWhite, borderRadius: BorderRadius.circular(8)),
+                              decoration: BoxDecoration(boxShadow: [BoxShadow(color: kGrey.withValues(alpha: 0.2), blurRadius: 8, offset: const Offset(0, 4))], color: kWhite, borderRadius: BorderRadius.circular(8)),
                               width: (MediaQuery.of(context).size.width + 184) / 3,
                               height: isFourthImage ? (MediaQuery.of(context).size.width + 184) / 3 + 80 : (MediaQuery.of(context).size.width + 184) / 3,
                               child: Column(
                                 children: [
-                                  Expanded(child: Container(height: 200, decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), image: DecorationImage(image: AssetImage('assets/imagersvp${imageIndex}.png'), fit: BoxFit.cover)))),
+                                  Expanded(child: Container(height: 200, decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), image: DecorationImage(image: AssetImage('assets/imagersvp$imageIndex.png'), fit: BoxFit.cover)))),
                                   if (isFourthImage)
                                     Container(
                                       width: double.infinity,

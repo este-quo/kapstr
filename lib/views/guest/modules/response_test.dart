@@ -2,6 +2,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/components/buttons/primary_button.dart';
 import 'package:kapstr/components/buttons/secondary_button.dart';
+import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/rsvps.dart';
 import 'package:kapstr/helpers/rsvp.dart';
 import 'package:kapstr/helpers/vibration.dart';
@@ -22,7 +23,7 @@ class ResponseTest extends StatefulWidget {
 }
 
 class _ResponseTestState extends State<ResponseTest> {
-  List<AddedGuest> _guests = [];
+  final List<AddedGuest> _guests = [];
   List<String> adultsIds = [];
   bool isLoading = false;
   bool isAnswered = false;
@@ -60,6 +61,13 @@ class _ResponseTestState extends State<ResponseTest> {
   }
 
   Future<void> _confirmPresence(bool value) async {
+    bool isOrganizer = await context.read<EventsController>().isOrganizer(context, context.read<EventsController>().event.code);
+
+    if (isOrganizer) {
+      showDialog(context: context, builder: (context) => AlertDialog(title: const Text("Vous êtes l'organisateur"), content: const Text("Vous ne pouvez pas répondre en tant qu'organisateur"), actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text("Compris"))]));
+      return;
+    }
+
     if (value && _guests.isEmpty) {
       showDialog(context: context, builder: (context) => AlertDialog(title: const Text("Erreur"), content: const Text("Veuillez renseigner au moins une personne pour être présent"), actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text("Compris"))]));
       return;
@@ -174,11 +182,12 @@ class _ResponseTestState extends State<ResponseTest> {
                 int index = entry.key;
                 AddedGuest guest = entry.value;
                 return _buildGuestEntry(index, guest, isGuestAnAdult(guest));
-              }).toList(),
-              const SizedBox(height: 16),
-              ElevatedButton(onPressed: _addGuest, style: ElevatedButton.styleFrom(backgroundColor: kBlack, padding: const EdgeInsets.symmetric(vertical: 8)), child: const Text('+', style: TextStyle(color: kWhite, fontSize: 16))),
-              SizedBox(height: 16),
+              }),
+
+              Center(child: ElevatedButton(onPressed: _addGuest, style: ElevatedButton.styleFrom(backgroundColor: kBlack, shape: const CircleBorder(), padding: const EdgeInsets.all(8)), child: const Icon(Icons.add, color: Colors.white))),
+              SizedBox(height: 24),
               PrimaryButton(
+                backgroundColor: kPrimary,
                 onPressed: () {
                   _confirmPresence(true);
                 },
@@ -205,7 +214,7 @@ class _ResponseTestState extends State<ResponseTest> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: kLightGrey), boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 8, offset: const Offset(0, 3))]),
+        decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(8), border: Border.all(color: kLightGrey), boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 8, offset: const Offset(0, 3))]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

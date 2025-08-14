@@ -16,7 +16,7 @@ import 'package:kapstr/models/guest.dart';
 import 'package:provider/provider.dart';
 
 class GuestsController extends ChangeNotifier {
-  Event _event;
+  final Event _event;
 
   GuestsController(Event event) : _event = event;
 
@@ -64,8 +64,6 @@ class GuestsController extends ChangeNotifier {
     List<Guest> newGuests = guests.where((guest) => !existingPhones.contains(guest.phone)).toList();
 
     List<Module> modules = Event.instance.modules;
-
-    List<String> excludedModules = kNonEventModules;
 
     List<Future<void>> tasks = [];
 
@@ -162,7 +160,7 @@ class GuestsController extends ChangeNotifier {
     try {
       String? phone = user.phone;
 
-      String? formattedPhone = await formatPhoneNumber(phone!);
+      String? formattedPhone = await formatPhoneNumber(phone);
 
       if (!existingPhones.contains(formattedPhone)) {
         var guestDocRef = configuration.getCollectionPath('events').doc(eventId).collection('guests').doc();
@@ -225,9 +223,9 @@ class GuestsController extends ChangeNotifier {
 
     for (var guest in newGuests) {
       try {
-        String? phone = guest.phones!.first;
+        String? phone = guest.phones.first;
 
-        String? formattedPhone = await formatPhoneNumber(phone!);
+        String? formattedPhone = await formatPhoneNumber(phone);
 
         // Check against local collection
         if (!existingPhones.contains(formattedPhone)) {
@@ -445,45 +443,24 @@ class GuestsController extends ChangeNotifier {
   }
 
   Future<void> allowModule(String guestId, String moduleId) async {
-    print("Allow Module :");
-    print(Event.instance.id);
-    print(moduleId);
-    print(guestId);
     try {
       // Vérifier si Event.instance est null
-      if (Event.instance.id == null) {
-        throw Exception('L\'ID de l\'événement est null.');
-      }
-
-      // Vérifier si guestId ou moduleId est null
       if (guestId.isEmpty || moduleId.isEmpty) {
         throw Exception('guestId ou moduleId ne peut pas être vide.');
       }
-
-      print("2");
 
       // Ajouter le module dans Firestore
       await configuration.getCollectionPath('events').doc(Event.instance.id).collection('guests').doc(guestId).update({
         'allowed_modules': FieldValue.arrayUnion([moduleId]),
       });
 
-      print("3");
-
       // Vérifier si le guest existe dans la liste en mémoire
-      final Guest? guest = _event.guests.firstWhere((element) => element.id == guestId);
+      final Guest guest = _event.guests.firstWhere((element) => element.id == guestId);
 
-      print("Guest:");
-
-      print(guest);
-
-      if (guest != null) {
-        guest.allowedModules.add(moduleId);
-        notifyListeners();
-      } else {
-        throw Exception('Guest non trouvé en mémoire avec l\'ID: $guestId');
-      }
+      guest.allowedModules.add(moduleId);
+      notifyListeners();
     } catch (e) {
-      print('Erreur dans allowModule: $e');
+      printOnDebug(e.toString());
     }
   }
 
@@ -510,9 +487,6 @@ class GuestsController extends ChangeNotifier {
       }
 
       // Construire un AppEvent à partir des données Firestore
-      Map<String, dynamic> eventData = eventSnapshot.data() as Map<String, dynamic>;
-      print("Event Data :");
-      print(eventData);
 
       // Notifier les listeners que l'événement a été mis à jour
       notifyListeners();

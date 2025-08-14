@@ -53,7 +53,7 @@ class _JoinedEventCardState extends State<JoinedEventCard> {
       if (eventType == 'mariage') {
         displayName = '$manFirstName & $womanFirstName';
       } else {
-        displayName = '$manFirstName';
+        displayName = manFirstName;
       }
     }
     return Container(
@@ -189,7 +189,7 @@ class _JoinedEventCardState extends State<JoinedEventCard> {
                   elevation: 10,
                   padding: const EdgeInsets.all(16.0),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                  shadowColor: kBlack.withOpacity(0.2),
+                  shadowColor: kBlack.withValues(alpha: 0.2),
                   icon: const Icon(Icons.more_vert, color: kBlack),
                   itemBuilder:
                       (BuildContext context) => [
@@ -227,7 +227,7 @@ class _JoinedEventCardState extends State<JoinedEventCard> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: Colors.white.withOpacity(1), // Fond presque blanc
+      barrierColor: Colors.white.withValues(alpha: 1), // Fond presque blanc
       builder: (BuildContext context) {
         return PopScope(
           onPopInvoked: (value) async => false, // Empêche le retour à l'écran précédent

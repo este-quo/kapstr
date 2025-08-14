@@ -20,7 +20,7 @@ class ModuleAction extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const ModuleAction({Key? key, required this.module, required this.text, required this.icon}) : super(key: key);
+  const ModuleAction({super.key, required this.module, required this.text, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ModuleAction extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1), // Couleur de l'ombre
+            color: Colors.black.withValues(alpha: 0.1), // Couleur de l'ombre
             spreadRadius: 1, // Taille de l'ombre
             blurRadius: 5, // Flou de l'ombre
             offset: const Offset(0, 3), // Ombre vers le bas (Offset)

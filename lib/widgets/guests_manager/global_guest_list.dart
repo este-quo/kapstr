@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:kapstr/components/dialogs/guest.dart';
 import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/models/app_event.dart';
@@ -7,11 +6,8 @@ import 'package:kapstr/models/guest.dart';
 import 'package:kapstr/controllers/guests.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/guest_manager/guest_profile.dart';
-import 'package:kapstr/widgets/guests_manager/add_button.dart';
 import 'package:kapstr/widgets/guests_manager/checkbox.dart';
 import 'package:provider/provider.dart';
-
-import '../../views/organizer/guest_manager/share_button.dart';
 
 class GlobalGuestsList extends StatefulWidget {
   final bool isFiltered;
@@ -49,7 +45,7 @@ class _GlobalGuestsListState extends State<GlobalGuestsList> {
                     padding: const EdgeInsets.only(bottom: 92),
                     shrinkWrap: true,
                     controller: controller,
-                    separatorBuilder: (context, index) => Divider(color: kLightGrey.withOpacity(0.2), thickness: 1),
+                    separatorBuilder: (context, index) => Divider(color: kLightGrey.withValues(alpha: 0.2), thickness: 1),
                     itemCount: guests.length,
                     itemBuilder: (context, index) {
                       Guest guest = guests[index];

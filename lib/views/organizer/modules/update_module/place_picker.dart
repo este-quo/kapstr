@@ -8,25 +8,26 @@ import 'package:provider/provider.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 
 class PlacePicker extends StatefulWidget {
-  String placeAdress;
+  final String initialPlaceAddress;
   final String moduleId;
   final Module module;
 
-  PlacePicker({super.key, required this.placeAdress, required this.moduleId, required this.module});
+  const PlacePicker({super.key, required this.initialPlaceAddress, required this.moduleId, required this.module});
 
   @override
   State<StatefulWidget> createState() => _PlacePickerState();
 }
 
 class _PlacePickerState extends State<PlacePicker> {
+  late String placeAdress;
   late TextEditingController placeAddressController;
   late FocusNode placeAddressFocusNode;
 
   @override
   void initState() {
     super.initState();
-    widget.placeAdress == 'Adresse du lieu' ? widget.placeAdress = '' : widget.placeAdress = widget.placeAdress;
-    placeAddressController = TextEditingController(text: widget.placeAdress);
+    placeAdress = widget.initialPlaceAddress == 'Adresse du lieu' ? '' : widget.initialPlaceAddress;
+    placeAddressController = TextEditingController(text: placeAdress);
     placeAddressFocusNode = FocusNode();
   }
 

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/configuration/navigation/app_router.dart';
-import 'package:kapstr/controllers/themes.dart';
 import 'package:kapstr/views/global/login/create_or_join.dart';
-import 'package:kapstr/views/global/login/login.dart';
 import 'package:kapstr/controllers/authentication.dart';
 import 'package:provider/provider.dart';
 

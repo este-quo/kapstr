@@ -67,7 +67,6 @@ class _CustomModuleState extends State<CustomModule> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _nameController = TextEditingController(text: widget.module.name);
     textSize = widget.module.textSize;
@@ -136,7 +135,7 @@ class _CustomModuleState extends State<CustomModule> {
                         width: MediaQuery.of(context).size.width - 40,
                         height: MediaQuery.of(context).size.width - 40,
                         decoration: BoxDecoration(
-                          color: widget.module.image == '' ? kBlack.withOpacity(0.1) : Colors.transparent,
+                          color: widget.module.image == '' ? kBlack.withValues(alpha: 0.1) : Colors.transparent,
                           borderRadius: BorderRadius.circular(8),
                           image: DecorationImage(image: NetworkImage(widget.module.image), colorFilter: ColorFilter.mode(fromHex(widget.module.colorFilter), BlendMode.srcOver), fit: BoxFit.cover, alignment: Alignment.center),
                         ),
@@ -164,7 +163,7 @@ class _CustomModuleState extends State<CustomModule> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(children: [Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text(widget.module.colorFilter, style: const TextStyle(color: kLightGrey, fontSize: 14, fontWeight: FontWeight.w400))), xSmallSpacerW()]),
+                              Row(children: [Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text(widget.module.colorFilter, style: const TextStyle(color: kLightGrey, fontSize: 14, fontWeight: FontWeight.w400))), xSmallSpacerW(context)]),
                               Container(
                                 width: 20,
                                 height: 20,
@@ -237,7 +236,7 @@ class _CustomModuleState extends State<CustomModule> {
                                             Navigator.of(context).pop(font);
                                           },
                                         );
-                                      }).toList(),
+                                      }),
                                       const SizedBox(height: 16),
                                       const Text('Toutes :', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
                                       ...allFonts.map((font) {
@@ -248,7 +247,7 @@ class _CustomModuleState extends State<CustomModule> {
                                             Navigator.of(context).pop(font); // Pop the dialog and return the selected font
                                           },
                                         );
-                                      }).toList(),
+                                      }),
                                     ],
                                   ),
                                 ),
@@ -332,13 +331,13 @@ class _CustomModuleState extends State<CustomModule> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(child: const Row(children: [Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Text('Taille du texte', style: TextStyle(color: kLightGrey, fontSize: 14, fontWeight: FontWeight.w400)))])),
+                              SizedBox(child: const Row(children: [Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Text('Taille du texte', style: TextStyle(color: kLightGrey, fontSize: 14, fontWeight: FontWeight.w400)))])),
                               Text('$textSize', style: const TextStyle(color: kBlack, fontSize: 16, fontWeight: FontWeight.w400)),
                             ],
                           ),
                         ),
                       ),
-                      largeSpacerH(),
+                      largeSpacerH(context),
 
                       const SizedBox(height: 12),
                       SizedBox(

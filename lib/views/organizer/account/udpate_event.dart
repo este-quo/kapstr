@@ -95,7 +95,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                   focusNode: _manFirstNameFieldFocusNode,
                   suffixIcon: const SizedBox(),
                   isPassword: false,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   validateInput: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez renseigner ce champ pour continuer';
@@ -119,7 +119,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                         key: const Key('lastNameMan'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -151,7 +151,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                         key: const Key('firstNameWoman'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -172,7 +172,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                         key: const Key('lastNameWoman'),
                         suffixIcon: const SizedBox(),
                         isPassword: false,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validateInput: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez renseigner ce champ pour continuer';
@@ -309,7 +309,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                 // Crop the image
                 final croppedFile = await ImageCropper().cropImage(
                   aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                  sourcePath: pickedFile!.path,
+                  sourcePath: pickedFile.path,
                   compressFormat: ImageCompressFormat.jpg,
                   compressQuality: 100,
                   uiSettings: uiSettingsList, // Pass the list here
@@ -383,7 +383,7 @@ class UdpateEventPageState extends State<UpdateEventPage> {
                   // Crop the image
                   final croppedFile = await ImageCropper().cropImage(
                     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-                    sourcePath: pickedFile!.path,
+                    sourcePath: pickedFile.path,
                     compressFormat: ImageCompressFormat.jpg,
                     compressQuality: 100,
                     uiSettings: uiSettingsList, // Pass the list here

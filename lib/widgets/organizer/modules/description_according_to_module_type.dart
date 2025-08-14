@@ -1,9 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/organizer/modules/cagnotte/link_preview.dart';
-import 'package:kapstr/widgets/custom_svg_picture.dart';
-
 String descriptionAccordingToEventType(String moduleType) {
   if (moduleType == "album_photo") {
     return "Créez votre album photos, visible pour les invités. Personnalisez également le design du module (typo, couleurs, tailles...)";

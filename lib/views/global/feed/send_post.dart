@@ -5,10 +5,10 @@ import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/feed.dart';
 import 'package:kapstr/controllers/notification.dart';
 import 'package:kapstr/controllers/users.dart';
+import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/app_guest.dart';
-import 'package:kapstr/models/app_organizer.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:image_picker/image_picker.dart';
@@ -161,7 +161,7 @@ class _SendPostState extends State<SendPost> {
                         // Send notification
                         await _sendNotification(context);
                       } catch (e) {
-                        print('Error posting: $e'); // Handle the error properly
+                        printOnDebug('Error posting: $e'); // Handle the error properly
                       } finally {
                         // Reset loading and navigate back regardless of success or failure
                         setState(() => isLoading = false);

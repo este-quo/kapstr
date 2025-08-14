@@ -95,7 +95,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                         textCapitalization: TextCapitalization.sentences,
                         controller: _firstNameController,
                         decoration: _inputDecoration('Entrez votre prénom'),
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez entrer votre prénom';
@@ -109,7 +109,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                         textCapitalization: TextCapitalization.sentences,
                         controller: _lastNameController,
                         decoration: _inputDecoration('Entrez votre nom'),
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Veuillez entrer votre nom';

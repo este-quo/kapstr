@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/tuto/tutorial_4.dart';
-import 'package:kapstr/views/organizer/modules/media/media.dart';
-import 'package:kapstr/widgets/buttons/main_button.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TutorialThree extends StatefulWidget {
   const TutorialThree({super.key});

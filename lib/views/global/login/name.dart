@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/controllers/users.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/events/events.dart';
-import 'package:kapstr/views/global/login/mail/signup.dart';
 import 'package:kapstr/views/global/phone_verification/request.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
@@ -90,7 +87,7 @@ class _NameFormPageState extends State<NameFormPage> {
                         textCapitalization: TextCapitalization.words,
                         controller: firstnameController,
                         decoration: _inputDecoration('Prénom'),
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         style: const TextStyle(color: kBlack, fontSize: 14, fontWeight: FontWeight.w400),
                         validator: (value) {
                           if (value == null || value.isEmpty) {

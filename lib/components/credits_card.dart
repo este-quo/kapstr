@@ -5,7 +5,7 @@ import 'package:kapstr/views/global/credits/credits.dart';
 class CreditDisplay extends StatelessWidget {
   final int credits;
 
-  const CreditDisplay({Key? key, required this.credits}) : super(key: key);
+  const CreditDisplay({super.key, required this.credits});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CreditDisplay extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 12.0),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 8, offset: const Offset(0, 2))]),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 8, offset: const Offset(0, 2))]),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

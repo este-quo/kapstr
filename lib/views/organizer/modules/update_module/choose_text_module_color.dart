@@ -73,7 +73,7 @@ class _ChooseTextModuleColorState extends State<ChooseTextModuleColor> {
     return Scaffold(
       floatingActionButton: MainButton(
         onPressed: () async {
-          String formattedColor = myColor.value.toRadixString(16).padLeft(8, '0');
+          String formattedColor = myColor.toARGB32().toRadixString(16).padLeft(8, '0');
 
           if (!Event.instance.favoriteColors.contains(formattedColor)) {
             Event.instance.favoriteColors.insert(0, formattedColor);
@@ -174,12 +174,12 @@ class _ChooseTextModuleColorState extends State<ChooseTextModuleColor> {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            myColor = colors[index - 1].withOpacity(1.0);
+                            myColor = colors[index - 1].withValues(alpha: 1.0);
                           });
                         },
                         child: Stack(
                           children: [
-                            Container(decoration: BoxDecoration(color: colors[index - 1].withOpacity(1.0), borderRadius: BorderRadius.circular(8.0), border: Border.all(color: kBorderColor, width: 1, strokeAlign: BorderSide.strokeAlignOutside))),
+                            Container(decoration: BoxDecoration(color: colors[index - 1].withValues(alpha: 1.0), borderRadius: BorderRadius.circular(8.0), border: Border.all(color: kBorderColor, width: 1, strokeAlign: BorderSide.strokeAlignOutside))),
 
                             // Display a checkmark if the color is selected
                             if (myColor == colors[index - 1]) Positioned(right: 4, bottom: 4, child: Container(padding: EdgeInsets.all(2), decoration: BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(100.0)), child: const Icon(Icons.check, color: kBlack, size: 12))),
@@ -195,7 +195,7 @@ class _ChooseTextModuleColorState extends State<ChooseTextModuleColor> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Couleur séléctionnée :', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, color: kBlack)),
-                  xSmallSpacerW(),
+                  xSmallSpacerW(context),
                   Container(width: 25, height: 25, decoration: BoxDecoration(color: myColor, borderRadius: BorderRadius.circular(100.0), border: Border.all(color: kBorderColor, width: 1, strokeAlign: BorderSide.strokeAlignOutside))),
                 ],
               ),
@@ -203,10 +203,10 @@ class _ChooseTextModuleColorState extends State<ChooseTextModuleColor> {
               SizedBox(
                 width: MediaQuery.of(context).size.width - 40,
                 child: FavoriteColors(
-                  colorToUpdate: myColor,
+                  initialColor: myColor,
                   onColorSelected: (Color color) {
                     setState(() {
-                      myColor = color.withOpacity(1.0);
+                      myColor = color.withValues(alpha: 1.0);
                     });
                   },
                 ),
@@ -214,10 +214,10 @@ class _ChooseTextModuleColorState extends State<ChooseTextModuleColor> {
               const SizedBox(height: 12),
               TextButton(
                 onPressed: () async {
-                  await context.read<ModulesController>().updateFieldForAllModules(key: "text_color", value: myColor.value.toRadixString(16).padLeft(8, '0'));
+                  await context.read<ModulesController>().updateFieldForAllModules(key: "text_color", value: myColor.toARGB32().toRadixString(16).padLeft(8, '0'));
 
                   for (var module in Event.instance.modules) {
-                    module.textColor = myColor.value.toRadixString(16).padLeft(8, '0');
+                    module.textColor = myColor.toARGB32().toRadixString(16).padLeft(8, '0');
                   }
 
                   if (!mounted) return;

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:kapstr/controllers/events.dart';
 import 'package:kapstr/controllers/themes.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/theme/browse_type.dart';

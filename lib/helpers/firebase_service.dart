@@ -6,7 +6,6 @@ import 'package:kapstr/helpers/debug_helper.dart';
 
 class FirebaseHelper {
   static Future<void> setupFirebase() async {
-    print(Firebase.apps);
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     }
@@ -30,7 +29,6 @@ class FirebaseHelper {
     try {
       final response = await callable.call(<String, dynamic>{'title': title, 'body': body, 'image': image, 'token': token});
 
-      print('result is ${response.data ?? 'No data returned'}');
       if (response.data == null) return false;
       return false;
     } catch (e) {

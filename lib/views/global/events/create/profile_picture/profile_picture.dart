@@ -1,32 +1,17 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:kapstr/controllers/event_data.dart';
 import 'package:kapstr/controllers/users.dart';
-import 'package:kapstr/configuration/app_initializer/app_initializer.dart';
 import 'package:kapstr/helpers/debug_helper.dart';
-import 'package:kapstr/helpers/generate_code.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/events/create/browse_themes_onboarding.dart';
 import 'package:kapstr/views/global/events/create/completed.dart';
 import 'package:kapstr/views/global/events/create/layout.dart';
-import 'package:kapstr/views/global/events/create/text_field.dart';
-import 'package:kapstr/views/global/events/create/woman/woman_infos.dart';
-import 'package:kapstr/views/organizer/home/configuration.dart';
-import 'package:kapstr/views/organizer/theme/browse_all.dart';
-import 'package:kapstr/views/organizer/theme/browse_type.dart';
-import 'package:kapstr/widgets/layout/get_device_type.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:kapstr/services/firebase/cloud_firestore/cloud_firestore.dart' as cloud_firestore;
-import 'package:kapstr/services/firebase/authentication/auth_firebase.dart' as auth_firebase;
-import 'package:kapstr/services/firebase/paid_modules/add_paid_modules.dart' as paid_modules_firestore;
 
 class ProfilePicturePage extends StatefulWidget {
   const ProfilePicturePage({super.key});

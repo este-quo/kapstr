@@ -11,7 +11,7 @@ class PhoneRequestHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        xLargeSpacerH(),
+        xLargeSpacerH(context),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -23,13 +23,13 @@ class PhoneRequestHeader extends StatelessWidget {
             ),
           ],
         ),
-        xLargeSpacerH(),
+        xLargeSpacerH(context),
         const Tagline(upText: 'Créez ton', downText: "Faire-part digital", color: kBlack),
-        xLargeSpacerH(),
+        xLargeSpacerH(context),
         Text(textAlign: TextAlign.center, 'Entrez votre numéro de téléphone', style: TextStyle(color: kBlack, fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize, fontWeight: FontWeight.bold)),
-        mediumSpacerH(),
+        mediumSpacerH(context),
         Text('''Vous allez recevoir un code par SMS pour valider votre compte.''', style: TextStyle(color: kBlack, fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize, fontFamily: 'Inter'), textAlign: TextAlign.center),
-        xLargeSpacerH(),
+        xLargeSpacerH(context),
       ],
     );
   }

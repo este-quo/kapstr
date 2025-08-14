@@ -80,7 +80,7 @@ class _ModuleDatePickerState extends State<ModuleDatePicker> {
       child: Column(
         children: [
           Text('Date de l\'évènement', style: TextStyle(color: kWhite, fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize)),
-          smallSpacerH(),
+          smallSpacerH(context),
           IntrinsicHeight(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -138,9 +138,9 @@ class _ModuleDatePickerState extends State<ModuleDatePicker> {
               ],
             ),
           ),
-          largeSpacerH(),
+          largeSpacerH(context),
           Text('Horaire de l\'évènement', style: Sizer(context).scaleTextStyle(Theme.of(context).textTheme.bodyLarge!).copyWith(color: kWhite, fontWeight: FontWeight.w400)),
-          largeSpacerH(),
+          largeSpacerH(context),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

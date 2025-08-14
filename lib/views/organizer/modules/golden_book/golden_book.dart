@@ -7,7 +7,6 @@ import 'package:kapstr/helpers/debug_helper.dart';
 import 'package:kapstr/themes/constants.dart';
 import 'package:kapstr/views/organizer/modules/golden_book/card.dart';
 import 'package:kapstr/views/organizer/modules/golden_book/evently_card.dart';
-import 'package:kapstr/views/organizer/modules/golden_book/evently_message.dart';
 import 'package:kapstr/views/organizer/modules/golden_book/guest_card.dart';
 import 'package:kapstr/views/organizer/modules/golden_book/list.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
@@ -175,7 +174,7 @@ class _GoldenBookOrganiserState extends State<GoldenBookOrganiser> {
                   child: Container(
                     width: 80,
                     height: 80,
-                    decoration: BoxDecoration(color: Colors.grey.withOpacity(0.2), borderRadius: BorderRadius.circular(100), border: Border.all(color: kLighterGrey, width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
+                    decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(100), border: Border.all(color: kLighterGrey, width: 1, strokeAlign: BorderSide.strokeAlignOutside)),
                     child: ClipRRect(borderRadius: BorderRadius.circular(100), child: Image.asset('assets/logos/evently_logo.png', fit: BoxFit.cover)),
                   ),
                 ),

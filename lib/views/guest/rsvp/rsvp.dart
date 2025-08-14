@@ -65,7 +65,7 @@ class RsvpState extends State<RsvpPage> {
       setState(() {
         _allModules = modules;
         _filteredModules = _allModules.where((module) => !kNonEventModules.contains(module.type)).toList()..sort((a, b) => a.id.compareTo(b.id));
-        final fakeRsvps = _filteredModules.map((module) => RSVP(guestId: 'fakeId', moduleId: module.id, isAllowed: true, response: 'En attente', adults: [AddedGuest(id: generateRandomId(), name: "Jean")], children: [], createdAt: DateTime.now(), isAnswered: false)).toList();
+        final fakeRsvps = _filteredModules.map((module) => RSVP(guestId: 'fakeId', moduleId: module.id, isAllowed: true, response: 'En attente', adults: [AddedGuest(id: generateRandomId(), name: "John Doe")], children: [], createdAt: DateTime.now(), isAnswered: false)).toList();
         rsvpController.setRsvps(fakeRsvps);
         _dataLoaded = true;
       });
@@ -88,8 +88,8 @@ class RsvpState extends State<RsvpPage> {
           elevation: 0,
           toolbarHeight: 64,
           centerTitle: false,
-          leading: const SizedBox.shrink(),
-          title: Padding(padding: const EdgeInsets.only(top: 20.0), child: Text('Mes RSVPs', style: TextStyle(color: context.read<ThemeController>().getTextColor(), fontSize: 24, fontFamily: "Inter", fontWeight: FontWeight.w600))),
+          automaticallyImplyLeading: false,
+          leading: Row(children: [SizedBox(width: 20), Padding(padding: const EdgeInsets.only(top: 20.0), child: Text('Mes RSVPs', style: TextStyle(color: context.read<ThemeController>().getTextColor(), fontSize: 24, fontFamily: "Inter", fontWeight: FontWeight.w600)))]),
         ),
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,

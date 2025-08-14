@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:kapstr/controllers/authentication.dart';
 import 'package:kapstr/controllers/feed.dart';
 import 'package:kapstr/controllers/users.dart';
@@ -7,7 +6,6 @@ import 'package:kapstr/helpers/vibration.dart';
 import 'package:kapstr/models/app_event.dart';
 import 'package:kapstr/models/modules/module.dart';
 import 'package:kapstr/themes/constants.dart';
-import 'package:kapstr/views/global/conversation/conversations.dart';
 import 'package:kapstr/views/global/feed/post.dart';
 import 'package:kapstr/views/global/feed/save_the_date.dart';
 import 'package:kapstr/views/global/feed/save_the_date_page.dart';
@@ -15,7 +13,6 @@ import 'package:kapstr/views/global/feed/send_post.dart';
 import 'package:kapstr/views/global/feed/send_post_quick.dart';
 import 'package:kapstr/views/global/login/login.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class Feed extends StatefulWidget {
   const Feed({super.key});
@@ -66,7 +63,7 @@ class _FeedState extends State<Feed> {
                     showModalBottomSheet(
                       isScrollControlled: true,
                       context: context,
-                      barrierColor: Colors.black.withOpacity(0.3),
+                      barrierColor: Colors.black.withValues(alpha: 0.3),
                       useSafeArea: true,
                       builder: (context) {
                         return DraggableScrollableSheet(
@@ -85,7 +82,7 @@ class _FeedState extends State<Feed> {
                     showModalBottomSheet(
                       isScrollControlled: true,
                       context: context,
-                      barrierColor: Colors.black.withOpacity(0.3),
+                      barrierColor: Colors.black.withValues(alpha: 0.3),
                       useSafeArea: true,
                       builder: (context) {
                         return DraggableScrollableSheet(

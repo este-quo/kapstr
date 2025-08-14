@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kapstr/components/copy_code.dart';
 import 'package:kapstr/controllers/events.dart';
@@ -15,7 +14,6 @@ import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/guests_manager/search_bar.dart';
 import 'package:kapstr/widgets/layout/spacing.dart';
 import 'package:kapstr/widgets/guests_manager/global_guest_list.dart';
-import 'package:kapstr/widgets/guests_manager/add_button.dart';
 import 'package:kapstr/widgets/guests_manager/select_all.dart';
 import 'package:kapstr/widgets/guests_manager/send_invitation.dart';
 import 'package:provider/provider.dart';
@@ -106,13 +104,13 @@ class _DisplayAllContactsState extends State<DisplayAllContacts> {
             event.isUnlocked
                 ? Column(
                   children: [
-                    largeSpacerH(),
+                    largeSpacerH(context),
                     Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: Row(children: [Expanded(child: SearchBarGuest(searchController: searchController)), const SizedBox(width: 12)])),
-                    smallSpacerH(),
+                    smallSpacerH(context),
                     Expanded(
                       child: Column(
                         children: [
-                          smallSpacerH(),
+                          smallSpacerH(context),
                           Consumer<GuestsController>(
                             builder: (context, guestProvider, child) {
                               return guestProvider.eventGuests.isNotEmpty ? SelectAllGuestsButton(guests: guestProvider.eventGuests) : const SizedBox();

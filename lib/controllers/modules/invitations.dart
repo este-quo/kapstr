@@ -173,8 +173,6 @@ class InvitationsController extends ChangeNotifier {
       }
     }
 
-    print("wowow ?");
-
     try {
       await configuration.getCollectionPath('events').doc(Event.instance.id).collection('modules').doc(currentInvitation.id).update({
         'initials': Event.instance.womanFirstName == '' ? capitalize(Event.instance.manFirstName[0]) : "${capitalize(Event.instance.manFirstName[0])} & ${capitalize(Event.instance.womanFirstName[0])}",

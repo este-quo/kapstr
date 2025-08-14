@@ -85,10 +85,10 @@ class AboutModule extends Module {
   }
 
   addService(AboutService service) {
-    this.services.add(service);
+    services.add(service);
   }
 
   removeService(AboutService service) {
-    this.services.remove(service);
+    services.remove(service);
   }
 }

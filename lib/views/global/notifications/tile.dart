@@ -16,7 +16,7 @@ class NotificationTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: seen ? kWhite : kPrimary.withOpacity(0.1), border: Border(bottom: BorderSide(width: 1, color: Colors.black.withOpacity(0.1)))),
+      decoration: BoxDecoration(color: seen ? kWhite : kPrimary.withValues(alpha: 0.1), border: Border(bottom: BorderSide(width: 1, color: Colors.black.withValues(alpha: 0.1)))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
