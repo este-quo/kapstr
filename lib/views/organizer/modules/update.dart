@@ -215,8 +215,9 @@ class UpdateModuleState extends State<UpdateModule> {
                           builder: (context, child) {
                             return Theme(
                               data: ThemeData.light().copyWith(
-                                dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                                colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack),
+                                dialogTheme: DialogThemeData(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack, background: Colors.white),
+                                dialogBackgroundColor: kWhite,
                               ),
                               child: child!,
                             );
@@ -268,8 +269,9 @@ class UpdateModuleState extends State<UpdateModule> {
                         builder: (context, child) {
                           return Theme(
                             data: ThemeData.light().copyWith(
-                              dialogTheme: DialogTheme(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                              colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack),
+                              dialogTheme: DialogThemeData(backgroundColor: kWhite, surfaceTintColor: kWhite, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                              colorScheme: const ColorScheme.light(primary: kPrimary, onPrimary: kWhite, surface: kWhite, onSurface: kBlack, background: Colors.white),
+                              dialogBackgroundColor: kWhite,
                             ),
                             child: child!,
                           );

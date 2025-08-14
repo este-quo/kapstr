@@ -50,6 +50,15 @@ class AuthenticationController extends ChangeNotifier {
     await email_auth.registerWithEmailAndPassword(email, password, firstName, lastName);
   }
 
+  // Reset password with email
+  Future<void> resetPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> deleteUser(BuildContext context) async {
     await _firebaseAuth.currentUser!.delete();
     await logout(context);

@@ -23,7 +23,10 @@ class _OrgaHomePageTabBarState extends State<OrgaHomePageTabBar> {
     OrganizerTabIndex tabIndex = context.watch<OrgaTabBarController>().index;
 
     return Container(
-      padding: EdgeInsets.only(bottom: Platform.isIOS ? 20 : 0, top: 10),
+      padding: EdgeInsets.only(
+        bottom: Platform.isIOS ? 20 : MediaQuery.of(context).padding.bottom + 10,
+        top: 10,
+      ),
       decoration: const BoxDecoration(color: kWhite, border: Border(top: BorderSide(color: Color.fromARGB(30, 0, 0, 0), width: 0.0))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

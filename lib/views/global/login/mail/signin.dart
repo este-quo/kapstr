@@ -6,6 +6,7 @@ import 'package:kapstr/views/global/login/mail/signup.dart';
 import 'package:kapstr/widgets/buttons/main_button.dart';
 import 'package:kapstr/widgets/logo_loader.dart';
 import 'package:provider/provider.dart';
+import 'package:kapstr/views/global/login/mail/forgot_password_phone.dart';
 
 class EmailSignIn extends StatefulWidget {
   const EmailSignIn({super.key});
@@ -111,12 +112,31 @@ class _EmailSignInState extends State<EmailSignIn> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EmailSignUp()));
-                        },
-                        child: const Text('Je n\'ai pas de compte', style: TextStyle(color: kPrimary, fontSize: 14, fontWeight: FontWeight.w400)),
+                      const SizedBox(height: 24),
+
+                      // Boutons alignés horizontalement
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EmailSignUp()));
+                            },
+                            child: const Text('Je n\'ai pas de compte', style: TextStyle(color: kPrimary, fontSize: 14, fontWeight: FontWeight.w400)),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const ForgotPasswordPhone()),
+                              );
+                            },
+                            child: const Text(
+                              'Mot de passe oublié ?',
+                              style: TextStyle(color: kPrimary, fontSize: 14, fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

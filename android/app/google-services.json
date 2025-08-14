@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "1016658555930-n047jf7cka3nvum2cnkdvnhjh1a5d2c5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "f6872cb76c537b8ae9b59aaee0b6c970f3ad8971"
+          }
+        },
+        {
           "client_id": "1016658555930-pkonanq96navu38j83g2lifg3294j2q1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -30,11 +38,64 @@
           }
         },
         {
+          "client_id": "1016658555930-srcjh6gpg9vudjcfqkqjrhc6gkqld895.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "6e46e8e547c20dc7708cbfaec858e2ee1343d7dc"
+          }
+        },
+        {
           "client_id": "1016658555930-svoqfhcqdb07mepinp2khribp97eoo2k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.events148.kapstr",
             "certificate_hash": "d1b14d9c1fd50ecb12be104d0531e8eb86164a57"
+          }
+        },
+        {
+          "client_id": "1016658555930-o6lm6tocbrtc263k5g59k03bmtsod4af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7im8C6Rrgk1TuzGM2ToYR-EMFqZv6lUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016658555930-o6lm6tocbrtc263k5g59k03bmtsod4af.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016658555930-2v5ekjgamgb0gjao4efgdrctnhdtbnjq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "events148.kapstr.app",
+                "app_store_id": "6503693192"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016658555930:android:9af0e815b59f4cc7aa8da3",
+        "android_client_info": {
+          "package_name": "com.events148.kapstr2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016658555930-r3rme3hm46l06fqp5tadlds3a2m1jo31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr2",
+            "certificate_hash": "ae6134b8fa77c2146bcf1eeabe2ca86fd0fc6036"
           }
         },
         {
