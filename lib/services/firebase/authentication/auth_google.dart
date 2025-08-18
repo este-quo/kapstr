@@ -10,20 +10,26 @@ final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 Future<User?> signInGoogle(BuildContext context) async {
   try {
-    GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
     if (googleUser == null) {
       printOnDebug("Can't reach Google sign-in services");
       return null;
     }
 
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken, 
+      idToken: googleAuth.idToken
+    );
 
     final User? user = (await _auth.signInWithCredential(credential)).user;
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AppRouter()));
+    // Store context before async operation to avoid warning
+    if (context.mounted) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AppRouter()));
+    }
 
     return user!;
   } catch (error) {
