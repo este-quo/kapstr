@@ -22,11 +22,35 @@
           }
         },
         {
+          "client_id": "1016658555930-gunohpi8q8g7cam3aqdvfudmmn1b1efg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "f662e20fefc097fb83fb6c0a5f9fe3973a58c22a"
+          }
+        },
+        {
+          "client_id": "1016658555930-k5q41onm8f0r9q05opjfafc329ijkcjs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "a7c8c8b792d0c1e57e2bb5ab71f3dc3ce7be6559"
+          }
+        },
+        {
           "client_id": "1016658555930-n047jf7cka3nvum2cnkdvnhjh1a5d2c5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.events148.kapstr",
             "certificate_hash": "f6872cb76c537b8ae9b59aaee0b6c970f3ad8971"
+          }
+        },
+        {
+          "client_id": "1016658555930-nk59vtjf9h318qhc04ejj2875aed98pg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.events148.kapstr",
+            "certificate_hash": "ae6134b8fa77c2146bcf1eeabe2ca86fd0fc6036"
           }
         },
         {

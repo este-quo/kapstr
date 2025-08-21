@@ -203,14 +203,34 @@ class RSVPController extends ChangeNotifier {
     DateTime today = DateTime.now();
     DateTime todayDate = DateTime(today.year, today.month, today.day);
 
-    // Filter out RSVPs whose modules have already occurred
-    List<RSVP> upcomingRsvps =
-        rsvps.where((RSVP rsvp) {
-          // Get the module associated with the RSVP
-          Module module = context.read<ModulesController>().getModuleById(rsvp.moduleId);
-          // Check if the module date is after today
-          return module.date!.isAfter(todayDate);
-        }).toList();
+    // Filter out RSVPs whose modules have already occurred.
+    // Be defensive: module may be missing or its date may be null -> skip those RSVPs
+    List<RSVP> upcomingRsvps = [];
+    for (var rsvp in rsvps) {
+      try {
+        Module module;
+        try {
+          module = context.read<ModulesController>().getModuleById(rsvp.moduleId);
+        } catch (e) {
+          // Module not found in Event instance, skip this RSVP
+          printOnDebug('Module not found for RSVP moduleId ${rsvp.moduleId}: $e');
+          continue;
+        }
+
+        if (module.date == null) {
+          // No date set for this module, ignore for upcoming list
+          continue;
+        }
+
+        if (module.date!.isAfter(todayDate)) {
+          upcomingRsvps.add(rsvp);
+        }
+      } catch (e) {
+        // Any unexpected error while filtering one RSVP should not break the whole flow
+        printOnDebug('Error while filtering RSVP for module ${rsvp.moduleId}: $e');
+        continue;
+      }
+    }
 
     // Now check if there are any pending responses among the filtered RSVPs
     await context.read<RSVPController>().checkIfNeedAnswer(upcomingRsvps);
