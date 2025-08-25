@@ -205,7 +205,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> with SingleTickerProvid
               margin: const EdgeInsets.symmetric(horizontal: 20),
               decoration: const BoxDecoration(color: Color.fromARGB(255, 240, 240, 240), borderRadius: BorderRadius.all(Radius.circular(12))),
               child: Theme(
-                data: Theme.of(context).copyWith(tabBarTheme: TabBarTheme(indicator: BoxDecoration(color: kBlack, borderRadius: BorderRadius.circular(8)), indicatorSize: TabBarIndicatorSize.tab)),
+                data: Theme.of(context).copyWith(tabBarTheme: TabBarThemeData(indicator: BoxDecoration(color: kBlack, borderRadius: BorderRadius.circular(8)), indicatorSize: TabBarIndicatorSize.tab)),
                 child: TabBar(
                   dividerColor: const Color.fromARGB(255, 240, 240, 240),
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

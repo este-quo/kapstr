@@ -10,7 +10,7 @@ class Api {
     return _instance;
   }
 
-  final String version = "2.2.0";
+  final String version = "2.7.0";
 
   // Services
   final TableService tables = TableService();
